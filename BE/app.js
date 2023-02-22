@@ -21,20 +21,12 @@ app.use(bodyParser.json({ limit: "50mb" }));
 app.use(cors()); //CORS là một cơ chế cho phép nhiều tài nguyên khác nhau (fonts, Javascript, v.v…) của một trang web có thể được truy vấn từ domain khác với domain của trang
 app.use(morgan("common")); // khi send request sẽ thông báo dưới terminal
 
-var server = http.createServer(function (request, response) {
-  response.writeHead(200, { "Content-Type": "text/plain" });
-  response.end("Hello World\n");
-});
-server.listen(8000);
-
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
 //kết nối database
 mongoose.set("strictQuery", false);
 mongoose.connect(process.env.MONGODB_URL, () => {
   console.log("Connected to MongoDB successful");
 });
+
 //Routes
 app.use("/TacGia", tacgiaRoute);
 // app.use("/TheLoai", theloaiRoute);
@@ -42,7 +34,15 @@ app.use("/TacGia", tacgiaRoute);
 // app.use("/TaiKhoan", taikhoanRoute);
 // app.use("/Chapter", chapterRoute);
 // app.use("/BinhLuan", binhluanRoute);
+
 //kiểm tra port hoạt động ở 8000
-// const server = app.listen(process.env.PORT || 8000, () => {
-//   console.log(`Server is running → PORT ${server.address().port}`);
-// });
+app.use(express.static("public"));
+app.set("view engine", "ejs");
+app.set("views", "./views");
+const server = http.Server(app);
+server.listen(8000, () => {
+  console.log(`Server is running → PORT ${server.address().port}`);
+});
+app.get("/", (req, res) => {
+  res.render("HomePage");
+});
