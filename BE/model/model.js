@@ -14,6 +14,11 @@ const TheLoaiSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
+  TrangThai: {
+    type: Boolean,
+    default: true,
+    required: true,
+  },
 });
 //=======================tạo schema Truyện=======================
 const TruyenSchema = new mongoose.Schema({

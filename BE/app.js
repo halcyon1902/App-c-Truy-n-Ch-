@@ -7,12 +7,12 @@ const morgan = require("morgan");
 const dotenv = require("dotenv");
 dotenv.config();
 
-const tacgiaRoute = require("./routes/tacgia");
+const tacgiaRoute = require("./routes/TacGia");
 // const truyenRoute = require("./routes/Truyen");
 // const taikhoanRoute = require("./routes/TaiKhoan");
 // const chapterRoute = require("./routes/Chapter");
 // const binhluanRoute = require("./routes/BinhLuan");
-// const theloaiRoute = require("./routes/TheLoai");
+const theloaiRoute = require("./routes/TheLoai");
 
 //giao diện
 const http = require("http");
@@ -33,7 +33,7 @@ mongoose.connect(process.env.MONGODB_URL, function (err) {
 
 //Routes
 app.use("/TacGia", tacgiaRoute);
-// app.use("/TheLoai", theloaiRoute);
+app.use("/TheLoai", theloaiRoute);
 // app.use("/Truyen", truyenRoute);
 // app.use("/TaiKhoan", taikhoanRoute);
 // app.use("/Chapter", chapterRoute);
