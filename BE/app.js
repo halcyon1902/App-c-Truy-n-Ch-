@@ -39,10 +39,11 @@ app.use("/TacGia", tacgiaRoute);
 // app.use("/Chapter", chapterRoute);
 // app.use("/BinhLuan", binhluanRoute);
 
-//kiểm tra port hoạt động ở 8000
+// sử dụng thư mục public
 app.use(express.static("public"));
 app.set("view engine", "ejs");
 app.set("views", "./views");
+//kiểm tra port hoạt động ở 8000
 const server = http.Server(app);
 server.listen(8000, () => {
   console.log(`Server is running → PORT ${server.address().port}`);
