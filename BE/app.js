@@ -23,8 +23,12 @@ app.use(morgan("common")); // khi send request sẽ thông báo dưới terminal
 
 //kết nối database
 mongoose.set("strictQuery", false);
-mongoose.connect(process.env.MONGODB_URL, () => {
-  console.log("Connected to MongoDB successful");
+mongoose.connect(process.env.MONGODB_URL, function (err) {
+  if (err) {
+    console.log("Connected to MongoDB fail:" + err);
+  } else {
+    console.log("Connected to MongoDB successful");
+  }
 });
 
 //Routes
@@ -43,6 +47,10 @@ const server = http.Server(app);
 server.listen(8000, () => {
   console.log(`Server is running → PORT ${server.address().port}`);
 });
+//link dẫn
 app.get("/", (req, res) => {
   res.render("HomePage");
+});
+app.get("/login", (req, res) => {
+  res.render("Login");
 });
