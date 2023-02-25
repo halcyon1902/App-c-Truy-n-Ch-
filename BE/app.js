@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const mongoose = require("mongoose");
-var bodyParser = require("body-parser");
+var bodyParser = require("body-parser"); //bodyParser trả về một function hoạt động như một middleware. Chức năng lắng nghe trên req.on (\'data\') và xây dựng req.body từ các đoạn dữ liệu mà nó nhận được.
 const morgan = require("morgan");
 const dotenv = require("dotenv");
 dotenv.config();
@@ -13,11 +13,17 @@ const taikhoanRoute = require("./routes/TaiKhoan");
 const chapterRoute = require("./routes/Chapter");
 const binhluanRoute = require("./routes/BinhLuan");
 const theloaiRoute = require("./routes/TheLoai");
-
+//model
+const { Truyen, TacGia } = require("./model/model");
 //giao diện
 const http = require("http");
 const css = require("css");
 app.use(bodyParser.json({ limit: "50mb" }));
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+);
 app.use(cors()); //CORS là một cơ chế cho phép nhiều tài nguyên khác nhau (fonts, Javascript, v.v…) của một trang web có thể được truy vấn từ domain khác với domain của trang
 app.use(morgan("common")); // khi send request sẽ thông báo dưới terminal
 
@@ -48,10 +54,26 @@ const server = http.Server(app);
 server.listen(8000, () => {
   console.log(`Server is running → PORT ${server.address().port}`);
 });
-//link dẫn
+//routes admin
 app.get("/", (req, res) => {
   res.render("HomePage");
 });
-app.get("/login", (req, res) => {
-  res.render("Login");
+//author
+app.get("/author", (req, res) => {
+  res.render("../views/author/author");
+});
+app.get("/author/:p", (req, res) => {
+  res.render("../views/author/author", { author: req.params.p });
+});
+app.post("/author/create", (req, res) => {
+  var author = new TacGia({
+    TenTacGia: req.body.TenTacGia,
+  });
+  author.save(function (err) {
+    if (err) {
+      console.log("save");
+    } else {
+      console.log("false");
+    }
+  });
 });
