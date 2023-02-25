@@ -99,10 +99,73 @@ const TaiKhoanSchema = new mongoose.Schema({
     type: [String],
   },
 });
+//=======================tạo schema Chapter=======================
+const ChapterSchema = new mongoose.Schema({
+  TenChapter: {
+    type: String,
+    required: true,
+  },
+  NgayNhap: {
+    type: Date,
+    default: new Date().toISOString(),
+    required: true,
+  },
+  TrangThai: {
+    type: Boolean,
+    default: true,
+    required: true,
+  },
+  Truyen: {
+    type: String,
+  },
+  LuotXem: {
+    type: Number,
+    default: 0,
+  },
+  LinkAnhs: {
+    type: [String],
+    required: true,
+  },
+  BinhLuans: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "BinhLuan",
+      required: true,
+    },
+  ],
+});
+//=======================tạo schema Bình luận=======================
+const BinhLuanSchema = new mongoose.Schema({
+  NoiDungBL: {
+    type: String,
+    required: true,
+  },
+  TrangThai: {
+    type: Boolean,
+    default: true,
+    required: true,
+  },
+  NgayNhap: {
+    type: Date,
+    default: new Date().toISOString(),
+    required: true,
+  },
+  //thêm vào chapter
+  Chapter: {
+    type: String,
+    required: true,
+  },
+  TaiKhoan: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "TaiKhoan",
+  },
+});
 
 //=======================tạo model=======================
 let TacGia = mongoose.model("TacGia", TacGiaSchema);
 let Truyen = mongoose.model("Truyen", TruyenSchema);
 let TaiKhoan = mongoose.model("TaiKhoan", TaiKhoanSchema);
+let Chapter = mongoose.model("Chapter", ChapterSchema);
+let BinhLuan = mongoose.model("BinhLuan", BinhLuanSchema);
 let TheLoai = mongoose.model("TheLoai", TheLoaiSchema);
-module.exports = { Truyen, TacGia, TaiKhoan, TheLoai };
+module.exports = { Truyen, TacGia, TaiKhoan, Chapter, BinhLuan, TheLoai };

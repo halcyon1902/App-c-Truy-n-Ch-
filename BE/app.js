@@ -9,9 +9,9 @@ dotenv.config();
 
 const tacgiaRoute = require("./routes/TacGia");
 const truyenRoute = require("./routes/Truyen");
-// const taikhoanRoute = require("./routes/TaiKhoan");
-// const chapterRoute = require("./routes/Chapter");
-// const binhluanRoute = require("./routes/BinhLuan");
+const taikhoanRoute = require("./routes/TaiKhoan");
+const chapterRoute = require("./routes/Chapter");
+const binhluanRoute = require("./routes/BinhLuan");
 const theloaiRoute = require("./routes/TheLoai");
 
 //giao diện
@@ -35,9 +35,9 @@ mongoose.connect(process.env.MONGODB_URL, function (err) {
 app.use("/TacGia", tacgiaRoute);
 app.use("/TheLoai", theloaiRoute);
 app.use("/Truyen", truyenRoute);
-// app.use("/TaiKhoan", taikhoanRoute);
-// app.use("/Chapter", chapterRoute);
-// app.use("/BinhLuan", binhluanRoute);
+app.use("/TaiKhoan", taikhoanRoute);
+app.use("/Chapter", chapterRoute);
+app.use("/BinhLuan", binhluanRoute);
 
 // sử dụng thư mục public
 app.use(express.static("public"));
