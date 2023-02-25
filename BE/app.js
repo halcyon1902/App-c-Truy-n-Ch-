@@ -62,10 +62,8 @@ app.get("/", (req, res) => {
 app.get("/author", (req, res) => {
   res.render("../views/author/author");
 });
-app.get("/author/:p", (req, res) => {
-  res.render("../views/author/author", { author: req.params.p });
-});
-app.post("/author/create", (req, res) => {
+app.get("/author/create", (req, res) => {
+  res.render("../views/author/addAuthor");
   var author = new TacGia({
     TenTacGia: req.body.TenTacGia,
   });
@@ -74,6 +72,18 @@ app.post("/author/create", (req, res) => {
       console.log("save");
     } else {
       console.log("false");
+    }
+  });
+});
+app.post("/author/create", (req, res) => {
+  var author = new TacGia({
+    TenTacGia: req.body.TenTacGia,
+  });
+  author.save(function (err) {
+    if (err) {
+      console.log("false");
+    } else {
+      console.log("save");
     }
   });
 });
