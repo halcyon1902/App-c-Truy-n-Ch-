@@ -14,7 +14,7 @@ const chapterRoute = require("./routes/Chapter");
 const binhluanRoute = require("./routes/BinhLuan");
 const theloaiRoute = require("./routes/TheLoai");
 //model
-const { Truyen, TacGia } = require("./model/model");
+const { Truyen, TacGia, TheLoai, Chapter, TaiKhoan } = require("./model/model");
 //giao diện
 const http = require("http");
 const css = require("css");
@@ -59,21 +59,20 @@ app.get("/", (req, res) => {
   res.render("HomePage");
 });
 //author
+// show danh sách author
 app.get("/author", (req, res) => {
-  res.render("../views/author/author");
-});
-app.get("/author/create", (req, res) => {
-  res.render("../views/author/addAuthor");
-  var author = new TacGia({
-    TenTacGia: req.body.TenTacGia,
-  });
-  author.save(function (err) {
+  TacGia.find(function (err, items) {
     if (err) {
-      console.log("save");
+      console.log(err);
+      res.render("../views/author/author", { listauthor: [] });
     } else {
-      console.log("false");
+      res.render("../views/author/author", { listauthor: items });
     }
   });
+});
+// show page tạo author
+app.get("/author/create", (req, res) => {
+  res.render("../views/author/addAuthor");
 });
 app.post("/author/create", (req, res) => {
   var author = new TacGia({
@@ -81,9 +80,41 @@ app.post("/author/create", (req, res) => {
   });
   author.save(function (err) {
     if (err) {
-      console.log("false");
+      console.log("save author error:" + err);
+      return res.render("../views/author/addAuthor", { message: "Thêm tác giả không thành công" });
     } else {
-      console.log("save");
+      console.log("save author successfully with id author :" + author._id);
+      return res.render("../views/author/addAuthor", { message: "Thêm tác giả thành công" });
+    }
+  });
+});
+//category
+// show danh sách category
+app.get("/category", (req, res) => {
+  TheLoai.find(function (err, items) {
+    if (err) {
+      console.log(err);
+      res.render("../views/category/category", { listcate: [] });
+    } else {
+      res.render("../views/category/category", { listcate: items });
+    }
+  });
+});
+// show page tạo category
+app.get("/category/create", (req, res) => {
+  res.render("../views/category/addCategory");
+});
+app.post("/category/create", (req, res) => {
+  var cate = new TheLoai({
+    TenTheLoai: req.body.TenTheLoai,
+  });
+  cate.save(function (err) {
+    if (err) {
+      console.log("save category error:" + err);
+      return res.render("../views/category/addCategory", { message: "Thêm thể loại không thành công" });
+    } else {
+      console.log("save category successfully with id category :" + cate._id);
+      return res.render("../views/category/addCategory", { message: "Thêm thể loại thành công" });
     }
   });
 });

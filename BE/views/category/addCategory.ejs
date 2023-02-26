@@ -34,22 +34,22 @@
                   <i class="flaticon-right-arrow"></i>
                 </li>
                 <li class="nav-item">
-                  <a href="/author">Danh sách tác giả</a>
+                  <a href="/category">Danh sách thể loại</a>
                 </li>
                 <li class="separator">
                   <i class="flaticon-right-arrow"></i>
                 </li>
                 <li class="nav-item">
-                  <a href="/author/add">Thêm tác giả</a>
+                  <a href="/category/create">Thêm thể loại</a>
                 </li>
               </ul>
             </div>
 
-            <form method="post" action="/author/create">
+            <form method="post" action="/category/create">
               <div class="form-group">
-                <label for="exampleInputEmail1">Tên tác giả</label>
-                <input type="text" class="form-control" name="TenTacGia" placeholder="tên tác giả..." />
-                <small class="form-text text-muted">Tên tác giả là unique</small>
+                <label for="exampleInputEmail1">Tên thể loại</label>
+                <input type="text" class="form-control" name="TenTheLoai" placeholder="tên thể loại..." />
+                <small class="form-text text-muted">Tên thể loại là unique</small>
                 <% if (typeof message !== 'undefined' ) { %>
                 <small class="form-text text-muted"><%= message %></small>
                 <% } %>

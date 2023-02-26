@@ -17,7 +17,7 @@
       <!-- Sidebar -->
       <%- include("../blocks/sidebar.ejs") %>
       <!-- End Sidebar -->
-      <!-- giao diện chính -->
+      <!-- Main board -->
       <div class="main-panel">
         <div class="content">
           <div class="page-inner">
@@ -33,55 +33,53 @@
                   <i class="flaticon-right-arrow"></i>
                 </li>
                 <li class="nav-item">
-                  <a href="/author">Danh sách tác giả</a>
+                  <a href="/category">Danh sách thể loại</a>
                 </li>
               </ul>
             </div>
-            <div class="row">
-              <div class="col-md-12">
-                <div class="card">
-                  <div class="card-header">
-                    <div class="d-flex align-items-center">
-                      <h4 class="card-title">DANH SÁCH TÁC GIẢ</h4>
-                      <button class="btn btn-primary btn-round ml-auto" onclick="location.href='/author/create'">
-                        <i class="fa fa-plus"></i>
-                        THÊM TÁC GIẢ
-                      </button>
-                    </div>
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header">
+                  <div class="d-flex align-items-center">
+                    <h4 class="card-title">DANH SÁCH THỂ LOẠI</h4>
+                    <button class="btn btn-primary btn-round ml-auto" onclick="location.href='/category/create'">
+                      <i class="fa fa-plus"></i>
+                      THÊM THỂ LOẠI
+                    </button>
                   </div>
-                  <div class="card-body">
-                    <div class="table-responsive">
-                      <table id="add-row" class="display table table-striped table-hover">
-                        <thead>
-                          <tr>
-                            <th>ID</th>
-                            <th>TÊN TÁC GIẢ</th>
-                            <th style="width: 10%">Action</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <% listauthor.forEach(function(author){ %>
-                          <tr>
-                            <td><%= author._id %></td>
-                            <td><%= author.TenTacGia %></td>
-                            <td>
-                              <div class="form-button-action">
-                                <button
-                                  type="button"
-                                  data-toggle="tooltip"
-                                  title=""
-                                  class="btn btn-link btn-primary btn-lg"
-                                  data-original-title="Edit Task"
-                                >
-                                  <i class="fa fa-edit"></i>
-                                </button>
-                              </div>
-                            </td>
-                          </tr>
-                          <% }); %>
-                        </tbody>
-                      </table>
-                    </div>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table id="add-row" class="display table table-striped table-hover">
+                      <thead>
+                        <tr>
+                          <th>ID</th>
+                          <th>TÊN THỂ LOẠI</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% listcate.forEach(function(cate){ %>
+                        <tr>
+                          <td><%= cate._id %></td>
+                          <td><%= cate.TenTheLoai %></td>
+                          <td>
+                            <div class="form-button-action">
+                              <button
+                                type="button"
+                                data-toggle="tooltip"
+                                title=""
+                                class="btn btn-link btn-primary btn-lg"
+                                data-original-title="Edit Task"
+                              >
+                                <i class="fa fa-edit"></i>
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                        <% }); %>
+                      </tbody>
+                    </table>
                   </div>
                 </div>
               </div>
@@ -104,6 +102,8 @@
     <script src="../../assets/js/plugin/datatables/datatables.min.js"></script>
     <!-- Atlantis JS -->
     <script src="../../assets/js/atlantis.min.js"></script>
+    <!-- Atlantis DEMO methods, don't include it in your project! -->
+    <script src="../../assets/js/setting-demo2.js"></script>
     <script>
       $(document).ready(function () {
         $("#basic-datatables").DataTable({});

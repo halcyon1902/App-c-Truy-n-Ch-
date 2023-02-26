@@ -1,10 +1,4 @@
-const {
-  Truyen,
-  TacGia,
-  TheLoai,
-  Chapter,
-  TaiKhoan,
-} = require("../model/model");
+const { Truyen, TacGia, TheLoai, TaiKhoan } = require("../model/model");
 const truyenController = {
   //Thêm truyện
   AddTruyen: async (req, res) => {
