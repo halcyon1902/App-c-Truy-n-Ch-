@@ -72,7 +72,7 @@ app.get("/author", (req, res) => {
 });
 // show page tạo author
 app.get("/author/create", (req, res) => {
-  res.render("../views/author/addAuthor");
+  res.render("../views/author/addAuthor", { message: 2 });
 });
 app.post("/author/create", (req, res) => {
   var author = new TacGia({
@@ -81,10 +81,10 @@ app.post("/author/create", (req, res) => {
   author.save(function (err) {
     if (err) {
       console.log("save author error:" + err);
-      return res.render("../views/author/addAuthor", { message: "Thêm tác giả không thành công" });
+      return res.render("../views/author/addAuthor", { message: 0 });
     } else {
       console.log("save author successfully with id author :" + author._id);
-      return res.render("../views/author/addAuthor", { message: "Thêm tác giả thành công" });
+      return res.render("../views/author/addAuthor", { message: 1 });
     }
   });
 });
@@ -102,7 +102,7 @@ app.get("/category", (req, res) => {
 });
 // show page tạo category
 app.get("/category/create", (req, res) => {
-  res.render("../views/category/addCategory");
+  res.render("../views/category/addCategory", { message: 2 });
 });
 app.post("/category/create", (req, res) => {
   var cate = new TheLoai({
@@ -111,10 +111,15 @@ app.post("/category/create", (req, res) => {
   cate.save(function (err) {
     if (err) {
       console.log("save category error:" + err);
-      return res.render("../views/category/addCategory", { message: "Thêm thể loại không thành công" });
+      return res.render("../views/category/addCategory", { message: 0 });
     } else {
       console.log("save category successfully with id category :" + cate._id);
-      return res.render("../views/category/addCategory", { message: "Thêm thể loại thành công" });
+      return res.render("../views/category/addCategory", { message: 1 });
     }
   });
+});
+//login
+//show page login
+app.get("/login", (req, res) => {
+  res.render("../views/login");
 });

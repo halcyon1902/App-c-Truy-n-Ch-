@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-  <!-- Head -->
-  <%- include("../blocks/head.ejs") %>
-  <!-- End Head -->
+  <head>
+    <%- include("../blocks/head.ejs") %>
+  </head>
+
   <body>
-    <div class="wrapper sidebar_minimize">
+    <div class="wrapper">
       <div class="main-header">
         <!-- Logo Header -->
         <%- include("../blocks/logoheader.ejs") %>
@@ -16,9 +17,7 @@
       </div>
       <!-- Sidebar -->
       <%- include("../blocks/sidebar.ejs") %>
-      <!-- End Sidebar -->
 
-      <!-- Main Board-->
       <div class="main-panel">
         <div class="content">
           <div class="page-inner">
@@ -44,22 +43,22 @@
                 </li>
               </ul>
             </div>
-
             <form method="post" action="/author/create">
               <div class="form-group">
                 <label for="exampleInputEmail1">Tên tác giả</label>
                 <input type="text" class="form-control" name="TenTacGia" placeholder="tên tác giả..." />
                 <small class="form-text text-muted">Tên tác giả là unique</small>
-                <% if (typeof message !== 'undefined' ) { %>
-                <small class="form-text text-muted"><%= message %></small>
-                <% } %>
+                <% if (typeof message !== 'undefined' ) { %> <% } %>
               </div>
-              <button type="submit" class="btn btn-primary">Submit</button>
+              <div class="col-lg-4 col-md-9 col-sm-12">
+                <button id="displayNotif" class="btn btn-success">Submit</button>
+              </div>
             </form>
           </div>
         </div>
       </div>
-      <!-- End Main Board-->
+
+      <!-- End Custom template -->
     </div>
     <!--   Core JS Files   -->
     <script src="../../assets/js/core/jquery.3.2.1.min.js"></script>
@@ -68,13 +67,45 @@
     <!-- jQuery UI -->
     <script src="../../assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
     <script src="../../assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
+    <!-- Bootstrap Notify -->
+    <script src="../../assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+
     <!-- jQuery Scrollbar -->
     <script src="../../assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
     <!-- Atlantis JS -->
     <script src="../../assets/js/atlantis.min.js"></script>
-
-    <script src="../assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
-    <!-- demo -->
-    <script src="../assets/js/demo.js"></script>
+    <!-- Atlantis DEMO methods, don't include it in your project! -->
+    <script src="../../assets/js/setting-demo2.js"></script>
+    <script>
+      var text = <%=message%>
+      if (text == 0) {
+        $.notify({
+          icon: "flaticon-alarm-1",
+          title: "ReadingApp",
+          message: "Thêm tác giả thất bại",
+        }, {
+          type: "danger",
+          placement: {
+            from: "top",
+            align: "center",
+          },
+          time: 1000,
+        });
+      }
+      if (text == 1) {
+        $.notify({
+          icon: "flaticon-alarm-1",
+          title: "ReadingApp",
+          message: "Thêm tác giả thành công",
+        }, {
+          type: "success",
+          placement: {
+            from: "top",
+            align: "center",
+          },
+          time: 1000,
+        });
+      }
+    </script>
   </body>
 </html>

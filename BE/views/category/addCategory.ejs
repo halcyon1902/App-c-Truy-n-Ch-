@@ -3,6 +3,7 @@
   <!-- Head -->
   <%- include("../blocks/head.ejs") %>
   <!-- End Head -->
+
   <body>
     <div class="wrapper sidebar_minimize">
       <div class="main-header">
@@ -50,11 +51,37 @@
                 <label for="exampleInputEmail1">Tên thể loại</label>
                 <input type="text" class="form-control" name="TenTheLoai" placeholder="tên thể loại..." />
                 <small class="form-text text-muted">Tên thể loại là unique</small>
-                <% if (typeof message !== 'undefined' ) { %>
-                <small class="form-text text-muted"><%= message %></small>
-                <% } %>
               </div>
-              <button type="submit" class="btn btn-primary">Submit</button>
+              <button id="displayNotif" type="submit" class="btn btn-primary">Submit</button>
+              <script>
+                $("#displayNotif").on("click", function () {
+                  var placementFrom = $("#notify_placement_from option:selected").val();
+                  var placementAlign = $("#notify_placement_align option:selected").val();
+                  var state = $("#notify_state option:selected").val();
+                  var style = $("#notify_style option:selected").val();
+                  var content = {};
+
+                  content.message = 'Turning standard Bootstrap alerts into "notify" like notifications';
+                  content.title = "Bootstrap notify";
+                  if (style == "withicon") {
+                    content.icon = "fa fa-bell";
+                  } else {
+                    content.icon = "none";
+                  }
+                  content.url = "index.html";
+                  content.target = "_blank";
+
+                  $.notify(content, {
+                    type: state,
+                    placement: {
+                      from: placementFrom,
+                      align: placementAlign,
+                    },
+                    time: 1000,
+                    delay: 0,
+                  });
+                });
+              </script>
             </form>
           </div>
         </div>
@@ -62,19 +89,53 @@
       <!-- End Main Board-->
     </div>
     <!--   Core JS Files   -->
+    <!--   Core JS Files   -->
     <script src="../../assets/js/core/jquery.3.2.1.min.js"></script>
     <script src="../../assets/js/core/popper.min.js"></script>
     <script src="../../assets/js/core/bootstrap.min.js"></script>
     <!-- jQuery UI -->
     <script src="../../assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
     <script src="../../assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
+    <!-- Bootstrap Notify -->
+    <script src="../../assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+
     <!-- jQuery Scrollbar -->
     <script src="../../assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
     <!-- Atlantis JS -->
     <script src="../../assets/js/atlantis.min.js"></script>
+    <!-- Atlantis DEMO methods, don't include it in your project! -->
+    <script src="../../assets/js/setting-demo2.js"></script>
 
-    <script src="../assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
-    <!-- demo -->
-    <script src="../assets/js/demo.js"></script>
+    <script>
+      var text = <%=message%>
+      if (text == 0) {
+        $.notify({
+          icon: "flaticon-alarm-1",
+          title: "ReadingApp",
+          message: "Thêm thể loại thất bại",
+        }, {
+          type: "danger",
+          placement: {
+            from: "top",
+            align: "center",
+          },
+          time: 1000,
+        });
+      }
+      if (text == 1) {
+        $.notify({
+          icon: "flaticon-alarm-1",
+          title: "ReadingApp",
+          message: "Thêm thể loại thành công",
+        }, {
+          type: "success",
+          placement: {
+            from: "top",
+            align: "center",
+          },
+          time: 1000,
+        });
+      }
+    </script>
   </body>
 </html>
