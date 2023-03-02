@@ -24,64 +24,106 @@
     //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 <!DOCTYPE html>
 <html lang="en">
+  <%- include("./blocks/head.ejs") %>
+  <!-- <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>ReadingApp</title>
+    <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
+    <link rel="icon" href="../assets/img/icon.ico" type="image/x-icon" />
+  </head> -->
+  <style>
+    h1 {
+      margin-bottom: -10px;
+    }
+    body {
+      display: flex;
+      justify-content: center;
+    }
+    form {
+      margin-top: 20px;
+      margin: auto;
+      display: flex;
+      flex-direction: column;
+    }
 
-<head>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>ReadingApp</title>
-  <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
-  <link rel="icon" href="../assets/img/icon.ico" type="image/x-icon" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback" />
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css" />
-  <!-- icheck bootstrap -->
-  <link rel="stylesheet" href="plugins/icheck-bootstrap/icheck-bootstrap.min.css" />
-  <!-- Theme style -->
-  <link rel="stylesheet" href="dist/css/adminlte.min.css" />
-</head>
-<style>
-  button {
-    margin-left: 90px;
-    justify-content: center;
-    align-items: center;
-  }
-</style>
-<body class="hold-transition login-page">
-  <div class="login-box">
-    <div class="card card-outline card-primary">
-      <div class="card-header text-center">
-        <a href="/" class="h1"><b>Admin</b>ReadingApp</a>
+    .input-field {
+      position: relative;
+      margin-top: 2rem;
+    }
+
+    .input-field input {
+      padding: 0.8rem;
+    }
+
+    form .input-field:first-child {
+      margin-bottom: 1.5rem;
+    }
+
+    form input[type="submit"] {
+      background: linear-gradient(to left, #4776e6, #8e54e9);
+      color: white;
+      border-radius: 4px;
+      margin-top: 2rem;
+      padding: 0.4rem;
+    }
+  </style>
+  <body>
+    <form action="/login" method="post">
+      <h1>Administrator</h1>
+      <div class="input-field">
+        <input type="text" name="TaiKhoan" id="username" placeholder="Enter Username" />
       </div>
-      <div class="card-body">
-        <p class="login-box-msg">Trang quản trị reading app</p>
-        <form action="/login" method="post">
-          <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Username" name="username" />
-            <div class="input-group-append">
-              <div class="input-group-text">
-                <span class="fas fa-envelope"></span>
-              </div>
-            </div>
-          </div>
-          <div class="input-group mb-3">
-            <input type="password" class="form-control" placeholder="Password" name="password" />
-            <div class="input-group-append">
-              <div class="input-group-text">
-                <span class="fas fa-lock"></span>
-              </div>
-            </div>
-          </div>
-          <div class="col-5">
-            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
-          </div>
-        </form>
+      <div class="input-field">
+        <input type="password" name="MatKhau" id="password" placeholder="Enter Password" />
       </div>
-    </div>
-  </div>
-  <!-- jQuery -->
-  <script src="plugins/jquery/jquery.min.js"></script>
-  <!-- Bootstrap 4 -->
-  <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <!-- AdminLTE App -->
-  <script src=public/dist/js/adminlte.min.js"></script>
-</body>
+      <input type="submit" value="LogIn" />
+    </form>
+    <!--   Core JS Files   -->
+    <script src="../assets/js/core/jquery.3.2.1.min.js"></script>
+    <script src="../assets/js/core/popper.min.js"></script>
+    <script src="../assets/js/core/bootstrap.min.js"></script>
+    <!-- jQuery UI -->
+    <script src="../assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+    <script src="../assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
+    <!-- Bootstrap Notify -->
+    <script src="../assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+
+    <!-- jQuery Scrollbar -->
+    <script src="../assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+    <!-- Atlantis JS -->
+    <script src="../assets/js/atlantis.min.js"></script>
+    <!-- Atlantis DEMO methods, don't include it in your project! -->
+    <script src="../assets/js/setting-demo2.js"></script>
+    <script>
+         var text = <%=message%>
+         if (text == 0) {
+           $.notify({
+             icon: "flaticon-alarm-1",
+             title: "ReadingApp",
+             message: "Sai mật khẩu",
+           }, {
+             type: "danger",
+             placement: {
+               from: "top",
+               align: "center",
+             },
+             time: 1000,
+           });
+         }
+      if (text == 1) {
+           $.notify({
+             icon: "flaticon-alarm-1",
+             title: "ReadingApp",
+             message: "Sai tên tài khoản",
+           }, {
+             type: "danger",
+             placement: {
+               from: "top",
+               align: "center",
+             },
+             time: 1000,
+           });
+         }
+    </script>
+  </body>
 </html>
