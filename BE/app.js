@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const app = express();
+const sessions = require("express-session");
 const mongoose = require("mongoose");
 var bodyParser = require("body-parser"); //bodyParser trả về một function hoạt động như một middleware. Chức năng lắng nghe trên req.on (\'data\') và xây dựng req.body từ các đoạn dữ liệu mà nó nhận được.
 const morgan = require("morgan");
@@ -26,7 +27,16 @@ app.use(
 );
 app.use(cors()); //CORS là một cơ chế cho phép nhiều tài nguyên khác nhau (fonts, Javascript, v.v…) của một trang web có thể được truy vấn từ domain khác với domain của trang
 app.use(morgan("common")); // khi send request sẽ thông báo dưới terminal
-
+//sử dụng session để kiểm tra login
+const oneDay = 1000;
+app.use(
+  sessions({
+    secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
+    saveUninitialized: true,
+    cookie: { maxAge: oneDay },
+    resave: false,
+  })
+);
 //kết nối database
 mongoose.set("strictQuery", false);
 mongoose.connect(process.env.MONGODB_URL, function (err) {
@@ -56,23 +66,41 @@ server.listen(8000, () => {
 });
 //routes admin
 app.get("/", (req, res) => {
-  res.render("HomePage");
+  session = req.session;
+  if (session.userid) {
+    res.render("HomePage");
+  } else {
+    console.log("Chưa đăng nhập");
+    res.redirect("/login");
+  }
 });
 //author
 // show danh sách author
 app.get("/author", (req, res) => {
-  TacGia.find(function (err, items) {
-    if (err) {
-      console.log(err);
-      res.render("../views/author/author", { listauthor: [] });
-    } else {
-      res.render("../views/author/author", { listauthor: items });
-    }
-  });
+  session = req.session;
+  if (session.userid) {
+    TacGia.find(function (err, items) {
+      if (err) {
+        console.log(err);
+        res.render("../views/author/author", { listauthor: [] });
+      } else {
+        res.render("../views/author/author", { listauthor: items });
+      }
+    });
+  } else {
+    console.log("Chưa đăng nhập");
+    res.redirect("/login");
+  }
 });
 // show page tạo author
 app.get("/author/create", (req, res) => {
-  res.render("../views/author/addAuthor", { message: 2 });
+  session = req.session;
+  if (session.userid) {
+    res.render("../views/author/addAuthor", { message: 2 });
+  } else {
+    console.log("Chưa đăng nhập");
+    res.redirect("/login");
+  }
 });
 app.post("/author/create", (req, res) => {
   var author = new TacGia({
@@ -91,18 +119,30 @@ app.post("/author/create", (req, res) => {
 //category
 // show danh sách category
 app.get("/category", (req, res) => {
-  TheLoai.find(function (err, items) {
-    if (err) {
-      console.log(err);
-      res.render("../views/category/category", { listcate: [] });
-    } else {
-      res.render("../views/category/category", { listcate: items });
-    }
-  });
+  session = req.session;
+  if (session.userid) {
+    TheLoai.find(function (err, items) {
+      if (err) {
+        console.log(err);
+        res.render("../views/category/category", { listcate: [] });
+      } else {
+        res.render("../views/category/category", { listcate: items });
+      }
+    });
+  } else {
+    console.log("Chưa đăng nhập");
+    res.redirect("/login");
+  }
 });
 // show page tạo category
 app.get("/category/create", (req, res) => {
-  res.render("../views/category/addCategory", { message: 2 });
+  session = req.session;
+  if (session.userid) {
+    res.render("../views/category/addCategory", { message: 2 });
+  } else {
+    console.log("Chưa đăng nhập");
+    res.redirect("/login");
+  }
 });
 app.post("/category/create", (req, res) => {
   var cate = new TheLoai({
@@ -120,6 +160,19 @@ app.post("/category/create", (req, res) => {
 });
 //login
 //show page login
+const myusername = "admin";
+const mypassword = "admin";
 app.get("/login", (req, res) => {
-  res.render("../views/login");
+  res.render("Login");
+});
+//api đăng nhập
+app.post("/login", (req, res) => {
+  if (req.body.username == myusername && req.body.password == mypassword) {
+    session = req.session;
+    session.userid = req.body.username;
+    console.log(req.session);
+    res.redirect("/");
+  } else {
+    res.render("Login");
+  }
 });
