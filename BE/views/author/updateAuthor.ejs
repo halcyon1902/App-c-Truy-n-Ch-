@@ -48,9 +48,10 @@
                 <label for="exampleInputEmail1">Tên tác giả</label>
                 <input type="text" class="form-control" name="TenTacGia" placeholder="tên tác giả..." />
                 <small class="form-text text-muted">Tên tác giả là unique</small>
+                <% if (typeof message !== 'undefined' ) { %> <% } %>
               </div>
               <div class="col-lg-4 col-md-9 col-sm-12">
-                <button class="btn btn-success">Create</button>
+                <button class="btn btn-success">Update</button>
                 <button class="btn btn-danger">Cancel</button>
               </div>
             </form>
@@ -76,7 +77,7 @@
     <script src="../../assets/js/atlantis.min.js"></script>
     <!-- Atlantis DEMO methods, don't include it in your project! -->
     <script src="../../assets/js/setting-demo2.js"></script>
-    <script>
+    <!-- <script>
       var text = <%=message%>
       if (text == 0) {
         $.notify({
@@ -106,6 +107,6 @@
           time: 1000,
         });
       }
-    </script>
+    </script> -->
   </body>
 </html>

@@ -18,16 +18,16 @@ const theloaiRoute = require("./routes/TheLoai");
 //model
 const { Truyen, TacGia, TheLoai, Chapter, TaiKhoan } = require("./model/model");
 //giao diện
-const http = require("http");
-const css = require("css");
 app.use(bodyParser.json({ limit: "50mb" }));
 app.use(
   bodyParser.urlencoded({
     extended: true,
   })
 );
-app.use(cors()); //CORS là một cơ chế cho phép nhiều tài nguyên khác nhau (fonts, Javascript, v.v…) của một trang web có thể được truy vấn từ domain khác với domain của trang
-app.use(morgan("common")); // khi send request sẽ thông báo dưới terminal
+//CORS là một cơ chế cho phép nhiều tài nguyên khác nhau (fonts, Javascript, v.v…) của một trang web có thể được truy vấn từ domain khác với domain của trang
+app.use(cors());
+// khi send request sẽ thông báo dưới terminal
+app.use(morgan("common"));
 //sử dụng session để kiểm tra login
 app.use(
   sessions({
@@ -41,9 +41,9 @@ app.use(
 mongoose.set("strictQuery", false);
 mongoose.connect(process.env.MONGODB_URL, function (err) {
   if (err) {
-    console.log("Connected to MongoDB fail:" + err);
+    console.log("CONNECTED TO MONGODB FAIL:" + err);
   } else {
-    console.log("Connected to MongoDB successful");
+    console.log("CONNECTED TO MONGODB SUCCESSFUL");
   }
 });
 
@@ -60,9 +60,8 @@ app.use(express.static("public"));
 app.set("view engine", "ejs");
 app.set("views", "./views");
 //kiểm tra port hoạt động ở 8000
-const server = http.Server(app);
-server.listen(8000, () => {
-  console.log(`Server is running → PORT ${server.address().port}`);
+const server = app.listen(8000, function () {
+  console.log("SERVER IS RUNNING ON http://localhost:" + server.address().port);
 });
 //routes admin
 app.get("/", (req, res) => {
@@ -80,13 +79,15 @@ app.get("/", (req, res) => {
 app.get("/author", (req, res) => {
   session = req.session;
   if (session.userid) {
-    TacGia.find(function (err, items) {
-      if (err) {
-        console.log(err);
-        res.render("../views/author/author", { listauthor: [] });
-      } else {
-        res.render("../views/author/author", { listauthor: items });
-      }
+    TaiKhoan.findOne({ TaiKhoan: session.userid }, function (err, item) {
+      TacGia.find(function (err, items) {
+        if (err) {
+          console.log(err);
+          res.render("../views/author/author", { listauthor: [], item });
+        } else {
+          res.render("../views/author/author", { listauthor: items, item });
+        }
+      });
     });
   } else {
     console.log("Chưa đăng nhập");
@@ -97,7 +98,9 @@ app.get("/author", (req, res) => {
 app.get("/author/create", (req, res) => {
   session = req.session;
   if (session.userid) {
-    res.render("../views/author/addAuthor", { message: 2 });
+    TaiKhoan.findOne({ TaiKhoan: session.userid }, function (err, item) {
+      res.render("../views/author/addAuthor", { message: 2, item });
+    });
   } else {
     console.log("Chưa đăng nhập");
     res.redirect("/login");
@@ -107,28 +110,47 @@ app.post("/author/create", (req, res) => {
   var author = new TacGia({
     TenTacGia: req.body.TenTacGia,
   });
-  author.save(function (err) {
-    if (err) {
-      console.log("save author error:" + err);
-      return res.render("../views/author/addAuthor", { message: 0 });
-    } else {
-      console.log("save author successfully with id author :" + author._id);
-      return res.render("../views/author/addAuthor", { message: 1 });
-    }
-  });
+  if (session.userid) {
+    TaiKhoan.findOne({ TaiKhoan: session.userid }, function (err, item) {
+      author.save(function (err) {
+        if (err) {
+          console.log("save author error:" + err);
+          return res.render("../views/author/addAuthor", { message: 0, item });
+        } else {
+          console.log("save author successfully with id author :" + author._id);
+          return res.render("../views/author/addAuthor", { message: 1, item });
+        }
+      });
+    });
+  }
 });
+//show page update author
+app.get("/author/update", (req, res) => {
+  session = req.session;
+  if (session.userid) {
+    TaiKhoan.findOne({ TaiKhoan: session.userid }, function (err, item) {
+      res.render("../views/author/updateAuthor", { message: 2, item });
+    });
+  } else {
+    console.log("Chưa đăng nhập");
+    res.redirect("/login");
+  }
+});
+app.po;
 //category
 // show danh sách category
 app.get("/category", (req, res) => {
   session = req.session;
   if (session.userid) {
-    TheLoai.find(function (err, items) {
-      if (err) {
-        console.log(err);
-        res.render("../views/category/category", { listcate: [] });
-      } else {
-        res.render("../views/category/category", { listcate: items });
-      }
+    TaiKhoan.findOne({ TaiKhoan: session.userid }, function (err, item) {
+      TheLoai.find(function (err, items) {
+        if (err) {
+          console.log(err);
+          res.render("../views/category/category", { listcate: [], item });
+        } else {
+          res.render("../views/category/category", { listcate: items, item });
+        }
+      });
     });
   } else {
     console.log("Chưa đăng nhập");
@@ -139,9 +161,10 @@ app.get("/category", (req, res) => {
 app.get("/category/create", (req, res) => {
   session = req.session;
   if (session.userid) {
-    res.render("../views/category/addCategory", { message: 2 });
+    TaiKhoan.findOne({ TaiKhoan: session.userid }, function (err, item) {
+      res.render("../views/category/addCategory", { message: 2, item });
+    });
   } else {
-    console.log("Chưa đăng nhập");
     res.redirect("/login");
   }
 });
@@ -149,14 +172,16 @@ app.post("/category/create", (req, res) => {
   var cate = new TheLoai({
     TenTheLoai: req.body.TenTheLoai,
   });
-  cate.save(function (err) {
-    if (err) {
-      console.log("save category error:" + err);
-      res.render("../views/category/addCategory", { message: 0 });
-    } else {
-      console.log("save category successfully with id category :" + cate._id);
-      res.render("../views/category/addCategory", { message: 1 });
-    }
+  TaiKhoan.findOne({ TaiKhoan: session.userid }, function (err, item) {
+    cate.save(function (err) {
+      if (err) {
+        console.log("save category error:" + err);
+        res.render("../views/category/addCategory", { message: 0, item });
+      } else {
+        console.log("save category successfully with id category :" + cate._id);
+        res.render("../views/category/addCategory", { message: 1, item });
+      }
+    });
   });
 });
 //login
@@ -164,19 +189,31 @@ app.post("/category/create", (req, res) => {
 const myusername = "admin";
 const mypassword = "admin";
 app.get("/login", (req, res) => {
-  //2 là bình thường
-  res.render("Login", { message: 2 });
+  session = req.session;
+  if (session.userid) {
+    res.redirect("/");
+  } else {
+    //2 là bình thường
+    res.render("Login", { message: 2 });
+  }
 });
 //api đăng nhập
 app.post("/login", (req, res) => {
   TaiKhoan.findOne({ TaiKhoan: req.body.TaiKhoan }, async function (err, item) {
     if (!err && item != null) {
       const valid = await bcrypt.compare(req.body.MatKhau, item.MatKhau);
+      const role = item.PhanQuyen;
+      const status = item.TrangThai;
       if (valid) {
         // đúng mật khẩu
-        session = req.session;
-        session.userid = req.body.TaiKhoan;
-        res.redirect("/");
+        if (role && status) {
+          session = req.session;
+          session.userid = req.body.TaiKhoan;
+          res.redirect("/");
+        } else {
+          //không có quyền truy cập
+          res.render("Login", { message: 3 });
+        }
       } else {
         //sai mật khẩu là 0
         res.render("Login", { message: 0 });
