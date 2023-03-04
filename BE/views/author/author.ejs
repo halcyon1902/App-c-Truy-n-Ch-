@@ -67,7 +67,14 @@
                             <td><%= author.TenTacGia %></td>
                             <td>
                               <div class="form-button-action">
-                                <button onclick="location.href='/author/update'" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
+                                <button
+                                  onclick="location.href='/author/update/<%= author._id %>'"
+                                  type="button"
+                                  data-toggle="tooltip"
+                                  title=""
+                                  class="btn btn-link btn-primary btn-lg"
+                                  data-original-title="Edit Task"
+                                >
                                   <i class="fa fa-edit"></i>
                                 </button>
                               </div>

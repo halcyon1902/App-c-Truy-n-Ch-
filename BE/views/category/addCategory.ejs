@@ -49,39 +49,10 @@
             <form method="post" action="/category/create">
               <div class="form-group">
                 <label for="exampleInputEmail1">Tên thể loại</label>
-                <input type="text" class="form-control" name="TenTheLoai" placeholder="tên thể loại..." />
+                <input required="required" type="text" class="form-control" name="TenTheLoai" placeholder="tên thể loại..." />
                 <small class="form-text text-muted">Tên thể loại là unique</small>
               </div>
-              <button id="displayNotif" type="submit" class="btn btn-primary">Submit</button>
-              <script>
-                $("#displayNotif").on("click", function () {
-                  var placementFrom = $("#notify_placement_from option:selected").val();
-                  var placementAlign = $("#notify_placement_align option:selected").val();
-                  var state = $("#notify_state option:selected").val();
-                  var style = $("#notify_style option:selected").val();
-                  var content = {};
-
-                  content.message = 'Turning standard Bootstrap alerts into "notify" like notifications';
-                  content.title = "Bootstrap notify";
-                  if (style == "withicon") {
-                    content.icon = "fa fa-bell";
-                  } else {
-                    content.icon = "none";
-                  }
-                  content.url = "index.html";
-                  content.target = "_blank";
-
-                  $.notify(content, {
-                    type: state,
-                    placement: {
-                      from: placementFrom,
-                      align: placementAlign,
-                    },
-                    time: 1000,
-                    delay: 0,
-                  });
-                });
-              </script>
+              <button type="submit" class="btn btn-primary">Create</button>
             </form>
           </div>
         </div>

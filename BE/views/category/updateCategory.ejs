@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <%- include("../blocks/head.ejs") %>
-  </head>
+  <!-- Head -->
+  <%- include("../blocks/head.ejs") %>
+  <!-- End Head -->
 
   <body>
-    <div class="wrapper">
+    <div class="wrapper sidebar_minimize">
       <div class="main-header">
         <!-- Logo Header -->
         <%- include("../blocks/logoheader.ejs") %>
@@ -17,7 +17,9 @@
       </div>
       <!-- Sidebar -->
       <%- include("../blocks/sidebar.ejs") %>
+      <!-- End Sidebar -->
 
+      <!-- Main Board-->
       <div class="main-panel">
         <div class="content">
           <div class="page-inner">
@@ -33,32 +35,58 @@
                   <i class="flaticon-right-arrow"></i>
                 </li>
                 <li class="nav-item">
-                  <a href="/author">Danh sách tác giả</a>
+                  <a href="/category">Danh sách thể loại</a>
                 </li>
                 <li class="separator">
                   <i class="flaticon-right-arrow"></i>
                 </li>
                 <li class="nav-item">
-                  <a href="/author/add">Thêm tác giả</a>
+                  <a href="/category/create">Thêm thể loại</a>
                 </li>
               </ul>
             </div>
-            <form method="post" action="/author/create">
+
+            <form method="put" action="/category/update/">
               <div class="form-group">
-                <label for="exampleInputEmail1">Tên tác giả</label>
-                <input required="required" type="text" class="form-control" name="TenTacGia" placeholder="tên tác giả..." />
-                <small class="form-text text-muted">Tên tác giả là unique</small>
+                <label for="exampleInputEmail1">Tên thể loại</label>
+                <input required="required" type="text" class="form-control" name="TenTheLoai" placeholder="tên thể loại..." />
+                <small class="form-text text-muted">Tên thể loại là unique</small>
               </div>
-              <div class="col-lg-4 col-md-9 col-sm-12">
-                <button class="btn btn-success">Create</button>
-                <button class="btn btn-danger">Cancel</button>
-              </div>
+              <button id="displayNotif" type="submit" class="btn btn-primary">Submit</button>
+              <script>
+                $("#displayNotif").on("click", function () {
+                  var placementFrom = $("#notify_placement_from option:selected").val();
+                  var placementAlign = $("#notify_placement_align option:selected").val();
+                  var state = $("#notify_state option:selected").val();
+                  var style = $("#notify_style option:selected").val();
+                  var content = {};
+
+                  content.message = 'Turning standard Bootstrap alerts into "notify" like notifications';
+                  content.title = "Bootstrap notify";
+                  if (style == "withicon") {
+                    content.icon = "fa fa-bell";
+                  } else {
+                    content.icon = "none";
+                  }
+                  content.url = "index.html";
+                  content.target = "_blank";
+
+                  $.notify(content, {
+                    type: state,
+                    placement: {
+                      from: placementFrom,
+                      align: placementAlign,
+                    },
+                    time: 1000,
+                    delay: 0,
+                  });
+                });
+              </script>
             </form>
           </div>
         </div>
       </div>
-
-      <!-- End Custom template -->
+      <!-- End Main Board-->
     </div>
     <!--   Core JS Files   -->
     <script src="../../assets/js/core/jquery.3.2.1.min.js"></script>
@@ -76,13 +104,14 @@
     <script src="../../assets/js/atlantis.min.js"></script>
     <!-- Atlantis DEMO methods, don't include it in your project! -->
     <script src="../../assets/js/setting-demo2.js"></script>
+
     <script>
       var text = <%=message%>
       if (text == 0) {
         $.notify({
           icon: "flaticon-alarm-1",
           title: "ReadingApp",
-          message: "Thêm tác giả thất bại",
+          message: "Thêm thể loại thất bại",
         }, {
           type: "danger",
           placement: {
@@ -96,7 +125,7 @@
         $.notify({
           icon: "flaticon-alarm-1",
           title: "ReadingApp",
-          message: "Thêm tác giả thành công",
+          message: "Thêm thể loại thành công",
         }, {
           type: "success",
           placement: {

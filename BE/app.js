@@ -124,8 +124,8 @@ app.post("/author/create", (req, res) => {
     });
   }
 });
-//show page update author
-app.get("/author/update", (req, res) => {
+//show page update author with id
+app.get("/author/update/:id", (req, res) => {
   session = req.session;
   if (session.userid) {
     TaiKhoan.findOne({ TaiKhoan: session.userid }, function (err, item) {
@@ -136,7 +136,6 @@ app.get("/author/update", (req, res) => {
     res.redirect("/login");
   }
 });
-app.po;
 //category
 // show danh sách category
 app.get("/category", (req, res) => {
@@ -184,10 +183,19 @@ app.post("/category/create", (req, res) => {
     });
   });
 });
+//show page update category
+app.get("/category/update/(:id)", (req, res) => {
+  session = req.session;
+  if (session.userid) {
+    TaiKhoan.findOne({ TaiKhoan: session.userid }, function (err, item) {
+      res.render("../views/category/updateCategory", { message: 2, item });
+    });
+  } else {
+    res.redirect("/login");
+  }
+});
 //login
 //show page login
-const myusername = "admin";
-const mypassword = "admin";
 app.get("/login", (req, res) => {
   session = req.session;
   if (session.userid) {
