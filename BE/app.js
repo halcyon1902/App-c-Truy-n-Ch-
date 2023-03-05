@@ -129,12 +129,28 @@ app.get("/author/update/:id", (req, res) => {
   session = req.session;
   if (session.userid) {
     TaiKhoan.findOne({ TaiKhoan: session.userid }, function (err, item) {
-      res.render("../views/author/updateAuthor", { message: 2, item });
+      TacGia.findById(req.params.id, function (error, author) {
+        if (error) {
+        } else {
+          res.render("../views/author/updateAuthor", { message: 2, item, author });
+        }
+      });
     });
   } else {
     console.log("Chưa đăng nhập");
     res.redirect("/login");
   }
+});
+//update author
+app.post("/author/update/:id", (req, res) => {
+  var update = { TenTacGia: req.body.TenTacGia };
+  TacGia.findByIdAndUpdate(req.params.id, update, function (err, item) {
+    if (err) {
+      res.render("../views/author/updateAuthor", { message: 0, item, author });
+    } else {
+      res.redirect("/author");
+    }
+  });
 });
 //category
 // show danh sách category
