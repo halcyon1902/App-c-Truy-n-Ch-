@@ -129,12 +129,28 @@ app.get("/author/update/:id", (req, res) => {
   session = req.session;
   if (session.userid) {
     TaiKhoan.findOne({ TaiKhoan: session.userid }, function (err, item) {
-      res.render("../views/author/updateAuthor", { message: 2, item });
+      TacGia.findById(req.params.id, function (error, author) {
+        if (error) {
+        } else {
+          res.render("../views/author/updateAuthor", { message: 2, item, author });
+        }
+      });
     });
   } else {
     console.log("Chưa đăng nhập");
     res.redirect("/login");
   }
+});
+//update author
+app.post("/author/update/:id", (req, res) => {
+  var update = { TenTacGia: req.body.TenTacGia };
+  TacGia.findByIdAndUpdate(req.params.id, update, function (err, item) {
+    if (err) {
+      res.render("../views/author/updateAuthor", { message: 0, item });
+    } else {
+      res.redirect("/author");
+    }
+  });
 });
 //category
 // show danh sách category
@@ -183,16 +199,33 @@ app.post("/category/create", (req, res) => {
     });
   });
 });
-//show page update category
-app.get("/category/update/(:id)", (req, res) => {
+//show page update author with id
+app.get("/category/update/:id", (req, res) => {
   session = req.session;
   if (session.userid) {
     TaiKhoan.findOne({ TaiKhoan: session.userid }, function (err, item) {
-      res.render("../views/category/updateCategory", { message: 2, item });
+      TheLoai.findById(req.params.id, function (error, cate) {
+        if (error) {
+        } else {
+          res.render("../views/category/updateCategory", { message: 2, item, cate });
+        }
+      });
     });
   } else {
+    console.log("Chưa đăng nhập");
     res.redirect("/login");
   }
+});
+//update author
+app.post("/category/update/:id", (req, res) => {
+  var update = { TenTheLoai: req.body.TenTheLoai };
+  TheLoai.findByIdAndUpdate(req.params.id, update, function (err, item) {
+    if (err) {
+      res.render("../views/category/updateCategory", { message: 0, item });
+    } else {
+      res.redirect("/category");
+    }
+  });
 });
 //login
 //show page login
