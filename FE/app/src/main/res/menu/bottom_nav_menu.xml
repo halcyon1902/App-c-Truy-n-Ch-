@@ -1,19 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/navigation_home"
+        android:id="@+id/menu_trangchu"
         android:icon="@drawable/ic_home_black_24dp"
-        android:title="@string/title_home" />
+        android:title="@string/title_trangchu"
+        app:showAsAction="always" />
 
     <item
-        android:id="@+id/navigation_dashboard"
-        android:icon="@drawable/ic_dashboard_black_24dp"
-        android:title="@string/title_dashboard" />
+        android:id="@+id/menu_theodoi"
+        android:icon="@drawable/ic_favorite_black"
+        android:title="@string/title_theodoi"
+        app:showAsAction="always" />
 
     <item
-        android:id="@+id/navigation_notifications"
-        android:icon="@drawable/ic_notifications_black_24dp"
-        android:title="@string/title_notifications" />
+        android:id="@+id/menu_bhx"
+        android:icon="@drawable/baseline_star_rate_24"
+        android:title="@string/title_bxh"
+        app:showAsAction="always" />
 
+    <item
+        android:id="@+id/menu_taikhoan"
+        android:icon="@drawable/baseline_person_24"
+        android:title="@string/title_taikhoan"
+        app:showAsAction="always" />
 </menu>
