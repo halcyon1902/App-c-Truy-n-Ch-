@@ -54,7 +54,6 @@ app.use("/Truyen", truyenRoute);
 app.use("/TaiKhoan", taikhoanRoute);
 app.use("/Chapter", chapterRoute);
 app.use("/BinhLuan", binhluanRoute);
-
 // sử dụng thư mục public
 app.use(express.static(__dirname + "/public"));
 app.set("view engine", "ejs");
@@ -137,7 +136,6 @@ app.get("/author/update/:id", (req, res) => {
       });
     });
   } else {
-    console.log("Chưa đăng nhập");
     res.redirect("/login");
   }
 });
@@ -168,7 +166,6 @@ app.get("/category", (req, res) => {
       });
     });
   } else {
-    console.log("Chưa đăng nhập");
     res.redirect("/login");
   }
 });
@@ -199,7 +196,7 @@ app.post("/category/create", (req, res) => {
     });
   });
 });
-//show page update author with id
+//show page update thể loại with id
 app.get("/category/update/:id", (req, res) => {
   session = req.session;
   if (session.userid) {
@@ -212,11 +209,10 @@ app.get("/category/update/:id", (req, res) => {
       });
     });
   } else {
-    console.log("Chưa đăng nhập");
     res.redirect("/login");
   }
 });
-//update author
+//update thể loại
 app.post("/category/update/:id", (req, res) => {
   var update = { TenTheLoai: req.body.TenTheLoai };
   TheLoai.findByIdAndUpdate(req.params.id, update, function (err, item) {
@@ -226,6 +222,36 @@ app.post("/category/update/:id", (req, res) => {
       res.redirect("/category");
     }
   });
+});
+//user
+//show page user
+app.get("/user", (req, res) => {
+  session = req.session;
+  if (session.userid) {
+    TaiKhoan.findOne({ TaiKhoan: session.userid }, function (err, item) {
+      TaiKhoan.find(function (err, items) {
+        if (err) {
+          console.log(err);
+          res.render("../views/user/user", { listuser: [], item });
+        } else {
+          res.render("../views/user/user", { listuser: items, item });
+        }
+      });
+    });
+  } else {
+    res.redirect("/login");
+  }
+});
+//show page tạo user
+app.get("/user/create", (req, res) => {
+  session = req.session;
+  if (session.userid) {
+    TaiKhoan.findOne({ TaiKhoan: session.userid }, function (err, item) {
+      res.render("../views/user/addUser", { message: 2, item });
+    });
+  } else {
+    res.redirect("/login");
+  }
 });
 //login
 //show page login
@@ -238,7 +264,6 @@ app.get("/login", (req, res) => {
     res.render("Login", { message: 2 });
   }
 });
-//api đăng nhập
 app.post("/login", (req, res) => {
   TaiKhoan.findOne({ TaiKhoan: req.body.TaiKhoan }, async function (err, item) {
     if (!err && item != null) {
@@ -265,3 +290,14 @@ app.post("/login", (req, res) => {
     }
   });
 });
+//logout
+app.get('/logout', (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.redirect('/');
+    }
+  });
+});
+
