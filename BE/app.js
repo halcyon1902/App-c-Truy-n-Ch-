@@ -8,13 +8,13 @@ const morgan = require("morgan");
 const dotenv = require("dotenv");
 const bcrypt = require("bcrypt");
 dotenv.config();
-
 const tacgiaRoute = require("./routes/TacGia");
 const truyenRoute = require("./routes/Truyen");
 const taikhoanRoute = require("./routes/TaiKhoan");
 const chapterRoute = require("./routes/Chapter");
 const binhluanRoute = require("./routes/BinhLuan");
 const theloaiRoute = require("./routes/TheLoai");
+
 //model
 const { Truyen, TacGia, TheLoai, Chapter, TaiKhoan } = require("./model/model");
 //giao diện
@@ -24,6 +24,7 @@ app.use(
     extended: true,
   })
 );
+
 //CORS là một cơ chế cho phép nhiều tài nguyên khác nhau (fonts, Javascript, v.v…) của một trang web có thể được truy vấn từ domain khác với domain của trang
 app.use(cors());
 // khi send request sẽ thông báo dưới terminal
@@ -46,7 +47,6 @@ mongoose.connect(process.env.MONGODB_URL, function (err) {
     console.log("CONNECTED TO MONGODB SUCCESSFUL");
   }
 });
-
 //Routes
 app.use("/TacGia", tacgiaRoute);
 app.use("/TheLoai", theloaiRoute);
@@ -234,7 +234,12 @@ app.get("/user", (req, res) => {
           console.log(err);
           res.render("../views/user/user", { listuser: [], item });
         } else {
-          res.render("../views/user/user", { listuser: items, item });
+          //không thể lấy ra admin tổng
+          var nonAdminUsers = items.filter(function (user) {
+            return user.TaiKhoan !== "admin";
+          });
+          console.log(nonAdminUsers);
+          res.render("../views/user/user", { listuser: nonAdminUsers, item });
         }
       });
     });
@@ -248,6 +253,21 @@ app.get("/user/create", (req, res) => {
   if (session.userid) {
     TaiKhoan.findOne({ TaiKhoan: session.userid }, function (err, item) {
       res.render("../views/user/addUser", { message: 2, item });
+    });
+  } else {
+    res.redirect("/login");
+  }
+});
+//show page xem admin
+app.get("/admin/update", (req, res) => {
+  session = req.session;
+  if (session.userid) {
+    TaiKhoan.findOne({ TaiKhoan: session.userid }, function (err, item) {
+      if (err) {
+        console.log(err);
+      } else {
+        res.render("../views/user/currentAdmin", { item });
+      }
     });
   } else {
     res.redirect("/login");
@@ -291,13 +311,12 @@ app.post("/login", (req, res) => {
   });
 });
 //logout
-app.get('/logout', (req, res) => {
+app.get("/logout", (req, res) => {
   req.session.destroy((err) => {
     if (err) {
       console.log(err);
     } else {
-      res.redirect('/');
+      res.redirect("/");
     }
   });
 });
-
