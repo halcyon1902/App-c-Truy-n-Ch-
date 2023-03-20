@@ -49,20 +49,12 @@
                   <div class="card-header">
                     <div class="d-flex align-items-center">
                       <h4 class="card-title">DANH SÁCH TÀI KHOẢN</h4>
-                      <button
-                        class="btn btn-primary btn-round ml-auto"
-                        onclick="location.href='/user/create'"
-                      >
-                        <i class="fa fa-plus"></i>THÊM TÀI KHOẢN
-                      </button>
+                      <button class="btn btn-primary btn-round ml-auto" onclick="location.href='/user/create'"><i class="fa fa-plus"></i>THÊM TÀI KHOẢN</button>
                     </div>
                   </div>
                   <div class="card-body">
                     <div class="table-responsive">
-                      <table
-                        id="add-row"
-                        class="display table table-striped table-hover"
-                      >
+                      <table id="add-row" class="display table table-striped table-hover">
                         <thead>
                           <tr class="centered">
                             <th>ID</th>
@@ -74,8 +66,7 @@
                           </tr>
                         </thead>
                         <tbody class="centered">
-                          <% listuser.forEach(function(user){ %>
-                          <%if(user.PhanQuyen==true ||user.PhanQuyen==false){ %>
+                          <% listuser.forEach(function(user){ %> <%if(user.PhanQuyen==true ||user.PhanQuyen==false){ %>
                           <tr>
                             <td><%= user._id %></td>
                             <td><%= user.TaiKhoan %></td>
@@ -88,20 +79,10 @@
                             <% } else { %>
                             <td style="color: red">User</td>
                             <% } %>
-                            <td>
-                              <%= (new
-                              Date(user.NgayTao)).toLocaleDateString('en-GB') %>
-                            </td>
+                            <td><%= (new Date(user.NgayTao)).toLocaleDateString('en-GB') %></td>
                             <td>
                               <div class="form-button-action">
-                                <button
-                                  onclick="location.href='/user/update/<%= user._id %>'"
-                                  type="button"
-                                  data-toggle="tooltip"
-                                  title=""
-                                  class="btn btn-link btn-primary btn-lg"
-                                  data-original-title="Edit Task"
-                                >
+                                <button onclick="location.href='/user/update/<%= user._id %>'" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
                                   <i class="fa fa-edit"></i>
                                 </button>
                               </div>
@@ -147,15 +128,11 @@
               .columns()
               .every(function () {
                 var column = this;
-                var select = $(
-                  '<select class="form-control"><option value=""></option></select>'
-                )
+                var select = $('<select class="form-control"><option value=""></option></select>')
                   .appendTo($(column.footer()).empty())
                   .on("change", function () {
                     var val = $.fn.dataTable.util.escapeRegex($(this).val());
-                    column
-                      .search(val ? "^" + val + "$" : "", true, false)
-                      .draw();
+                    column.search(val ? "^" + val + "$" : "", true, false).draw();
                   });
 
                 column
@@ -163,9 +140,7 @@
                   .unique()
                   .sort()
                   .each(function (d, j) {
-                    select.append(
-                      '<option value="' + d + '">' + d + "</option>"
-                    );
+                    select.append('<option value="' + d + '">' + d + "</option>");
                   });
               });
           },

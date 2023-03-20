@@ -38,6 +38,7 @@ app.use(
     resave: true,
   })
 );
+//#region database và port
 //kết nối database
 mongoose.set("strictQuery", false);
 mongoose.connect(process.env.MONGODB_URL, function (err) {
@@ -47,33 +48,25 @@ mongoose.connect(process.env.MONGODB_URL, function (err) {
     console.log("CONNECTED TO MONGODB SUCCESSFUL");
   }
 });
-//Routes
+//kiểm tra port hoạt động ở 8000
+const server = app.listen(8000, function () {
+  console.log("SERVER IS RUNNING ON http://localhost:" + server.address().port);
+});
+//#endregion
+//#region routes
 app.use("/TacGia", tacgiaRoute);
 app.use("/TheLoai", theloaiRoute);
 app.use("/Truyen", truyenRoute);
 app.use("/TaiKhoan", taikhoanRoute);
 app.use("/Chapter", chapterRoute);
 app.use("/BinhLuan", binhluanRoute);
-// sử dụng thư mục public
+//#endregion
+//#region view engine
 app.use(express.static(__dirname + "/public"));
 app.set("view engine", "ejs");
 app.set("views", "./views");
-//kiểm tra port hoạt động ở 8000
-const server = app.listen(8000, function () {
-  console.log("SERVER IS RUNNING ON http://localhost:" + server.address().port);
-});
-//routes admin
-app.get("/", (req, res) => {
-  session = req.session;
-  if (session.userid) {
-    TaiKhoan.findOne({ TaiKhoan: session.userid }, function (err, item) {
-      res.render("HomePage", { item });
-    });
-  } else {
-    res.redirect("/login");
-  }
-});
-//author
+//#endregion
+//#region author
 // show danh sách author
 app.get("/author", (req, res) => {
   session = req.session;
@@ -150,8 +143,35 @@ app.post("/author/update/:id", (req, res) => {
     }
   });
 });
-//category
-// show danh sách category
+//#endregion
+//#region admin
+//trang chủ
+app.get("/", (req, res) => {
+  session = req.session;
+  if (session.userid) {
+    TaiKhoan.findOne({ TaiKhoan: session.userid }, function (err, item) {
+      res.render("HomePage", { item });
+    });
+  } else {
+    res.redirect("/login");
+  }
+});
+//show page xem admin
+app.get("/admin/update", (req, res) => {
+  session = req.session;
+  if (session.userid) {
+    TaiKhoan.findOne({ TaiKhoan: session.userid }, function (err, item) {
+      if (err) {
+        console.log(err);
+      } else {
+        res.render("../views/user/currentAdmin", { item });
+      }
+    });
+  }
+});
+//#endregion
+//#region category
+//show page danh sách category
 app.get("/category", (req, res) => {
   session = req.session;
   if (session.userid) {
@@ -223,7 +243,8 @@ app.post("/category/update/:id", (req, res) => {
     }
   });
 });
-//user
+//#endregion
+//#region user
 //show page user
 app.get("/user", (req, res) => {
   session = req.session;
@@ -258,22 +279,54 @@ app.get("/user/create", (req, res) => {
     res.redirect("/login");
   }
 });
-//show page xem admin
-app.get("/admin/update", (req, res) => {
+app.post("/user/create", function (req, res) {
+  session = req.session;
+  if (session.userid) {
+    TaiKhoan.findOne({ TaiKhoan: session.userid }, async function (err, item) {
+      try {
+        if (req.body.MatKhau != req.body.XacNhanMatKhau) {
+          //thông báo xác nhận mật khẩu sai
+          res.render("../views/user/addUser", { message: 1, item });
+        }
+        const salt = await bcrypt.genSalt(10);
+        const hashed = await bcrypt.hash(req.body.MatKhau, salt);
+        //tạo tài khoản mới
+        var user = new TaiKhoan({
+          TaiKhoan: req.body.TaiKhoan,
+          MatKhau: hashed,
+          HoTen: req.body.HoTen,
+          Email: req.body.Email,
+          PhanQuyen: req.body.isAdmin,
+          TrangThai: req.body.isActive,
+        });
+        //lưu vào database
+        await user.save();
+        res.redirect("/user");
+      } catch (err) {
+        res.render("../views/user/addUser", { message: 0, item });
+      }
+    });
+  }
+});
+//show page update user
+app.get("/user/update/:id", (req, res) => {
   session = req.session;
   if (session.userid) {
     TaiKhoan.findOne({ TaiKhoan: session.userid }, function (err, item) {
-      if (err) {
-        console.log(err);
-      } else {
-        res.render("../views/user/currentAdmin", { item });
-      }
+      TaiKhoan.findById(req.params.id, function (error, user) {
+        if (error) {
+        } else {
+          //2 là thông báo bình thường
+          res.render("../views/user/updateUser", { message: 2, item, user });
+        }
+      });
     });
   } else {
     res.redirect("/login");
   }
 });
-//login
+//#endregion
+//#region login
 //show page login
 app.get("/login", (req, res) => {
   session = req.session;
@@ -320,3 +373,24 @@ app.get("/logout", (req, res) => {
     }
   });
 });
+//#endregion
+//#region story
+//show page danh sách story
+app.get("/story", (req, res) => {
+  session = req.session;
+  if (session.userid) {
+    TaiKhoan.findOne({ TaiKhoan: session.userid }, function (err, item) {
+      Truyen.find(function (err, items) {
+        if (err) {
+          console.log(err);
+          res.render("../views/story/story", { list: [], item });
+        } else {
+          res.render("../views/story/story", { list: items, item });
+        }
+      });
+    });
+  } else {
+    res.redirect("/login");
+  }
+});
+//#endregion

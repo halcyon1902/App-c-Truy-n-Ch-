@@ -77,7 +77,7 @@
     <!-- Atlantis DEMO methods, don't include it in your project! -->
     <script src="../../assets/js/setting-demo2.js"></script>
     <script>
-      var text = <%=message%>
+      var text = '<%= message %>';
       if (text == 0) {
         $.notify({
           icon: "flaticon-alarm-1",

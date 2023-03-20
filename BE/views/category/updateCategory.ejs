@@ -56,20 +56,23 @@
     <script src="../../assets/js/setting-demo2.js"></script>
 
     <script>
-      var text = <%=message%>
+      var text = "<%= message %>";
       if (text == 0) {
-        $.notify({
-          icon: "flaticon-alarm-1",
-          title: "ReadingApp",
-          message: "Cập nhật tác giả thất bại",
-        }, {
-          type: "danger",
-          placement: {
-            from: "top",
-            align: "center",
+        $.notify(
+          {
+            icon: "flaticon-alarm-1",
+            title: "ReadingApp",
+            message: "Cập nhật tác giả thất bại",
           },
-          time: 1000,
-        });
+          {
+            type: "danger",
+            placement: {
+              from: "top",
+              align: "center",
+            },
+            time: 1000,
+          }
+        );
       }
     </script>
   </body>

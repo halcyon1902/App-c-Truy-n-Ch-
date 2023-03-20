@@ -40,7 +40,7 @@
                 <i class="flaticon-right-arrow"></i>
               </li>
               <li class="nav-item">
-                <a href="/category">Danh sách thể loại</a>
+                <a href="/category">Danh sách truyện</a>
               </li>
             </ul>
           </div>
@@ -48,10 +48,10 @@
             <div class="card">
               <div class="card-header">
                 <div class="d-flex align-items-center">
-                  <h4 class="card-title">DANH SÁCH THỂ LOẠI</h4>
+                  <h4 class="card-title">DANH SÁCH TRUYỆN</h4>
                   <button class="btn btn-primary btn-round ml-auto" onclick="location.href='/category/create'">
                     <i class="fa fa-plus"></i>
-                    THÊM THỂ LOẠI
+                    Thêm truyện
                   </button>
                 </div>
               </div>
@@ -61,19 +61,35 @@
                     <thead>
                       <tr class="centered">
                         <th>ID</th>
-                        <th>TÊN THỂ LOẠI</th>
+                        <th>TÊN TRUYỆN</th>
+                        <th>TÌNH TRẠNG</th>
+                        <th>TRẠNG THÁI</th>
                         <th>Action</th>
                       </tr>
                     </thead>
                     <tbody class="centered">
-                      <% listcate.forEach(function(cate){ %>
+                      <% list.forEach(function(story){ %>
                       <tr>
-                        <td><%= cate._id %></td>
-                        <td><%= cate.TenTheLoai %></td>
+                        <td><%= story._id %></td>
+                        <td><%= story.TenTruyen %></td>
+                        <% if(story.TinhTrang==true) { %>
+                        <td style="color: green">Hoàn thành</td>
+                        <% } else { %>
+                        <td style="color: red">Chưa hoàn thành</td>
+                        <% } %> <% if(story.TrangThai==true) { %>
+                        <td style="color: green">Đã kích hoạt</td>
+                        <% } else { %>
+                        <td style="color: red">Chưa kích hoạt</td>
+                        <% } %>
                         <td>
                           <div class="form-button-action">
-                            <button onclick="location.href='/category/update/<%= cate._id %>'" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Chỉnh sửa">
+                            <button onclick="location.href='/category/update/<%= story._id %>'" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Chỉnh sửa">
                               <i class="fa fa-edit"></i>
+                            </button>
+                          </div>
+                          <div class="form-button-action">
+                            <button onclick="location.href='/category/update/<%= story._id %>'" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Thêm chương">
+                              <i class="fas fa-pen"></i>
                             </button>
                           </div>
                         </td>

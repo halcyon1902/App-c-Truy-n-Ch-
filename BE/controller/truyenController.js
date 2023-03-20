@@ -13,19 +13,7 @@ const truyenController = {
   //lấy toàn bộ truyện
   GetAllTruyen: async (req, res) => {
     try {
-      const allTruyen = await Truyen.find()
-        .populate("Chapters")
-        .populate({
-          path: "Chapters",
-          populate: { path: "BinhLuans" },
-        })
-        .populate({
-          path: "Chapters",
-          populate: {
-            path: "BinhLuans",
-            populate: { path: "TaiKhoan" },
-          },
-        });
+      const allTruyen = await Truyen.find();
       res.status(200).json(allTruyen);
     } catch (err) {
       res.status(500).json(err);

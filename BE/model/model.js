@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-//=======================tạo schema Tác giả=======================
+//#region tác giả
 const TacGiaSchema = new mongoose.Schema({
   TenTacGia: {
     type: String,
@@ -7,7 +7,8 @@ const TacGiaSchema = new mongoose.Schema({
     unique: true,
   },
 });
-//=======================tạo schema Thể loại=======================
+//#endregion
+//#region thể loại
 const TheLoaiSchema = new mongoose.Schema({
   TenTheLoai: {
     type: String,
@@ -15,7 +16,8 @@ const TheLoaiSchema = new mongoose.Schema({
     unique: true,
   },
 });
-//=======================tạo schema Truyện=======================
+//#endregion
+//#region truyện
 const TruyenSchema = new mongoose.Schema({
   TenTruyen: {
     type: String,
@@ -47,7 +49,8 @@ const TruyenSchema = new mongoose.Schema({
     ref: "TacGia",
   },
 });
-//=======================tạo schema Tài khoản=======================
+//#endregion
+//#region tài khoản
 const TaiKhoanSchema = new mongoose.Schema({
   TaiKhoan: {
     type: String,
@@ -81,7 +84,7 @@ const TaiKhoanSchema = new mongoose.Schema({
   },
   TrangThai: {
     type: Boolean,
-    default: true,
+    default: false,
     required: true,
   },
   BinhLuans: {
@@ -94,7 +97,8 @@ const TaiKhoanSchema = new mongoose.Schema({
     type: [String],
   },
 });
-//=======================tạo schema Chapter=======================
+//#endregion
+//#region chapter
 const ChapterSchema = new mongoose.Schema({
   TenChapter: {
     type: String,
@@ -111,25 +115,25 @@ const ChapterSchema = new mongoose.Schema({
     required: true,
   },
   Truyen: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Truyen",
   },
   LuotXem: {
     type: Number,
     default: 0,
   },
-  LinkAnhs: {
-    type: [String],
-    required: true,
+  NoiDung: {
+    type: String,
   },
   BinhLuans: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "BinhLuan",
-      required: true,
     },
   ],
 });
-//=======================tạo schema Bình luận=======================
+//#endregion
+//#region Tên khu vực
 const BinhLuanSchema = new mongoose.Schema({
   NoiDungBL: {
     type: String,
@@ -155,7 +159,7 @@ const BinhLuanSchema = new mongoose.Schema({
     ref: "TaiKhoan",
   },
 });
-
+//#endregion
 //=======================tạo model=======================
 let TacGia = mongoose.model("TacGia", TacGiaSchema);
 let Truyen = mongoose.model("Truyen", TruyenSchema);
