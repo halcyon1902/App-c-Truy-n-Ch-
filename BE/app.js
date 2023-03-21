@@ -393,4 +393,29 @@ app.get("/story", (req, res) => {
     res.redirect("/login");
   }
 });
+//show page tạo user
+app.get("/story/create", (req, res) => {
+  session = req.session;
+  if (session.userid) {
+    TaiKhoan.findOne({ TaiKhoan: session.userid }, async function (err, item) {
+      const author = await TacGia.find();
+      const category = await TheLoai.find();
+      res.render("../views/story/addStory", { message: 2, item, author, category });
+    });
+  } else {
+    res.redirect("/login");
+  }
+});
+app.post("/story/create", function (req, res) {
+  session = req.session;
+  if (session.userid) {
+    TaiKhoan.findOne({ TaiKhoan: session.userid }, async function (err, item) {
+      try {
+        res.redirect("/user");
+      } catch (err) {
+        res.render("../views/user/addUser", { message: 0, item });
+      }
+    });
+  }
+});
 //#endregion
