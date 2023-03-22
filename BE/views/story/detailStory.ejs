@@ -44,14 +44,43 @@
               </li>
             </ul>
           </div>
+          <form style="width: 2000px" method="get" action="">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group input-with-icon">
+                  <label for="TenTruyen">Tên truyện</label>
+                  <input id="TenTruyen" type="text" class="form-control" value="<%= truyen.TenTruyen %>" readonly />
+                </div>
+                <div class="form-group">
+                  <label for="GioiThieu">Mô tả</label>
+                  <textarea class="form-control" type="text" rows="8" id="GioiThieu" readonly style="overflow: auto;"><%= truyen.GioiThieu %></textarea>
+                </div>
+                <div class="form-group input-with-icon">
+                  <label for="TacGia">Tác giả</label>
+                  <input id="TacGia" type="text" class="form-control" value="<%= truyen.TacGia %>" readonly />
+                </div>
+                <div class="form-group input-with-icon">
+                  <label for="TheLoai">Thể loại</label>
+                  <input id="TheLoai" type="text" class="form-control" value="<%= truyen.TheLoais %>" readonly />
+                </div>
+                <div class="form-group input-with-icon">
+                  <label for="TheLoai">Thể loại</label>
+                  <input id="TheLoai" type="text" class="form-control" value="<%= truyen.TheLoais %>" readonly />
+                </div>
+              </div>
+              <div class="col-md-8">
+                <img src="https://static.8cache.com/cover/o/eJzLyTDW1_V3t_T2qnR3zcoI1Q_zTPTTDTLzyQ_y1HeEghyPZH1XX7dIL7cIy0SfUP1yI0NT3QxjIyMAPb0Rtw==/di-the-ta-quan.jpg" class="img-fluid" alt="Responsive image">
+              </div>
+            </div>
+          </form>
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
                 <div class="d-flex align-items-center">
-                  <h4 class="card-title">DANH SÁCH TRUYỆN</h4>
-                  <button class="btn btn-primary btn-round ml-auto" onclick="location.href='/story/create'">
+                  <h4 class="card-title">DANH SÁCH CHƯƠNG TRUYỆN:<%= truyen.TenTruyen %></h4>
+                  <button class="btn btn-primary btn-round ml-auto" onclick="location.href='/chapter/create'">
                     <i class="fa fa-plus"></i>
-                    Thêm truyện
+                    Thêm chương
                   </button>
                 </div>
               </div>
@@ -60,34 +89,30 @@
                   <table id="add-row" class="display table table-striped table-hover">
                     <thead>
                       <tr class="centered">
-                        <th>TÊN TRUYỆN</th>
-                        <!-- <th>ẢNH</th> -->
-                        <th>TÌNH TRẠNG</th>
+                        <th>TÊN CHƯƠNG</th>
+                        <th>NGÀY NHẬP</th>
                         <th>TRẠNG THÁI</th>
                         <th>Action</th>
                       </tr>
                     </thead>
                     <tbody class="centered">
-                      <% list.forEach(function(story){ %>
+                      <% truyen.Chapters.forEach(function(chapter){ %>
                       <tr>
-                        <td><%= story.TenTruyen %></td>
-                        <% if(story.TinhTrang==true) { %>
-                        <td style="color: green">Hoàn thành</td>
-                        <% } else { %>
-                        <td style="color: red">Chưa hoàn thành</td>
-                        <% } %> <% if(story.TrangThai==true) { %>
+                        <td><%= chapter.TenChapter %></td>
+                        <td><%= (new Date(chapter.NgayNhap)).toLocaleDateString('en-GB') %></td>
+                        <% if(chapter.TrangThai==true) { %>
                         <td style="color: green">Đã kích hoạt</td>
                         <% } else { %>
                         <td style="color: red">Chưa kích hoạt</td>
                         <% } %>
                         <td>
                           <div class="form-button-action">
-                            <button onclick="location.href='/story/update/<%= story._id %>'" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Chỉnh sửa">
+                            <button onclick="location.href='/chapter/update/<%= chapter._id %>'" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Chỉnh sửa">
                               <i class="fa fa-edit"></i>
                             </button>
                           </div>
                           <div class="form-button-action">
-                            <button onclick="location.href='/story/detail/<%= story._id %>'" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Chi tiết">
+                            <button onclick="location.href='/chapter/detail/<%= chapter._id %>'" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Chi tiết">
                               <i class="fas fa-pen"></i>
                             </button>
                           </div>

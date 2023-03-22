@@ -41,13 +41,19 @@ const TruyenSchema = new mongoose.Schema({
     type: String,
   },
   AnhBia: {
-    type: String,
-    required: true,
+    data: Buffer,
+    contentType: String,
   },
-  TacGias: {
+  TacGia: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "TacGia",
   },
+  Chapters: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Chapter",
+    },
+  ],
 });
 //#endregion
 //#region tài khoản
@@ -133,7 +139,7 @@ const ChapterSchema = new mongoose.Schema({
   ],
 });
 //#endregion
-//#region Tên khu vực
+//#region bình luân
 const BinhLuanSchema = new mongoose.Schema({
   NoiDungBL: {
     type: String,

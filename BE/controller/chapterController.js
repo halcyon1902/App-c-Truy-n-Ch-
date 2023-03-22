@@ -7,18 +7,11 @@ const chapterController = {
       const saveChapter = await newChapter.save();
       if (req.body.Truyen) {
         const truyen = Truyen.findById(req.body.Truyen);
-        console.log(
-          "ngay nhap chapter" +
-            saveChapter.NgayNhap +
-            " ngay nhap truyen: " +
-            truyen
-        );
         await truyen.updateMany({
           $push: { Chapters: saveChapter._id },
           $set: { NgayCapNhat: saveChapter.NgayNhap },
-        }); // thêm id chapter vào truyện
+        });
       }
-
       res.status(200).json(saveChapter);
     } catch (err) {
       res.status(500).json(err);

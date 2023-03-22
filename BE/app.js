@@ -34,7 +34,7 @@ app.use(
   sessions({
     secret: process.env.SERCRET_KEY,
     saveUninitialized: false,
-    cookie: { maxAge: 900000 },
+    cookie: { maxAge: 90000000 },
     resave: true,
   })
 );
@@ -259,7 +259,6 @@ app.get("/user", (req, res) => {
           var nonAdminUsers = items.filter(function (user) {
             return user.TaiKhoan !== "admin";
           });
-          console.log(nonAdminUsers);
           res.render("../views/user/user", { listuser: nonAdminUsers, item });
         }
       });
@@ -411,11 +410,73 @@ app.post("/story/create", function (req, res) {
   if (session.userid) {
     TaiKhoan.findOne({ TaiKhoan: session.userid }, async function (err, item) {
       try {
-        res.redirect("/user");
+        var truyen = new Truyen({
+          TenTruyen: req.body.TenTruyen,
+          GioiThieu: req.body.GioiThieu,
+          // AnhBia: req.body.AnhBia,
+          TacGia: req.body.TacGia,
+          TheLoais: req.body.showSelectedCategoriesIds,
+          TinhTrang: req.body.isDone,
+        });
+        await truyen.save();
+        res.redirect("/story");
       } catch (err) {
-        res.render("../views/user/addUser", { message: 0, item });
+        console.log(err);
+        const author = await TacGia.find();
+        const category = await TheLoai.find();
+        res.render("../views/story/addStory", { message: 0, item, author, category });
       }
     });
+  }
+});
+//chi tiết truyện
+app.get("/story/detail/:id", async (req, res) => {
+  session = req.session;
+  if (session.userid) {
+    TaiKhoan.findOne({ TaiKhoan: session.userid }, async function (err, item) {
+      try {
+        var truyen = await Truyen.findById(req.params.id)
+          .populate("Chapters")
+          .populate({
+            path: "Chapters",
+            populate: { path: "BinhLuans" },
+          })
+          .populate({
+            path: "Chapters",
+            populate: {
+              path: "BinhLuans",
+              populate: { path: "TaiKhoan" },
+            },
+          });
+        res.render("../views/story/detailStory", { truyen, item });
+      } catch (err) {
+        console.log(err);
+      }
+    });
+  } else {
+    res.redirect("/login");
+  }
+});
+//chương của truyện
+app.get("/chapter/detail/:id", (req, res) => {
+  session = req.session;
+  if (session.userid) {
+    TaiKhoan.findOne({ TaiKhoan: session.userid }, async function (err, item) {
+      try {
+        var chapter = await Chapter.findById(req.params.id)
+          .populate("BinhLuans")
+          .populate({
+            path: "BinhLuans",
+            populate: { path: "TaiKhoan" },
+          });
+        console.log(chapter);
+        res.render("../views/chapter/detailChapter", { chapter, item });
+      } catch (err) {
+        res.status(500).json(err);
+      }
+    });
+  } else {
+    res.redirect("/login");
   }
 });
 //#endregion

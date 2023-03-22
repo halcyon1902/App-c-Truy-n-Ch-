@@ -1,153 +1,172 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <%- include("../blocks/head.ejs") %>
-  </head>
-  <style>
-    .input-with-icon {
-      position: relative;
-    }
 
-    .field-icon {
-      margin-right: 30px;
-      position: absolute;
-      right: 0;
-      top: 65%;
-      transform: translateY(-50%);
-      cursor: pointer;
-    }
-    .form-control {
-      padding-right: 30px;
-    }
-  </style>
-  <body>
-    <div class="wrapper">
-      <div class="main-header">
-        <!-- Logo Header -->
-        <%- include("../blocks/logoheader.ejs") %>
-        <!-- End Logo Header -->
+<head>
+  <%- include("../blocks/head.ejs") %>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<style>
+  .input-with-icon {
+    position: relative;
+  }
 
-        <!-- Navbar Header -->
-        <%- include("../blocks/navbarheader.ejs") %>
-        <!-- End Navbar -->
-      </div>
-      <!-- Sidebar -->
-      <%- include("../blocks/sidebar.ejs") %>
-      <div class="main-panel">
-        <div class="content">
-          <div class="page-inner">
-            <div class="page-header">
-              <h4 class="page-title">ReadingApp</h4>
-              <ul class="breadcrumbs">
-                <li class="nav-home">
-                  <a href="/">
-                    <i class="flaticon-home"></i>
-                  </a>
-                </li>
-                <li class="separator">
-                  <i class="flaticon-right-arrow"></i>
-                </li>
-                <li class="nav-item">
-                  <a href="/user">Danh sách truyện</a>
-                </li>
-                <li class="separator">
-                  <i class="flaticon-right-arrow"></i>
-                </li>
-                <li class="nav-item">
-                  <a href="/user/create">Thêm truyện</a>
-                </li>
-              </ul>
-            </div>
-            <form style="width: 650px" method="post" action="/story/create">
-              <div class="form-group input-with-icon">
-                <label>Tên Truyện</label>
-                <input required="required" type="text" class="form-control" name="TaiKhoan" placeholder="Nhập tên truyện..." />
-                <small class="form-text text-muted">Tên truyện là unique</small>
-              </div>
-              <div class="form-group input-with-icon">
-                <label for="author">Tác giả</label>
-                <select class="form-control" name="select author" id="author" style="width: 200px">
-                  <% author.forEach(function(aut) { %>
-                  <option value="<%= aut._id %>"><%= aut.TenTacGia %></option>
-                  <% }); %>
-                </select>
-              </div>
-              <div class="form-group input-with-icon">
-                <label for="category">Thể loại</label>
-                <select class="form-control" name="select category" style="width: 200px" id="category">
-                  <% category.forEach(function(cate) { %>
-                  <option value="<%= cate._id %>"><%= cate.TenTheLoai %></option>
-                  <% }); %>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="isDone">Truyện đã hoàn thành</label>
-                <input type="checkbox" value="true" id="isDone" name="isDone" />
-              </div>
-              <div class="col-lg-4 col-md-9 col-sm-12">
-                <br />
-                <button class="btn btn-success">Create</button>
-                <button class="btn btn-danger" onclick="location.href='/story'">Cancel</button>
-              </div>
-            </form>
+  .field-icon {
+    margin-right: 30px;
+    position: absolute;
+    right: 0;
+    top: 65%;
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
+
+  .theloai {
+    column-count: 5;
+  }
+
+  .form-control {
+    padding-right: 30px;
+  }
+</style>
+
+<body>
+  <div class="wrapper">
+    <div class="main-header">
+      <!-- Logo Header -->
+      <%- include("../blocks/logoheader.ejs") %>
+      <!-- End Logo Header -->
+
+      <!-- Navbar Header -->
+      <%- include("../blocks/navbarheader.ejs") %>
+      <!-- End Navbar -->
+    </div>
+    <!-- Sidebar -->
+    <%- include("../blocks/sidebar.ejs") %>
+    <div class="main-panel">
+      <div class="content">
+        <div class="page-inner">
+          <div class="page-header">
+            <h4 class="page-title">ReadingApp</h4>
+            <ul class="breadcrumbs">
+              <li class="nav-home">
+                <a href="/">
+                  <i class="flaticon-home"></i>
+                </a>
+              </li>
+              <li class="separator">
+                <i class="flaticon-right-arrow"></i>
+              </li>
+              <li class="nav-item">
+                <a href="/story">Danh sách truyện</a>
+              </li>
+              <li class="separator">
+                <i class="flaticon-right-arrow"></i>
+              </li>
+              <li class="nav-item">
+                <a href="/story/create">Thêm truyện</a>
+              </li>
+            </ul>
           </div>
+          <form style="width: 650px" method="post" action="/story/create">
+            <div class="form-group input-with-icon">
+              <label for="TenTruyen">Tên Truyện</label>
+              <input id="TenTruyen" required="required" type="text" class="form-control" name="TenTruyen" placeholder="Nhập tên truyện..." />
+            </div>
+            <div class="form-group">
+              <label for="GioiThieu">Mô tả</label>
+              <textarea class="form-control" rows="8" id="GioiThieu" name="GioiThieu">
+              </textarea>
+            </div>
+            <!-- <div class="form-group">
+              <label for="AnhBia">Ảnh bìa</label>
+              <input accept=".jpg,.png" type="file" class="form-control-file" id="AnhBia" name="AnhBia">
+            </div> -->
+            <div class="form-group input-with-icon">
+              <label for="TacGia">Tác giả</label>
+              <select class="form-control" id="TacGia" style="width: 200px" name="TacGia">
+                <% author.forEach(function(aut) { %>
+                <option value="<%= aut._id %>"><%= aut.TenTacGia %></option>
+                <% }); %>
+              </select>
+            </div>
+            <div class="form-group theloai">
+              <label for="theloai">Thể loại:</label>
+              <% category.forEach(function(cate) { %>
+              <div class="checkbox">
+                <label><input data-id="<%=cate._id%>" type="checkbox" value="<%= cate.TenTheLoai %>"><%= cate.TenTheLoai %></label>
+              </div>
+              <% }); %>
+            </div>
+            <!-- Hiển thị id để lấy dữ liệu -->
+            <input type="text" style="width: 650px;display:none;" id="showSelectedCategoriesIds" readonly name="showSelectedCategoriesIds" />
+            <!-- Hiển thị tên -->
+            <input type="text" style="width: 650px;" id="showSelectedCategoriesNames" readonly name="showSelectedCategoriesNames" />
+
+            <div class="form-group">
+              <label for="isDone">Truyện đã hoàn thành</label>
+              <input type="checkbox" value="true" id="isDone" name="isDone" />
+            </div>
+            <div class="col-lg-4 col-md-9 col-sm-12">
+              <br />
+              <button class="btn btn-success">Create</button>
+              <button class="btn btn-danger" onclick="location.href='/story'">Cancel</button>
+            </div>
+          </form>
         </div>
       </div>
-
-      <!-- End Custom template -->
     </div>
-    <!--   Core JS Files   -->
-    <script src="../../assets/js/core/jquery.3.2.1.min.js"></script>
-    <script src="../../assets/js/core/popper.min.js"></script>
-    <script src="../../assets/js/core/bootstrap.min.js"></script>
-    <!-- jQuery UI -->
-    <script src="../../assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
-    <script src="../../assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
-    <!-- Bootstrap Notify -->
-    <script src="../../assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+  </div>
+  <script src="../../assets/js/core/jquery.3.2.1.min.js"></script>
+  <script src="../../assets/js/core/popper.min.js"></script>
+  <script src="../../assets/js/core/bootstrap.min.js"></script>
+  <script src="../../assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+  <script src="../../assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
+  <script src="../../assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+  <script src="../../assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+  <script src="../../assets/js/atlantis.min.js"></script>
+  <script src="../../assets/js/setting-demo2.js"></script>
+  <script>
+    $(document).ready(function() {
+      $('input[type=checkbox]:not("#isDone")').change(function() {
+        var selectedCategoriesIds = $('input[type=checkbox]:checked').map(function() {
+          return $(this).attr('data-id');
+        }).get();
+        var selectedCategoriesNames = $('input[type=checkbox]:checked').map(function() {
+          return $(this).val();
+        }).get();
+        $("#showSelectedCategoriesIds").val(selectedCategoriesIds.join(", "));
+        $("#showSelectedCategoriesNames").val(selectedCategoriesNames.join(", "));
+      });
+    });
+  </script>
+  <script>
+    var fileInput = document.getElementById('AnhBia');
+    var fileExtension = fileInput.value.toLowerCase().split('.').pop();
+    if (fileInput.value) {
+      if (fileExtension !== 'jpg' && fileExtension !== 'png') {
+        alert('Chỉ chấp nhận các tệp JPG hoặc PNG');
+      }
+    } else {
+      alert('Vui lòng chọn ảnh bìa');
+    }
+  </script>
+  <script>
+    var text = "<%= message %>";
+    if (text == 0) {
+      $.notify({
+        icon: "flaticon-alarm-1",
+        title: "ReadingApp",
+        message: "Tạo tài khoản thất bại",
+      }, {
+        type: "danger",
+        placement: {
+          from: "top",
+          align: "center",
+        },
+        time: 1000,
+      });
+    }
+  </script>
+</body>
 
-    <!-- jQuery Scrollbar -->
-    <script src="../../assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
-    <!-- Atlantis JS -->
-    <script src="../../assets/js/atlantis.min.js"></script>
-    <!-- Atlantis DEMO methods, don't include it in your project! -->
-    <script src="../../assets/js/setting-demo2.js"></script>
-    <script>
-      var text = "<%= message %>";
-      if (text == 0) {
-        $.notify(
-          {
-            icon: "flaticon-alarm-1",
-            title: "ReadingApp",
-            message: "Tạo tài khoản thất bại",
-          },
-          {
-            type: "danger",
-            placement: {
-              from: "top",
-              align: "center",
-            },
-            time: 1000,
-          }
-        );
-      }
-      if (text == 1) {
-        $.notify(
-          {
-            icon: "flaticon-alarm-1",
-            title: "ReadingApp",
-            message: "Mật khẩu không trùng khớp",
-          },
-          {
-            type: "danger",
-            placement: {
-              from: "top",
-              align: "center",
-            },
-            time: 1000,
-          }
-        );
-      }
-    </script>
-  </body>
 </html>
