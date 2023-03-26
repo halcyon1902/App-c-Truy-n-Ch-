@@ -22,6 +22,8 @@
 
   .theloai {
     column-count: 5;
+    column-width: 130px;
+    column-gap: 10px;
   }
 
   .form-control {
@@ -74,8 +76,7 @@
             </div>
             <div class="form-group">
               <label for="GioiThieu">Mô tả</label>
-              <textarea class="form-control" rows="8" id="GioiThieu" name="GioiThieu">
-              </textarea>
+              <textarea class="form-control custom-textarea" rows="8" id="GioiThieu" name="GioiThieu"></textarea>
             </div>
             <!-- <div class="form-group">
               <label for="AnhBia">Ảnh bìa</label>
@@ -97,11 +98,8 @@
               </div>
               <% }); %>
             </div>
-            <!-- Hiển thị id để lấy dữ liệu -->
             <input type="text" style="width: 650px;display:none;" id="showSelectedCategoriesIds" readonly name="showSelectedCategoriesIds" />
-            <!-- Hiển thị tên -->
             <input type="text" style="width: 650px;" id="showSelectedCategoriesNames" readonly name="showSelectedCategoriesNames" />
-
             <div class="form-group">
               <label for="isDone">Truyện đã hoàn thành</label>
               <input type="checkbox" value="true" id="isDone" name="isDone" />
@@ -156,7 +154,7 @@
       $.notify({
         icon: "flaticon-alarm-1",
         title: "ReadingApp",
-        message: "Tạo tài khoản thất bại",
+        message: "Thêm truyện thất bại",
       }, {
         type: "danger",
         placement: {

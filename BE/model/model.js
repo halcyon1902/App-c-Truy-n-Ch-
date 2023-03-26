@@ -90,17 +90,8 @@ const TaiKhoanSchema = new mongoose.Schema({
   },
   TrangThai: {
     type: Boolean,
-    default: false,
+    default: true,
     required: true,
-  },
-  BinhLuans: {
-    type: [String],
-  },
-  LichSu: {
-    type: [String],
-  },
-  YeuThich: {
-    type: [String],
   },
 });
 //#endregion
@@ -131,39 +122,6 @@ const ChapterSchema = new mongoose.Schema({
   NoiDung: {
     type: String,
   },
-  BinhLuans: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "BinhLuan",
-    },
-  ],
-});
-//#endregion
-//#region bình luân
-const BinhLuanSchema = new mongoose.Schema({
-  NoiDungBL: {
-    type: String,
-    required: true,
-  },
-  TrangThai: {
-    type: Boolean,
-    default: true,
-    required: true,
-  },
-  NgayNhap: {
-    type: Date,
-    default: new Date().toISOString(),
-    required: true,
-  },
-  //thêm vào chapter
-  Chapter: {
-    type: String,
-    required: true,
-  },
-  TaiKhoan: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "TaiKhoan",
-  },
 });
 //#endregion
 //=======================tạo model=======================
@@ -171,6 +129,5 @@ let TacGia = mongoose.model("TacGia", TacGiaSchema);
 let Truyen = mongoose.model("Truyen", TruyenSchema);
 let TaiKhoan = mongoose.model("TaiKhoan", TaiKhoanSchema);
 let Chapter = mongoose.model("Chapter", ChapterSchema);
-let BinhLuan = mongoose.model("BinhLuan", BinhLuanSchema);
 let TheLoai = mongoose.model("TheLoai", TheLoaiSchema);
-module.exports = { Truyen, TacGia, TaiKhoan, Chapter, BinhLuan, TheLoai };
+module.exports = { Truyen, TacGia, TaiKhoan, Chapter, TheLoai };

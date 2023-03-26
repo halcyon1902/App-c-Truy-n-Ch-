@@ -22,19 +22,7 @@ const truyenController = {
   //lấy thông tin 1 truyện
   Get1Truyen: async (req, res) => {
     try {
-      const truyen = await Truyen.findById(req.params.id)
-        .populate("Chapters")
-        .populate({
-          path: "Chapters",
-          populate: { path: "BinhLuans" },
-        })
-        .populate({
-          path: "Chapters",
-          populate: {
-            path: "BinhLuans",
-            populate: { path: "TaiKhoan" },
-          },
-        });
+      const truyen = await Truyen.findById(req.params.id).populate("Chapters");
       res.status(200).json(truyen);
     } catch (err) {
       res.status(500).json(err);

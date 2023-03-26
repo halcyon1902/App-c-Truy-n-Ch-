@@ -70,7 +70,7 @@
                     <tbody class="centered">
                       <% list.forEach(function(story){ %>
                       <tr>
-                        <td><%= story.TenTruyen %></td>
+                        <td><a href="/story/detail/<%= story._id %>"><%= story.TenTruyen %></a></td>
                         <% if(story.TinhTrang==true) { %>
                         <td style="color: green">Hoàn thành</td>
                         <% } else { %>
@@ -84,11 +84,6 @@
                           <div class="form-button-action">
                             <button onclick="location.href='/story/update/<%= story._id %>'" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Chỉnh sửa">
                               <i class="fa fa-edit"></i>
-                            </button>
-                          </div>
-                          <div class="form-button-action">
-                            <button onclick="location.href='/story/detail/<%= story._id %>'" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Chi tiết">
-                              <i class="fas fa-pen"></i>
                             </button>
                           </div>
                         </td>

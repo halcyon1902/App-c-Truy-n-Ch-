@@ -1,111 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
-  <!-- Head -->
-  <%- include("../blocks/head.ejs") %>
-  <!-- End Head -->
+<!-- Head -->
+<%- include("../blocks/head.ejs") %>
+<!-- End Head -->
 
-  <body>
-    <div class="wrapper sidebar_minimize">
-      <div class="main-header">
-        <!-- Logo Header -->
-        <%- include("../blocks/logoheader.ejs") %>
-        <!-- End Logo Header -->
+<body>
+  <div class="wrapper sidebar_minimize">
+    <div class="main-header">
+      <!-- Logo Header -->
+      <%- include("../blocks/logoheader.ejs") %>
+      <!-- End Logo Header -->
 
-        <!-- Navbar Header -->
-        <%- include("../blocks/navbarheader.ejs") %>
-        <!-- End Navbar -->
-      </div>
-      <!-- Sidebar -->
-      <%- include("../blocks/sidebar.ejs") %>
-      <!-- End Sidebar -->
+      <!-- Navbar Header -->
+      <%- include("../blocks/navbarheader.ejs") %>
+      <!-- End Navbar -->
+    </div>
+    <!-- Sidebar -->
+    <%- include("../blocks/sidebar.ejs") %>
+    <!-- End Sidebar -->
 
-      <!-- Main Board-->
-      <div class="main-panel">
-        <div class="content">
-          <div class="page-inner">
-            <div class="page-header">
-              <h4 class="page-title">ReadingApp</h4>
-              <ul class="breadcrumbs">
-                <li class="nav-home">
-                  <a href="/">
-                    <i class="flaticon-home"></i>
-                  </a>
-                </li>
-                <li class="separator">
-                  <i class="flaticon-right-arrow"></i>
-                </li>
-                <li class="nav-item">
-                  <a href="/category">Danh sách thể loại</a>
-                </li>
-                <li class="separator">
-                  <i class="flaticon-right-arrow"></i>
-                </li>
-                <li class="nav-item">
-                  <a href="/category/create">Thêm thể loại</a>
-                </li>
-              </ul>
-            </div>
-
-            <form method="post" action="/category/create">
-              <div class="form-group">
-                <label for="exampleInputEmail1">Tên thể loại</label>
-                <input required="required" type="text" class="form-control" name="TenTheLoai" placeholder="tên thể loại..." />
-                <small class="form-text text-muted">Tên thể loại là unique</small>
-              </div>
-              <button type="submit" class="btn btn-primary">Create</button>
-            </form>
+    <!-- Main Board-->
+    <div class="main-panel">
+      <div class="content">
+        <div class="page-inner">
+          <div class="page-header">
+            <h4 class="page-title">ReadingApp</h4>
+            <ul class="breadcrumbs">
+              <li class="nav-home">
+                <a href="/">
+                  <i class="flaticon-home"></i>
+                </a>
+              </li>
+              <li class="separator">
+                <i class="flaticon-right-arrow"></i>
+              </li>
+              <li class="nav-item">
+                <a href="/category">Danh sách thể loại</a>
+              </li>
+              <li class="separator">
+                <i class="flaticon-right-arrow"></i>
+              </li>
+              <li class="nav-item">
+                <a href="/category/create">Thêm thể loại</a>
+              </li>
+            </ul>
           </div>
+
+          <form method="post" action="/category/create">
+            <div class="form-group">
+              <label for="exampleInputEmail1">Tên thể loại</label>
+              <input required="required" type="text" class="form-control" name="TenTheLoai" placeholder="Tên thể loại..." />
+              <small class="form-text text-muted">Tên thể loại là unique</small>
+            </div>
+            <button type="submit" class="btn btn-primary">Create</button>
+          </form>
         </div>
       </div>
-      <!-- End Main Board-->
     </div>
-    <!--   Core JS Files   -->
-    <script src="../../assets/js/core/jquery.3.2.1.min.js"></script>
-    <script src="../../assets/js/core/popper.min.js"></script>
-    <script src="../../assets/js/core/bootstrap.min.js"></script>
-    <!-- jQuery UI -->
-    <script src="../../assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
-    <script src="../../assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
-    <!-- Bootstrap Notify -->
-    <script src="../../assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+    <!-- End Main Board-->
+  </div>
+  <!--   Core JS Files   -->
+  <script src="../../assets/js/core/jquery.3.2.1.min.js"></script>
+  <script src="../../assets/js/core/popper.min.js"></script>
+  <script src="../../assets/js/core/bootstrap.min.js"></script>
+  <!-- jQuery UI -->
+  <script src="../../assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+  <script src="../../assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
+  <!-- Bootstrap Notify -->
+  <script src="../../assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
 
-    <!-- jQuery Scrollbar -->
-    <script src="../../assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
-    <!-- Atlantis JS -->
-    <script src="../../assets/js/atlantis.min.js"></script>
-    <!-- Atlantis DEMO methods, don't include it in your project! -->
-    <script src="../../assets/js/setting-demo2.js"></script>
+  <!-- jQuery Scrollbar -->
+  <script src="../../assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+  <!-- Atlantis JS -->
+  <script src="../../assets/js/atlantis.min.js"></script>
+  <!-- Atlantis DEMO methods, don't include it in your project! -->
+  <script src="../../assets/js/setting-demo2.js"></script>
 
-    <script>
-      var text = '<%= message %>';
-      if (text == 0) {
-        $.notify({
-          icon: "flaticon-alarm-1",
-          title: "ReadingApp",
-          message: "Thêm thể loại thất bại",
-        }, {
-          type: "danger",
-          placement: {
-            from: "top",
-            align: "center",
-          },
-          time: 1000,
-        });
-      }
-      if (text == 1) {
-        $.notify({
-          icon: "flaticon-alarm-1",
-          title: "ReadingApp",
-          message: "Thêm thể loại thành công",
-        }, {
-          type: "success",
-          placement: {
-            from: "top",
-            align: "center",
-          },
-          time: 1000,
-        });
-      }
-    </script>
-  </body>
+  <script>
+    var text = '<%= message %>';
+    if (text == 0) {
+      $.notify({
+        icon: "flaticon-alarm-1",
+        title: "ReadingApp",
+        message: "Thêm thể loại thất bại",
+      }, {
+        type: "danger",
+        placement: {
+          from: "top",
+          align: "center",
+        },
+        time: 1000,
+      });
+    }
+    if (text == 1) {
+      $.notify({
+        icon: "flaticon-alarm-1",
+        title: "ReadingApp",
+        message: "Thêm thể loại thành công",
+      }, {
+        type: "success",
+        placement: {
+          from: "top",
+          align: "center",
+        },
+        time: 1000,
+      });
+    }
+  </script>
+</body>
+
 </html>

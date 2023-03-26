@@ -410,7 +410,7 @@ app.post("/story/create", function (req, res) {
   if (session.userid) {
     TaiKhoan.findOne({ TaiKhoan: session.userid }, async function (err, item) {
       try {
-        var truyen = new Truyen({
+        const truyen = new Truyen({
           TenTruyen: req.body.TenTruyen,
           GioiThieu: req.body.GioiThieu,
           // AnhBia: req.body.AnhBia,
@@ -435,19 +435,8 @@ app.get("/story/detail/:id", async (req, res) => {
   if (session.userid) {
     TaiKhoan.findOne({ TaiKhoan: session.userid }, async function (err, item) {
       try {
-        var truyen = await Truyen.findById(req.params.id)
-          .populate("Chapters")
-          .populate({
-            path: "Chapters",
-            populate: { path: "BinhLuans" },
-          })
-          .populate({
-            path: "Chapters",
-            populate: {
-              path: "BinhLuans",
-              populate: { path: "TaiKhoan" },
-            },
-          });
+        const truyen = await Truyen.findById(req.params.id).populate("Chapters");
+        console.log(truyen);
         res.render("../views/story/detailStory", { truyen, item });
       } catch (err) {
         console.log(err);
@@ -457,19 +446,12 @@ app.get("/story/detail/:id", async (req, res) => {
     res.redirect("/login");
   }
 });
-//chương của truyện
 app.get("/chapter/detail/:id", (req, res) => {
   session = req.session;
   if (session.userid) {
     TaiKhoan.findOne({ TaiKhoan: session.userid }, async function (err, item) {
       try {
-        var chapter = await Chapter.findById(req.params.id)
-          .populate("BinhLuans")
-          .populate({
-            path: "BinhLuans",
-            populate: { path: "TaiKhoan" },
-          });
-        console.log(chapter);
+        const chapter = await Chapter.findById(req.params.id);
         res.render("../views/chapter/detailChapter", { chapter, item });
       } catch (err) {
         res.status(500).json(err);
@@ -477,6 +459,42 @@ app.get("/chapter/detail/:id", (req, res) => {
     });
   } else {
     res.redirect("/login");
+  }
+});
+app.get("/chapter/create/:id", (req, res) => {
+  session = req.session;
+  if (session.userid) {
+    TaiKhoan.findOne({ TaiKhoan: session.userid }, async function (err, item) {
+      try {
+        const truyen = await Truyen.findById(req.params.id);
+        res.render("../views/chapter/addChapter", { item, truyen, message: 2 });
+      } catch (err) {
+        console.log(err);
+      }
+    });
+  } else {
+    res.redirect("/login");
+  }
+});
+app.post("/chapter/create/:id", (req, res) => {
+  session = req.session;
+  if (session.userid) {
+    TaiKhoan.findOne({ TaiKhoan: session.userid }, async function (err, item) {
+      const truyen = await Truyen.findById(req.params.id);
+      try {
+        const chapter = new Chapter({
+          TenChapter: req.body.TenChapter,
+          NoiDung: req.body.NoiDung,
+          Truyen: req.params.id,
+        });
+        const saveChapter = await chapter.save();
+        await truyen.updateOne({ $push: { Chapters: saveChapter._id } }, { $set: { NgayCapNhat: new Date() } });
+        res.render("../views/chapter/addChapter", { item, truyen, message: 1 });
+      } catch (err) {
+        console.log(err);
+        res.render("../views/chapter/addChapter", { item, truyen, message: 0 });
+      }
+    });
   }
 });
 //#endregion

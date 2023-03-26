@@ -47,38 +47,45 @@
           <form style="width: 2000px" method="get" action="">
             <div class="row">
               <div class="col-md-4">
+                <!-- Tên truyện -->
                 <div class="form-group input-with-icon">
                   <label for="TenTruyen">Tên truyện</label>
-                  <input id="TenTruyen" type="text" class="form-control" value="<%= truyen.TenTruyen %>" readonly />
+                  <div><%= truyen.TenTruyen %></div>
                 </div>
+
+                <!-- Mô tả truyện -->
                 <div class="form-group">
                   <label for="GioiThieu">Mô tả</label>
-                  <textarea class="form-control" type="text" rows="8" id="GioiThieu" readonly style="overflow: auto;"><%= truyen.GioiThieu %></textarea>
+                  <div><%= truyen.GioiThieu %></div>
                 </div>
+
+                <!-- Tác giả truyện -->
                 <div class="form-group input-with-icon">
                   <label for="TacGia">Tác giả</label>
-                  <input id="TacGia" type="text" class="form-control" value="<%= truyen.TacGia %>" readonly />
+                  <div><%= truyen.TacGia %></div>
                 </div>
+
+                <!-- Thể loại truyện -->
                 <div class="form-group input-with-icon">
                   <label for="TheLoai">Thể loại</label>
-                  <input id="TheLoai" type="text" class="form-control" value="<%= truyen.TheLoais %>" readonly />
-                </div>
-                <div class="form-group input-with-icon">
-                  <label for="TheLoai">Thể loại</label>
-                  <input id="TheLoai" type="text" class="form-control" value="<%= truyen.TheLoais %>" readonly />
+                  <div><%= truyen.TheLoais %></div>
                 </div>
               </div>
+
               <div class="col-md-8">
+                <!-- Ảnh bìa truyện -->
                 <img src="https://static.8cache.com/cover/o/eJzLyTDW1_V3t_T2qnR3zcoI1Q_zTPTTDTLzyQ_y1HeEghyPZH1XX7dIL7cIy0SfUP1yI0NT3QxjIyMAPb0Rtw==/di-the-ta-quan.jpg" class="img-fluid" alt="Responsive image">
               </div>
             </div>
+
+
           </form>
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
                 <div class="d-flex align-items-center">
                   <h4 class="card-title">DANH SÁCH CHƯƠNG TRUYỆN:<%= truyen.TenTruyen %></h4>
-                  <button class="btn btn-primary btn-round ml-auto" onclick="location.href='/chapter/create'">
+                  <button class="btn btn-primary btn-round ml-auto" onclick="location.href='/chapter/create/<%= truyen._id  %>'">
                     <i class="fa fa-plus"></i>
                     Thêm chương
                   </button>
@@ -98,7 +105,7 @@
                     <tbody class="centered">
                       <% truyen.Chapters.forEach(function(chapter){ %>
                       <tr>
-                        <td><%= chapter.TenChapter %></td>
+                        <td><a href="/story/detail/<%= chapter._id  %>"><%=  chapter.TenChapter %></a></td>
                         <td><%= (new Date(chapter.NgayNhap)).toLocaleDateString('en-GB') %></td>
                         <% if(chapter.TrangThai==true) { %>
                         <td style="color: green">Đã kích hoạt</td>
@@ -109,11 +116,6 @@
                           <div class="form-button-action">
                             <button onclick="location.href='/chapter/update/<%= chapter._id %>'" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Chỉnh sửa">
                               <i class="fa fa-edit"></i>
-                            </button>
-                          </div>
-                          <div class="form-button-action">
-                            <button onclick="location.href='/chapter/detail/<%= chapter._id %>'" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Chi tiết">
-                              <i class="fas fa-pen"></i>
                             </button>
                           </div>
                         </td>
