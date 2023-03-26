@@ -61,7 +61,7 @@
                     <thead>
                       <tr class="centered">
                         <th>TÊN TRUYỆN</th>
-                        <!-- <th>ẢNH</th> -->
+                        <th>ẢNH</th>
                         <th>TÌNH TRẠNG</th>
                         <th>TRẠNG THÁI</th>
                         <th>Action</th>
@@ -71,6 +71,11 @@
                       <% list.forEach(function(story){ %>
                       <tr>
                         <td><a href="/story/detail/<%= story._id %>"><%= story.TenTruyen %></a></td>
+                        <td style="width: 150px; height: 150px;">
+                          <img class="image" src="data:image/<%=story.AnhBia.contentType%>;base64,<%=story.AnhBia.data.toString('base64')%>" style="width: 100%; height: 100%; object-fit: cover;">
+                        </td>
+
+
                         <% if(story.TinhTrang==true) { %>
                         <td style="color: green">Hoàn thành</td>
                         <% } else { %>

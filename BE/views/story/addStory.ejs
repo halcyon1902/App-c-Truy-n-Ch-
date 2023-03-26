@@ -69,7 +69,7 @@
               </li>
             </ul>
           </div>
-          <form style="width: 650px" method="post" action="/story/create">
+          <form style="width: 650px" method="post" action="/story/create" enctype="multipart/form-data">
             <div class="form-group input-with-icon">
               <label for="TenTruyen">Tên Truyện</label>
               <input id="TenTruyen" required="required" type="text" class="form-control" name="TenTruyen" placeholder="Nhập tên truyện..." />
@@ -78,10 +78,10 @@
               <label for="GioiThieu">Mô tả</label>
               <textarea class="form-control custom-textarea" rows="8" id="GioiThieu" name="GioiThieu"></textarea>
             </div>
-            <!-- <div class="form-group">
+            <div class="form-group">
               <label for="AnhBia">Ảnh bìa</label>
               <input accept=".jpg,.png" type="file" class="form-control-file" id="AnhBia" name="AnhBia">
-            </div> -->
+            </div>
             <div class="form-group input-with-icon">
               <label for="TacGia">Tác giả</label>
               <select class="form-control" id="TacGia" style="width: 200px" name="TacGia">

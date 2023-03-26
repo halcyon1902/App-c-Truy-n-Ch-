@@ -7,6 +7,9 @@ var bodyParser = require("body-parser"); //bodyParser trả về một function 
 const morgan = require("morgan");
 const dotenv = require("dotenv");
 const bcrypt = require("bcrypt");
+const multer = require("multer");
+const path = require("path");
+const fs = require("fs");
 dotenv.config();
 const tacgiaRoute = require("./routes/TacGia");
 const truyenRoute = require("./routes/Truyen");
@@ -14,7 +17,15 @@ const taikhoanRoute = require("./routes/TaiKhoan");
 const chapterRoute = require("./routes/Chapter");
 const binhluanRoute = require("./routes/BinhLuan");
 const theloaiRoute = require("./routes/TheLoai");
-
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "uploads");
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.fieldname + "-" + Date.now() + path.extname(file.originalname));
+  },
+});
+const upload = multer({ storage: storage });
 //model
 const { Truyen, TacGia, TheLoai, Chapter, TaiKhoan } = require("./model/model");
 //giao diện
@@ -24,7 +35,6 @@ app.use(
     extended: true,
   })
 );
-
 //CORS là một cơ chế cho phép nhiều tài nguyên khác nhau (fonts, Javascript, v.v…) của một trang web có thể được truy vấn từ domain khác với domain của trang
 app.use(cors());
 // khi send request sẽ thông báo dưới terminal
@@ -405,15 +415,21 @@ app.get("/story/create", (req, res) => {
     res.redirect("/login");
   }
 });
-app.post("/story/create", function (req, res) {
+app.post("/story/create", upload.single("AnhBia"), function (req, res) {
   session = req.session;
   if (session.userid) {
     TaiKhoan.findOne({ TaiKhoan: session.userid }, async function (err, item) {
       try {
+        const obj = {
+          img: {
+            data: fs.readFileSync(path.join(__dirname + "/uploads/" + req.file.filename)),
+            contentType: "image/png",
+          },
+        };
         const truyen = new Truyen({
           TenTruyen: req.body.TenTruyen,
           GioiThieu: req.body.GioiThieu,
-          // AnhBia: req.body.AnhBia,
+          AnhBia: obj.img,
           TacGia: req.body.TacGia,
           TheLoais: req.body.showSelectedCategoriesIds,
           TinhTrang: req.body.isDone,
