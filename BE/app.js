@@ -22,7 +22,10 @@ const storage = multer.diskStorage({
     cb(null, "uploads");
   },
   filename: function (req, file, cb) {
-    cb(null, file.fieldname + "-" + Date.now() + path.extname(file.originalname));
+    cb(
+      null,
+      file.fieldname + "-" + Date.now() + path.extname(file.originalname)
+    );
   },
 });
 const upload = multer({ storage: storage });
@@ -134,7 +137,11 @@ app.get("/author/update/:id", (req, res) => {
       TacGia.findById(req.params.id, function (error, author) {
         if (error) {
         } else {
-          res.render("../views/author/updateAuthor", { message: 2, item, author });
+          res.render("../views/author/updateAuthor", {
+            message: 2,
+            item,
+            author,
+          });
         }
       });
     });
@@ -234,7 +241,11 @@ app.get("/category/update/:id", (req, res) => {
       TheLoai.findById(req.params.id, function (error, cate) {
         if (error) {
         } else {
-          res.render("../views/category/updateCategory", { message: 2, item, cate });
+          res.render("../views/category/updateCategory", {
+            message: 2,
+            item,
+            cate,
+          });
         }
       });
     });
@@ -334,6 +345,24 @@ app.get("/user/update/:id", (req, res) => {
     res.redirect("/login");
   }
 });
+//update user
+app.post("/user/update/:id", (req, res) => {
+  var update = {
+    TaiKhoan: req.body.TaiKhoan,
+    HoTen: req.body.HoTen,
+    Email: req.body.Email,
+    PhanQuyen: req.body.isAdmin,
+    TrangThai: req.body.isActive,
+  };
+  TaiKhoan.findByIdAndUpdate(req.params.id, update, function (err, item) {
+    if (err) {
+      //2 là thông báo bình thường
+      res.render("../views/user/updateUser", { message: 2, item, user });
+    } else {
+      res.redirect("/user");
+    }
+  });
+});
 //#endregion
 //#region login
 //show page login
@@ -409,7 +438,12 @@ app.get("/story/create", (req, res) => {
     TaiKhoan.findOne({ TaiKhoan: session.userid }, async function (err, item) {
       const author = await TacGia.find();
       const category = await TheLoai.find();
-      res.render("../views/story/addStory", { message: 2, item, author, category });
+      res.render("../views/story/addStory", {
+        message: 2,
+        item,
+        author,
+        category,
+      });
     });
   } else {
     res.redirect("/login");
@@ -422,7 +456,9 @@ app.post("/story/create", upload.single("AnhBia"), function (req, res) {
       try {
         const obj = {
           img: {
-            data: fs.readFileSync(path.join(__dirname + "/uploads/" + req.file.filename)),
+            data: fs.readFileSync(
+              path.join(__dirname + "/uploads/" + req.file.filename)
+            ),
             contentType: "image/png",
           },
         };
@@ -440,7 +476,12 @@ app.post("/story/create", upload.single("AnhBia"), function (req, res) {
         console.log(err);
         const author = await TacGia.find();
         const category = await TheLoai.find();
-        res.render("../views/story/addStory", { message: 0, item, author, category });
+        res.render("../views/story/addStory", {
+          message: 0,
+          item,
+          author,
+          category,
+        });
       }
     });
   }
@@ -451,7 +492,9 @@ app.get("/story/detail/:id", async (req, res) => {
   if (session.userid) {
     TaiKhoan.findOne({ TaiKhoan: session.userid }, async function (err, item) {
       try {
-        const truyen = await Truyen.findById(req.params.id).populate("Chapters");
+        const truyen = await Truyen.findById(req.params.id).populate(
+          "Chapters"
+        );
         console.log(truyen);
         res.render("../views/story/detailStory", { truyen, item });
       } catch (err) {
@@ -504,7 +547,10 @@ app.post("/chapter/create/:id", (req, res) => {
           Truyen: req.params.id,
         });
         const saveChapter = await chapter.save();
-        await truyen.updateOne({ $push: { Chapters: saveChapter._id } }, { $set: { NgayCapNhat: new Date() } });
+        await truyen.updateOne(
+          { $push: { Chapters: saveChapter._id } },
+          { $set: { NgayCapNhat: new Date() } }
+        );
         res.render("../views/chapter/addChapter", { item, truyen, message: 1 });
       } catch (err) {
         console.log(err);
