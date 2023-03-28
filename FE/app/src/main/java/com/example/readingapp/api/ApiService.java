@@ -20,7 +20,7 @@ public interface ApiService {
     Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
     OkHttpClient http = new OkHttpClient().newBuilder().build();
     ApiService apiService = new Retrofit.Builder()
-            .baseUrl("http://192.168.1.11:8000/")
+            .baseUrl("http://192.168.1.6:8000/")
             //.baseUrl("https://manga.herokuapp.com/")
             .addConverterFactory(GsonConverterFactory.create(gson))
             .client(http)
