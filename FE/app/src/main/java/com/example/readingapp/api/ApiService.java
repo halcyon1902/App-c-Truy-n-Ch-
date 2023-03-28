@@ -1,6 +1,11 @@
 package com.example.readingapp.api;
 
+import com.example.readingapp.model.Chapter;
+import com.example.readingapp.model.PostBinhLuan;
+import com.example.readingapp.model.TacGia;
 import com.example.readingapp.model.TaiKhoan;
+import com.example.readingapp.model.TheLoai;
+import com.example.readingapp.model.Truyen;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -45,4 +50,53 @@ public interface ApiService {
 
     @PUT("TaiKhoan/UpdateMatKhau/{id}")
     Call<TaiKhoan> updateMatKHau(@Path("id") String ID, @Body TaiKhoan taiKhoan);
+
+    //Chapter
+    @GET("Chapter/{id}")
+    Call<Chapter> GetChapter(@Path("id") String ChapterID);
+
+    @PUT("Chapter/{id}")
+    Call<Chapter> UpdateChapter(@Path("id") String ChapterID, @Body Chapter chapter);
+
+    //Truyện
+    @GET("Truyen")
+    Call<List<Truyen>> GetTatCaTruyen();
+
+    @GET("Truyen/TruyenTheoLuotXem")
+    Call<List<Truyen>> GetTruyenHot();
+
+    @GET("Truyen/TruyenMoi")
+    Call<List<Truyen>> GetTruyenMoi();
+
+    @GET("Truyen/{id}")
+    Call<Truyen> GetTruyen(@Path("id") String truyenID);
+
+    @GET("Truyen/SearchTruyenTheoTacGia/{id}")
+    Call<List<Truyen>> GetTruyenTheoTacGia(@Path("id") String truyenID);
+
+    @GET("Truyen/SearchTruyenTheoTheLoai/{id}")
+    Call<List<Truyen>> GetTruyenTheoTheLoai(@Path("id") String truyenID);
+
+    @GET("Truyen/SearchTruyen/{id}")
+    Call<List<Truyen>> GetTruyenTheoTenTruyenOrTacGia(@Path("id") String truyenID);
+
+    @PUT("Truyen/{id}")
+    Call<Truyen> UpdateTruyen(@Path("id") String truyenID, @Body Truyen truyen);
+
+
+    //Thể loại
+    @GET("TheLoai/{id}")
+    Call<TheLoai> GetTheLoai(@Path("id") String theLoaiID);
+
+
+    @GET("TheLoai")
+    Call<List<TheLoai>> GetTatCaTheLoai();
+
+    //Tác giả
+    @GET("TacGia/{id}")
+    Call<TacGia> GetTacGia(@Path("id") String tacGiaID);
+
+    //BinhLuan
+    @POST("BinhLuan")
+    Call<PostBinhLuan> ThemBinhLuan(@Body PostBinhLuan postBinhLuan);
 }
