@@ -25,7 +25,7 @@ public interface ApiService {
     Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
     OkHttpClient http = new OkHttpClient().newBuilder().build();
     ApiService apiService = new Retrofit.Builder()
-            .baseUrl("http://192.168.1.6:8000/")
+            .baseUrl("http://172.20.10.2:8000/")
             //.baseUrl("https://manga.herokuapp.com/")
             .addConverterFactory(GsonConverterFactory.create(gson))
             .client(http)
@@ -61,9 +61,6 @@ public interface ApiService {
     //Truyện
     @GET("Truyen")
     Call<List<Truyen>> GetTatCaTruyen();
-
-    @GET("Truyen/TruyenTheoLuotXem")
-    Call<List<Truyen>> GetTruyenHot();
 
     @GET("Truyen/TruyenMoi")
     Call<List<Truyen>> GetTruyenMoi();

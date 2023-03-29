@@ -48,22 +48,6 @@ public class GetChapter extends AppCompatActivity {
         //lấy thông tin từ sharedPreferences
         SharedPreferences sharedPreferences = getSharedPreferences(MY_PREFERENCE_NAME, MODE_PRIVATE);
         id = sharedPreferences.getString("value", "");
-        ApiService.apiService.GetTruyen(chapter.getTruyen()).enqueue(new Callback<Truyen>() {
-            @Override
-            public void onResponse(Call<Truyen> call, Response<Truyen> response) {
-                if (response.body() != null) {
-                    list = Arrays.asList(response.body().getChapters());
-                    Collections.reverse(list);
-                    viewPager2.setAdapter(new DetailAdapter(list, GetChapter.this));
-                    viewPager2.setCurrentItem(position, false);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Truyen> call, Throwable t) {
-
-            }
-        });
     }
 
     private void init() {

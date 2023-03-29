@@ -69,81 +69,54 @@
               </li>
             </ul>
           </div>
-          <form style="width: 650px" method="post" action="/story/create">
+          <form style="width: 650px" method="post" action="/story/update/<%= truyen._id %>">
             <div class="form-group input-with-icon">
               <label for="TenTruyen">Tên Truyện</label>
-              <input id="TenTruyen" required="required" type="text" class="form-control" name="TenTruyen" placeholder="Nhập tên truyện..." />
+              <input required="required" type="text" class="form-control" name="TenTruyen" placeholder="<%= truyen.TenTruyen %>" value="<%= truyen.TenTruyen %>" />
             </div>
             <div class="form-group">
               <label for="GioiThieu">Mô tả</label>
-              <textarea class="form-control custom-textarea" rows="8" id="GioiThieu" name="GioiThieu"></textarea>
+              <textarea class="form-control custom-textarea" rows="8" name="GioiThieu"><%= truyen.GioiThieu %></textarea>
             </div>
             <div class="form-group input-with-icon">
               <label for="AnhBia">Link ảnh</label>
-              <input id="AnhBia" required="required" type="text" class="form-control" name="AnhBia" placeholder="Nhập link ảnh" />
+              <input required="required" type="text" class="form-control" name="AnhBia" placeholder="<%= truyen.AnhBia %>" value="<%= truyen.AnhBia %>" />
             </div>
-            <div class="form-group input-with-icon">
-              <label for="TacGia">Tác giả</label>
-              <select class="form-control" id="TacGia" style="width: 200px" name="TacGia">
-                <% author.forEach(function(aut) { %>
-                <option value="<%= aut._id %>"><%= aut.TenTacGia %></option>
-                <% }); %>
-              </select>
-            </div>
-            <div class="form-group theloai">
-              <label for="theloai">Thể loại:</label>
-              <% category.forEach(function(cate) { %>
-              <div class="checkbox">
-                <label><input data-id="<%=cate._id%>" type="checkbox" value="<%= cate.TenTheLoai %>"><%= cate.TenTheLoai %></label>
-              </div>
-              <% }); %>
-            </div>
-            <input type="text" style="width: 650px;display:none;" id="showSelectedCategoriesIds" readonly name="showSelectedCategoriesIds" />
-            <input type="text" style="width: 650px;" id="showSelectedCategoriesNames" readonly name="showSelectedCategoriesNames" />
-            <div class="form-group">
-              <label for="isDone">Truyện đã hoàn thành</label>
-              <input type="checkbox" value="true" id="isDone" name="isDone" />
-            </div>
+           
             <div class="col-lg-4 col-md-9 col-sm-12">
               <br />
-              <button class="btn btn-success">Create</button>
-              <button class="btn btn-danger" onclick="location.href='/story'">Cancel</button>
+              <button class="btn btn-success">Update</button>
+              <button class="btn btn-danger">Cancel</button>
             </div>
           </form>
         </div>
       </div>
     </div>
   </div>
+  <!--   Core JS Files   -->
   <script src="../../assets/js/core/jquery.3.2.1.min.js"></script>
   <script src="../../assets/js/core/popper.min.js"></script>
   <script src="../../assets/js/core/bootstrap.min.js"></script>
+  <!-- jQuery UI -->
   <script src="../../assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
   <script src="../../assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
+  <!-- Bootstrap Notify -->
   <script src="../../assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+
+  <!-- jQuery Scrollbar -->
   <script src="../../assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+  <!-- Atlantis JS -->
   <script src="../../assets/js/atlantis.min.js"></script>
+  <!-- Atlantis DEMO methods, don't include it in your project! -->
   <script src="../../assets/js/setting-demo2.js"></script>
+
   <script>
-    $(document).ready(function() {
-      $('input[type=checkbox]:not("#isDone")').change(function() {
-        var selectedCategoriesIds = $('input[type=checkbox]:checked').map(function() {
-          return $(this).attr('data-id');
-        }).get();
-        var selectedCategoriesNames = $('input[type=checkbox]:checked').map(function() {
-          return $(this).val();
-        }).get();
-        $("#showSelectedCategoriesIds").val(selectedCategoriesIds.join(", "));
-        $("#showSelectedCategoriesNames").val(selectedCategoriesNames.join(", "));
-      });
-    });
-  </script>
-  <script>
-    var text = "<%= message %>";
+    var text = '<%= message %>';
     if (text == 0) {
       $.notify({
         icon: "flaticon-alarm-1",
         title: "ReadingApp",
-        message: "Thêm truyện thất bại",
+        message: "Cập nhật truyện thành công",
       }, {
         type: "danger",
         placement: {

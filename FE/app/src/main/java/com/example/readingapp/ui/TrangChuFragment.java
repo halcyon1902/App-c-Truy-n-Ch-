@@ -55,12 +55,11 @@ public class TrangChuFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_trang_chu, container, false);
         init(view);
         toolBar();
-        //GetTatCaTruyen();
-        GetTruyenHot();
+        GetTatCaTruyen();
         GetTruyenMoi();
         initGridView();
-        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(MY_PREFERENCE_NAME, MODE_PRIVATE);
-        id = sharedPreferences.getString("value", "");
+//        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(MY_PREFERENCE_NAME, MODE_PRIVATE);
+//        id = sharedPreferences.getString("value", "");
         return view;
     }
 
@@ -78,7 +77,7 @@ public class TrangChuFragment extends Fragment {
         rcvDSTruyenHot.setFocusable(false);
     }
 
-    private void GetTruyenHot() {
+    private void GetTatCaTruyen() {
         ApiService.apiService.GetTatCaTruyen().enqueue(new Callback<List<Truyen>>() {
             @Override
             public void onResponse(@NonNull Call<List<Truyen>> call, @NonNull Response<List<Truyen>> response) {

@@ -28,7 +28,7 @@
             <form method="post" action="/category/update/<%= cate._id %>">
               <div class="form-group">
                 <label for="exampleInputEmail1">Tên thể loại</label>
-                <input required="required" type="text" class="form-control" name="TenTheLoai" placeholder="<%= cate.TenTheLoai %>" />
+                <input required="required" type="text" class="form-control" name="TenTheLoai" placeholder="<%= cate.TenTheLoai %>" value="<%= cate.TenTheLoai %>" />
                 <small class="form-text text-muted">Tên thể loại là unique</small>
               </div>
               <button class="btn btn-success">Update</button>

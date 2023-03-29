@@ -41,8 +41,7 @@ const TruyenSchema = new mongoose.Schema({
     type: String,
   },
   AnhBia: {
-    data: Buffer,
-    contentType: String,
+    type: String,
   },
   TacGia: {
     type: mongoose.Schema.Types.ObjectId,

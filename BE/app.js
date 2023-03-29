@@ -7,9 +7,6 @@ var bodyParser = require("body-parser"); //bodyParser trả về một function 
 const morgan = require("morgan");
 const dotenv = require("dotenv");
 const bcrypt = require("bcrypt");
-const multer = require("multer");
-const path = require("path");
-const fs = require("fs");
 dotenv.config();
 const tacgiaRoute = require("./routes/TacGia");
 const truyenRoute = require("./routes/Truyen");
@@ -17,18 +14,6 @@ const taikhoanRoute = require("./routes/TaiKhoan");
 const chapterRoute = require("./routes/Chapter");
 const binhluanRoute = require("./routes/BinhLuan");
 const theloaiRoute = require("./routes/TheLoai");
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "uploads");
-  },
-  filename: function (req, file, cb) {
-    cb(
-      null,
-      file.fieldname + "-" + Date.now() + path.extname(file.originalname)
-    );
-  },
-});
-const upload = multer({ storage: storage });
 //model
 const { Truyen, TacGia, TheLoai, Chapter, TaiKhoan } = require("./model/model");
 //giao diện
@@ -438,50 +423,34 @@ app.get("/story/create", (req, res) => {
     TaiKhoan.findOne({ TaiKhoan: session.userid }, async function (err, item) {
       const author = await TacGia.find();
       const category = await TheLoai.find();
-      res.render("../views/story/addStory", {
-        message: 2,
-        item,
-        author,
-        category,
-      });
+      res.render("../views/story/addStory", { message: 2, item, author, category });
     });
   } else {
     res.redirect("/login");
   }
 });
-app.post("/story/create", upload.single("AnhBia"), function (req, res) {
+//thêm truyện
+app.post("/story/create", function (req, res) {
   session = req.session;
   if (session.userid) {
     TaiKhoan.findOne({ TaiKhoan: session.userid }, async function (err, item) {
       try {
-        const obj = {
-          img: {
-            data: fs.readFileSync(
-              path.join(__dirname + "/uploads/" + req.file.filename)
-            ),
-            contentType: "image/png",
-          },
-        };
         const truyen = new Truyen({
           TenTruyen: req.body.TenTruyen,
           GioiThieu: req.body.GioiThieu,
-          AnhBia: obj.img,
+          AnhBia: req.body.AnhBia,
           TacGia: req.body.TacGia,
           TheLoais: req.body.showSelectedCategoriesIds,
           TinhTrang: req.body.isDone,
         });
+        console.log(truyen);
         await truyen.save();
         res.redirect("/story");
       } catch (err) {
         console.log(err);
         const author = await TacGia.find();
         const category = await TheLoai.find();
-        res.render("../views/story/addStory", {
-          message: 0,
-          item,
-          author,
-          category,
-        });
+        res.render("../views/story/addStory", { message: 0, item, author, category });
       }
     });
   }
@@ -492,9 +461,7 @@ app.get("/story/detail/:id", async (req, res) => {
   if (session.userid) {
     TaiKhoan.findOne({ TaiKhoan: session.userid }, async function (err, item) {
       try {
-        const truyen = await Truyen.findById(req.params.id).populate(
-          "Chapters"
-        );
+        const truyen = await Truyen.findById(req.params.id).populate("Chapters");
         console.log(truyen);
         res.render("../views/story/detailStory", { truyen, item });
       } catch (err) {
@@ -505,6 +472,39 @@ app.get("/story/detail/:id", async (req, res) => {
     res.redirect("/login");
   }
 });
+//show update truyện
+app.get("/story/update/:id", (req, res) => {
+  session = req.session;
+  if (session.userid) {
+    TaiKhoan.findOne({ TaiKhoan: session.userid }, async function (err, item) {
+      try {
+        const truyen = await Truyen.findById(req.params.id);
+        console.log(truyen);
+        res.render("../views/story/updateStory", {  message: 2,truyen, item });
+      } catch (err) {
+        console.log(err);
+      }
+    });
+  } else {
+    res.redirect("/story");
+  }
+});
+//update truyện
+app.post("/story/update/:id", (req, res) => {
+  var update = { 
+    TenTruyen: req.body.TenTruyen,
+    GioiThieu: req.body.GioiThieu,
+    AnhBia: req.body.AnhBia,
+  };
+  Truyen.findByIdAndUpdate(req.params.id, update, function (err, item) {
+    if (err) {
+      res.render("../views/story/updateStory", { message: 0, item });
+    } else {
+      res.redirect("/story");
+    }
+  });
+});
+//show chapter detail
 app.get("/chapter/detail/:id", (req, res) => {
   session = req.session;
   if (session.userid) {
@@ -547,10 +547,7 @@ app.post("/chapter/create/:id", (req, res) => {
           Truyen: req.params.id,
         });
         const saveChapter = await chapter.save();
-        await truyen.updateOne(
-          { $push: { Chapters: saveChapter._id } },
-          { $set: { NgayCapNhat: new Date() } }
-        );
+        await truyen.updateOne({ $push: { Chapters: saveChapter._id } }, { $set: { NgayCapNhat: new Date() } });
         res.render("../views/chapter/addChapter", { item, truyen, message: 1 });
       } catch (err) {
         console.log(err);
