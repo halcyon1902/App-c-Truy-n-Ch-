@@ -462,8 +462,9 @@ app.get("/story/detail/:id", async (req, res) => {
     TaiKhoan.findOne({ TaiKhoan: session.userid }, async function (err, item) {
       try {
         const truyen = await Truyen.findById(req.params.id).populate("Chapters");
-        console.log(truyen);
-        res.render("../views/story/detailStory", { truyen, item });
+        const tacgia = truyen.TacGia;
+        const author = await TacGia.findById(tacgia);
+        res.render("../views/story/detailStory", { truyen, item, author });
       } catch (err) {
         console.log(err);
       }
@@ -479,8 +480,7 @@ app.get("/story/update/:id", (req, res) => {
     TaiKhoan.findOne({ TaiKhoan: session.userid }, async function (err, item) {
       try {
         const truyen = await Truyen.findById(req.params.id);
-        console.log(truyen);
-        res.render("../views/story/updateStory", {  message: 2,truyen, item });
+        res.render("../views/story/updateStory", { message: 2, truyen, item });
       } catch (err) {
         console.log(err);
       }
@@ -491,7 +491,7 @@ app.get("/story/update/:id", (req, res) => {
 });
 //update truyện
 app.post("/story/update/:id", (req, res) => {
-  var update = { 
+  var update = {
     TenTruyen: req.body.TenTruyen,
     GioiThieu: req.body.GioiThieu,
     AnhBia: req.body.AnhBia,

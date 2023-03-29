@@ -52,33 +52,27 @@
                   <label for="TenTruyen">Tên truyện</label>
                   <div><%= truyen.TenTruyen %></div>
                 </div>
-
                 <!-- Mô tả truyện -->
                 <div class="form-group">
                   <label for="GioiThieu">Mô tả</label>
                   <div><%= truyen.GioiThieu %></div>
                 </div>
-
                 <!-- Tác giả truyện -->
                 <div class="form-group input-with-icon">
                   <label for="TacGia">Tác giả</label>
-                  <div><%= truyen.TacGia %></div>
+                  <div><%= author.TenTacGia %></div>
                 </div>
-
                 <!-- Thể loại truyện -->
                 <div class="form-group input-with-icon">
                   <label for="TheLoai">Thể loại</label>
                   <div><%= truyen.TheLoais %></div>
                 </div>
               </div>
-
               <div class="col-md-8">
                 <!-- Ảnh bìa truyện -->
                 <img src="<%=truyen.AnhBia%>" class="img-fluid" alt="Responsive image">
               </div>
             </div>
-
-
           </form>
           <div class="col-md-12">
             <div class="card">
@@ -105,7 +99,7 @@
                     <tbody class="centered">
                       <% truyen.Chapters.forEach(function(chapter){ %>
                       <tr>
-                        <td><a href="/story/detail/<%= chapter._id  %>"><%=  chapter.TenChapter %></a></td>
+                        <td><a href="/chapter/detail/<%= chapter._id  %>"><%=  chapter.TenChapter %></a></td>
                         <td><%= (new Date(chapter.NgayNhap)).toLocaleDateString('en-GB') %></td>
                         <% if(chapter.TrangThai==true) { %>
                         <td style="color: green">Đã kích hoạt</td>
