@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include("../blocks/head.ejs") %>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  </head>
+
+  <body>
+    <div class="wrapper">
+      <div class="main-header">
+        <!-- Logo Header -->
+        <%- include("../blocks/logoheader.ejs") %>
+        <!-- End Logo Header -->
+
+        <!-- Navbar Header -->
+        <%- include("../blocks/navbarheader.ejs") %>
+        <!-- End Navbar -->
+      </div>
+      <!-- Sidebar -->
+      <%- include("../blocks/sidebar.ejs") %>
+      <div class="main-panel">
+        <div class="content">
+          <div class="page-inner">
+            <div class="page-header">
+              <h4 class="page-title">ReadingApp</h4>
+              <ul class="breadcrumbs">
+                <ul class="breadcrumbs">
+                  <li class="nav-home">
+                    <a href="/">
+                      <i class="flaticon-home"></i>
+                    </a>
+                  </li>
+                  <li class="separator">
+                    <i class="flaticon-right-arrow"></i>
+                  </li>
+                  <li class="nav-item">
+                    <a href="/story">Danh sách truyện</a>
+                  </li>
+                </ul>
+              </ul>
+            </div>
+            <form style="width: 650px" method="get">
+              <div class="form-group input-with-icon">
+                <label for="TacGia">Tên Chương</label>
+                <div><%= chapter.TenChapter %></div>
+              </div>
+              <div class="form-group input-with-icon">
+                <label for="TacGia">Nội dung</label>
+                <div><%= chapter.NoiDung %></div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="../../assets/js/core/jquery.3.2.1.min.js"></script>
+    <script src="../../assets/js/core/popper.min.js"></script>
+    <script src="../../assets/js/core/bootstrap.min.js"></script>
+    <script src="../../assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+    <script src="../../assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
+    <script src="../../assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+    <script src="../../assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+    <script src="../../assets/js/atlantis.min.js"></script>
+    <script src="../../assets/js/setting-demo2.js"></script>
+  </body>
+</html>

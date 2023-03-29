@@ -556,4 +556,52 @@ app.post("/chapter/create/:id", (req, res) => {
     });
   }
 });
+//show chapter detail
+app.get("/chapter/detail/:id", (req, res) => {
+  session = req.session;
+  if (session.userid) {
+    TaiKhoan.findOne({ TaiKhoan: session.userid }, async function (err, item) {
+      try {
+        const chapter = await Chapter.findById(req.params.id);
+        res.render("../views/chapter/detailChapter", { chapter, item });
+      } catch (err) {
+        console.log(err);
+      }
+    });
+  } else {
+    res.redirect("/story");
+  }
+});
+//show update chapter
+app.get("/chapter/update/:id", (req, res) => {
+  session = req.session;
+  if (session.userid) {
+    Chapter.findOne({ TaiKhoan: session.userid }, async function (err, item) {
+      try {
+        const chapter = await Chapter.findById(req.params.id);
+        console.log(chapter);
+        res.render("../views/chapter/updateChapter", { message: 2, chapter, item });
+      } catch (err) {
+        console.log(err);
+      }
+    });
+  } else {
+    res.redirect("/story");
+  }
+});
+////update chapter
+app.post("/chapter/update/:id", (req, res) => {
+  var update = {
+    TenChapter: req.body.TenChapter,
+    NoiDung: req.body.NoiDung,
+    TrangThai: req.body.isActive,
+  };
+  Chapter.findByIdAndUpdate(req.params.id, update, function (err, item) {
+    if (err) {
+      res.render("../views/chapter/updateChapter", { message: 0, item });
+    } else {
+      res.redirect("/story");
+    }
+  });
+});
 //#endregion
