@@ -115,9 +115,12 @@
             android:textStyle="bold"
             tools:ignore="HardcodedText" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rcv_tac_gia"
+        <TextView
+            android:id="@+id/txt_tac_gia"
             android:layout_width="wrap_content"
+            android:text="ua alo"
+            android:textSize="15sp"
+            android:textColor="@color/white"
             android:layout_height="wrap_content" />
 
         <TextView

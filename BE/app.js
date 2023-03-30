@@ -464,7 +464,24 @@ app.get("/story/detail/:id", async (req, res) => {
         const truyen = await Truyen.findById(req.params.id).populate("Chapters");
         const tacgia = truyen.TacGia;
         const author = await TacGia.findById(tacgia);
-        res.render("../views/story/detailStory", { truyen, item, author });
+        const theloai = truyen.TheLoais.toString();
+        const temp = theloai.split(",").map((str) => str.trim());
+        async function retrieveAsync() {
+          const tempArray = [];
+          for (const id of temp) {
+            try {
+              const item2 = await TheLoai.findById(id).exec();
+              if (item2) {
+                tempArray.push(item2.TenTheLoai);
+              }
+            } catch (err) {
+              console.error(err);
+            }
+          }
+          return tempArray; // Trả về kết quả cho hàm
+        }
+        const tempArray = await retrieveAsync(); // Lấy danh sách thể loại bằng cách gọi hàm
+        res.render("../views/story/detailStory", { truyen, item, author, tempArray });
       } catch (err) {
         console.log(err);
       }
@@ -473,36 +490,85 @@ app.get("/story/detail/:id", async (req, res) => {
     res.redirect("/login");
   }
 });
-//show update truyện
-app.get("/story/update/:id", (req, res) => {
-  session = req.session;
-  if (session.userid) {
-    TaiKhoan.findOne({ TaiKhoan: session.userid }, async function (err, item) {
-      try {
-        const truyen = await Truyen.findById(req.params.id);
-        res.render("../views/story/updateStory", { message: 2, truyen, item });
-      } catch (err) {
-        console.log(err);
+// Show update story form
+app.get("/story/update/:id", async (req, res) => {
+  try {
+    const session = req.session;
+    if (!session.userid) {
+      return res.redirect("/story");
+    }
+    const item = await TaiKhoan.findOne({ TaiKhoan: session.userid });
+    const truyen = await Truyen.findById(req.params.id);
+    const authors = await TacGia.find();
+    const categories = await TheLoai.find();
+    const theloai = truyen.TheLoais.toString();
+    const temp = theloai.split(",").map((str) => str.trim());
+    async function retrieveAsync() {
+      const selectedCategories = [];
+      for (const id of temp) {
+        try {
+          const item2 = await TheLoai.findById(id).exec();
+          if (item2) {
+            selectedCategories.push(item2.TenTheLoai);
+          }
+        } catch (err) {
+          console.error(err);
+        }
       }
+      return selectedCategories; // Trả về kết quả cho hàm
+    }
+    // Get the list of selected categories
+    const selectedCategories = await retrieveAsync();
+    // Render the form with selected categories
+    res.render("../views/story/updateStory", {
+      message: 2,
+      truyen,
+      item,
+      authors,
+      categories,
+      author: authors,
+      selectedCategories, // Pass the selected categories to the view
     });
-  } else {
+  } catch (err) {
+    console.log(err);
     res.redirect("/story");
   }
 });
 //update truyện
-app.post("/story/update/:id", (req, res) => {
-  var update = {
-    TenTruyen: req.body.TenTruyen,
-    GioiThieu: req.body.GioiThieu,
-    AnhBia: req.body.AnhBia,
-  };
-  Truyen.findByIdAndUpdate(req.params.id, update, function (err, item) {
-    if (err) {
-      res.render("../views/story/updateStory", { message: 0, item });
-    } else {
-      res.redirect("/story");
+app.post("/story/update/:id", async (req, res) => {
+  try {
+    const truyen = await Truyen.findById(req.params.id);
+    if (!truyen) {
+      return res.render("../views/story/updateStory", { message: 0 });
     }
-  });
+    // Retrieve selected categories
+    const theloai = req.body.theloai || []; // Empty array if no category is selected
+    const showSelectedCategories = await Promise.all(
+      theloai.map(async (categoryName) => {
+        try {
+          const category = await TheLoai.findOne({ TenTheLoai: categoryName }).exec();
+          return category ? category._id : null; // Return category ID instead of object
+        } catch (err) {
+          console.error(err);
+          return null;
+        }
+      })
+    );
+    const update = {
+      TenTruyen: req.body.TenTruyen,
+      GioiThieu: req.body.GioiThieu,
+      AnhBia: req.body.AnhBia,
+      TacGia: req.body.TacGia,
+      TheLoais: showSelectedCategories.filter((category) => category !== null),
+      TinhTrang: req.body.isEnable,
+      TrangThai: req.body.isActive,
+    };
+    await truyen.updateOne(update);
+    res.redirect("/story");
+  } catch (err) {
+    console.log(err);
+    res.redirect("/story");
+  }
 });
 //show chapter detail
 app.get("/chapter/detail/:id", (req, res) => {

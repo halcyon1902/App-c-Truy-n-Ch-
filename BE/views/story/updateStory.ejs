@@ -1,132 +1,202 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <%- include("../blocks/head.ejs") %>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  </head>
+  <style>
+    .input-with-icon {
+      position: relative;
+    }
 
-<head>
-  <%- include("../blocks/head.ejs") %>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-</head>
-<style>
-  .input-with-icon {
-    position: relative;
-  }
+    .field-icon {
+      margin-right: 30px;
+      position: absolute;
+      right: 0;
+      top: 65%;
+      transform: translateY(-50%);
+      cursor: pointer;
+    }
 
-  .field-icon {
-    margin-right: 30px;
-    position: absolute;
-    right: 0;
-    top: 65%;
-    transform: translateY(-50%);
-    cursor: pointer;
-  }
+    .theloai {
+      column-count: 5;
+      column-width: 130px;
+      column-gap: 10px;
+    }
 
-  .theloai {
-    column-count: 5;
-    column-width: 130px;
-    column-gap: 10px;
-  }
+    .form-control {
+      padding-right: 30px;
+    }
+  </style>
 
-  .form-control {
-    padding-right: 30px;
-  }
-</style>
+  <body>
+    <div class="wrapper">
+      <div class="main-header">
+        <!-- Logo Header -->
+        <%- include("../blocks/logoheader.ejs") %>
+        <!-- End Logo Header -->
 
-<body>
-  <div class="wrapper">
-    <div class="main-header">
-      <!-- Logo Header -->
-      <%- include("../blocks/logoheader.ejs") %>
-      <!-- End Logo Header -->
-
-      <!-- Navbar Header -->
-      <%- include("../blocks/navbarheader.ejs") %>
-      <!-- End Navbar -->
-    </div>
-    <!-- Sidebar -->
-    <%- include("../blocks/sidebar.ejs") %>
-    <div class="main-panel">
-      <div class="content">
-        <div class="page-inner">
-          <div class="page-header">
-            <h4 class="page-title">ReadingApp</h4>
-            <ul class="breadcrumbs">
-              <li class="nav-home">
-                <a href="/">
-                  <i class="flaticon-home"></i>
-                </a>
-              </li>
-              <li class="separator">
-                <i class="flaticon-right-arrow"></i>
-              </li>
-              <li class="nav-item">
-                <a href="/story">Danh sách truyện</a>
-              </li>
-              <li class="separator">
-                <i class="flaticon-right-arrow"></i>
-              </li>
-              <li class="nav-item">
-                <a href="/story/create">Thêm truyện</a>
-              </li>
-            </ul>
+        <!-- Navbar Header -->
+        <%- include("../blocks/navbarheader.ejs") %>
+        <!-- End Navbar -->
+      </div>
+      <!-- Sidebar -->
+      <%- include("../blocks/sidebar.ejs") %>
+      <div class="main-panel">
+        <div class="content">
+          <div class="page-inner">
+            <div class="page-header">
+              <h4 class="page-title">ReadingApp</h4>
+              <ul class="breadcrumbs">
+                <li class="nav-home">
+                  <a href="/">
+                    <i class="flaticon-home"></i>
+                  </a>
+                </li>
+                <li class="separator">
+                  <i class="flaticon-right-arrow"></i>
+                </li>
+                <li class="nav-item">
+                  <a href="/story">Danh sách truyện</a>
+                </li>
+                <li class="separator">
+                  <i class="flaticon-right-arrow"></i>
+                </li>
+                <li class="nav-item">
+                  <a href="/story/update">Cập nhật truyện</a>
+                </li>
+              </ul>
+            </div>
+            <form method="post" action="/story/update/<%= truyen._id %>">
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group input-with-icon">
+                    <label for="TenTruyen">Tên Truyện</label>
+                    <input required="required" type="text" class="form-control" name="TenTruyen" placeholder="<%= truyen.TenTruyen %>" value="<%= truyen.TenTruyen %>" />
+                  </div>
+                  <div class="form-group">
+                    <label for="GioiThieu">Mô tả</label>
+                    <textarea class="form-control custom-textarea" rows="8" name="GioiThieu"><%= truyen.GioiThieu %></textarea>
+                  </div>
+                  <div class="form-group input-with-icon">
+                    <label for="AnhBia">Link ảnh</label>
+                    <input required="required" type="text" class="form-control" name="AnhBia" placeholder="<%= truyen.AnhBia %>" value="<%= truyen.AnhBia %>" />
+                  </div>
+                  <div class="form-group input-with-icon">
+                    <label for="TacGia">Tác giả</label>
+                    <select class="form-control" id="TacGia" style="width: 200px" name="TacGia">
+                      <% authors.forEach(function(author) { %> <% if (author._id.equals(truyen.TacGia)) { %>
+                      <option value="<%= author._id %>" selected><%= author.TenTacGia %></option>
+                      <% } else { %>
+                      <option value="<%= author._id %>"><%= author.TenTacGia %></option>
+                      <% } %> <% }); %>
+                    </select>
+                  </div>
+                  <div class="form-group theloai">
+                    <label for="theloai">Thể loại:</label>
+                    <% categories.forEach(function(cate) { %>
+                    <div class="checkbox">
+                      <% if (selectedCategories && selectedCategories.includes(cate.TenTheLoai)) { %>
+                      <input type="checkbox" name="theloai" value="<%= cate.TenTheLoai %>" checked /> <%= cate.TenTheLoai %> <% } else { %> <input type="checkbox" name="theloai" value="<%= cate.TenTheLoai %>" /> <%= cate.TenTheLoai %> <% } %>
+                    </div>
+                    <% }); %>
+                  </div>
+                  <input type="text" style="width: 650px; display: none" id="showSelectedCategoriesIds" readonly name="showSelectedCategoriesIds" value="<%= [...selectedCategories].join(',') %>" />
+                  <input type="text" style="width: 650px" id="showSelectedCategoriesNames" readonly name="showSelectedCategoriesNames" value="<%= selectedCategories.join(', ') %>" />
+                  <div class="form-group">
+                    <% if(truyen.TinhTrang){ %>
+                    <label for="isAdmin">Chưa hoàn thành</label>
+                    <input type="checkbox" value="false" name="isEnable" />
+                    <% }else{ %>
+                    <label for="isAdmin">Đã hoàn thành</label>
+                    <input type="checkbox" value="true" name="isEnable" />
+                    <% } %>
+                  </div>
+                  <div class="form-group">
+                    <% if(truyen.TrangThai){ %>
+                    <label for="isActive">Chưa kích hoạt</label>
+                    <input type="checkbox" value="false" name="isActive" />
+                    <% }else{ %>
+                    <label for="isActive">Đã kích hoạt</label>
+                    <input type="checkbox" value="true" name="isActive" />
+                    <% } %>
+                  </div>
+                </div>
+                <div class="col-md-8">
+                  <!-- Ảnh bìa truyện -->
+                  <img src="<%=truyen.AnhBia%>" class="img-fluid" alt="Responsive image" />
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-9 col-sm-12">
+                <br />
+                <button class="btn btn-success">Update</button>
+                <button class="btn btn-danger">Cancel</button>
+              </div>
+            </form>
           </div>
-          <form style="width: 650px" method="post" action="/story/update/<%= truyen._id %>">
-            <div class="form-group input-with-icon">
-              <label for="TenTruyen">Tên Truyện</label>
-              <input required="required" type="text" class="form-control" name="TenTruyen" placeholder="<%= truyen.TenTruyen %>" value="<%= truyen.TenTruyen %>" />
-            </div>
-            <div class="form-group">
-              <label for="GioiThieu">Mô tả</label>
-              <textarea class="form-control custom-textarea" rows="8" name="GioiThieu"><%= truyen.GioiThieu %></textarea>
-            </div>
-            <div class="form-group input-with-icon">
-              <label for="AnhBia">Link ảnh</label>
-              <input required="required" type="text" class="form-control" name="AnhBia" placeholder="<%= truyen.AnhBia %>" value="<%= truyen.AnhBia %>" />
-            </div>
-           
-            <div class="col-lg-4 col-md-9 col-sm-12">
-              <br />
-              <button class="btn btn-success">Update</button>
-              <button class="btn btn-danger">Cancel</button>
-            </div>
-          </form>
         </div>
       </div>
     </div>
-  </div>
-  <!--   Core JS Files   -->
-  <script src="../../assets/js/core/jquery.3.2.1.min.js"></script>
-  <script src="../../assets/js/core/popper.min.js"></script>
-  <script src="../../assets/js/core/bootstrap.min.js"></script>
-  <!-- jQuery UI -->
-  <script src="../../assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
-  <script src="../../assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
-  <!-- Bootstrap Notify -->
-  <script src="../../assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+    <!--   Core JS Files   -->
+    <script src="../../assets/js/core/jquery.3.2.1.min.js"></script>
+    <script src="../../assets/js/core/popper.min.js"></script>
+    <script src="../../assets/js/core/bootstrap.min.js"></script>
+    <!-- jQuery UI -->
+    <script src="../../assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+    <script src="../../assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
+    <!-- Bootstrap Notify -->
+    <script src="../../assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
 
-  <!-- jQuery Scrollbar -->
-  <script src="../../assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
-  <!-- Atlantis JS -->
-  <script src="../../assets/js/atlantis.min.js"></script>
-  <!-- Atlantis DEMO methods, don't include it in your project! -->
-  <script src="../../assets/js/setting-demo2.js"></script>
+    <!-- jQuery Scrollbar -->
+    <script src="../../assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+    <!-- Atlantis JS -->
+    <script src="../../assets/js/atlantis.min.js"></script>
+    <!-- Atlantis DEMO methods, don't include it in your project! -->
+    <script src="../../assets/js/setting-demo2.js"></script>
+    <script>
+      // Lấy tất cả các checkbox trong danh sách thể loại
+      const checkboxes = document.querySelectorAll('input[name="theloai"]');
 
-  <script>
-    var text = '<%= message %>';
-    if (text == 0) {
-      $.notify({
-        icon: "flaticon-alarm-1",
-        title: "ReadingApp",
-        message: "Cập nhật truyện thành công",
-      }, {
-        type: "danger",
-        placement: {
-          from: "top",
-          align: "center",
-        },
-        time: 1000,
+      // Lấy input chứa tên các thể loại đã chọn
+      const selectedCategoriesNamesInput = document.querySelector("#showSelectedCategoriesNames");
+
+      // Thêm sự kiện onclick cho mỗi checkbox
+      checkboxes.forEach((checkbox) => {
+        checkbox.onclick = () => {
+          // Tạo một mảng chứa tên các thể loại đã chọn
+          const selectedCategoriesNames = [];
+          checkboxes.forEach((checkbox) => {
+            if (checkbox.checked) {
+              selectedCategoriesNames.push(checkbox.value);
+            }
+          });
+
+          // Cập nhật giá trị của input "showSelectedCategoriesNames"
+          selectedCategoriesNamesInput.value = selectedCategoriesNames.join(", ");
+        };
       });
-    }
-  </script>
-</body>
+    </script>
 
+    <script>
+      var text = "<%= message %>";
+      if (text == 0) {
+        $.notify(
+          {
+            icon: "flaticon-alarm-1",
+            title: "ReadingApp",
+            message: "Cập nhật truyện thành công",
+          },
+          {
+            type: "danger",
+            placement: {
+              from: "top",
+              align: "center",
+            },
+            time: 1000,
+          }
+        );
+      }
+    </script>
+  </body>
 </html>

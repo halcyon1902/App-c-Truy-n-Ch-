@@ -2,7 +2,6 @@ package com.example.readingapp.model;
 
 import java.io.Serializable;
 import java.util.Arrays;
-import java.util.Date;
 
 public class Truyen implements Serializable {
     private String _id;
@@ -12,24 +11,39 @@ public class Truyen implements Serializable {
     private boolean TinhTrang;
     private String GioiThieu;
     private String AnhBia;
-    private int LuotThich;
-    private int LuotXem;
-    private int LuotXemThang;
-    private Date NgayXepHang;
-    private String[] TacGias;
-
-    public Truyen(boolean trangThai, boolean tinhTrang, int luotThich, int luotXem, int luotXemThang, Date ngayXepHang) {
-        TrangThai = trangThai;
-        TinhTrang = tinhTrang;
-        LuotThich = luotThich;
-        LuotXem = luotXem;
-        LuotXemThang = luotXemThang;
-        NgayXepHang = ngayXepHang;
-    }
-
+    private String TacGias;
 
     public Truyen() {
     }
+
+    public Truyen(String _id, String tenTruyen, String[] theLoais, boolean trangThai, boolean tinhTrang, String gioiThieu, String anhBia, String tacGias) {
+        this._id = _id;
+        TenTruyen = tenTruyen;
+        TheLoais = theLoais;
+        TrangThai = trangThai;
+        TinhTrang = tinhTrang;
+        GioiThieu = gioiThieu;
+        AnhBia = anhBia;
+        TacGias = tacGias;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Truyen{" +
+                "_id='" + _id + '\'' +
+                ", TenTruyen='" + TenTruyen + '\'' +
+                ", TheLoais=" + Arrays.toString(TheLoais) +
+                ", TrangThai=" + TrangThai +
+                ", TinhTrang=" + TinhTrang +
+                ", GioiThieu='" + GioiThieu + '\'' +
+                ", AnhBia='" + AnhBia + '\'' +
+                ", TacGias=" + TacGias +
+//                ", Chapters=" + Arrays.toString(Chapters) +
+                '}';
+    }
+
+
     public String get_id() {
         return _id;
     }
@@ -86,43 +100,11 @@ public class Truyen implements Serializable {
         AnhBia = anhBia;
     }
 
-    public int getLuotThich() {
-        return LuotThich;
-    }
-
-    public void setLuotThich(int luotThich) {
-        LuotThich = luotThich;
-    }
-
-    public int getLuotXem() {
-        return LuotXem;
-    }
-
-    public void setLuotXem(int luotXem) {
-        LuotXem = luotXem;
-    }
-
-    public int getLuotXemThang() {
-        return LuotXemThang;
-    }
-
-    public void setLuotXemThang(int luotXemThang) {
-        LuotXemThang = luotXemThang;
-    }
-
-    public Date getNgayXepHang() {
-        return NgayXepHang;
-    }
-
-    public void setNgayXepHang(Date ngayXepHang) {
-        NgayXepHang = ngayXepHang;
-    }
-
-    public String[] getTacGias() {
+    public String getTacGias() {
         return TacGias;
     }
 
-    public void setTacGias(String[] tacGias) {
+    public void setTacGias(String tacGias) {
         TacGias = tacGias;
     }
 }

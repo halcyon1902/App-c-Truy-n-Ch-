@@ -1,7 +1,6 @@
 package com.example.readingapp.model;
 
 import java.io.Serializable;
-import java.util.Arrays;
 import java.util.Date;
 
 public class Chapter implements Serializable {
@@ -11,35 +10,20 @@ public class Chapter implements Serializable {
     private Date NgayNhap;
     private boolean TrangThai;
     private String Truyen;
-    private String[] LinkAnhs;
-    private int LuotXem;
-    private BinhLuan[] BinhLuans;
 
     public Chapter() {
     }
 
     public Chapter(int luotXem, boolean trangThai) {
-        LuotXem = luotXem;
         TrangThai = trangThai;
     }
 
-    public Chapter(String _id, String tenChapter, Date ngayNhap, boolean trangThai, String truyen, String[] linkAnhs, int luotXem, BinhLuan[] binhLuans) {
+    public Chapter(String _id, String tenChapter, Date ngayNhap, boolean trangThai, String truyen) {
         this._id = _id;
         TenChapter = tenChapter;
         NgayNhap = ngayNhap;
         TrangThai = trangThai;
         Truyen = truyen;
-        LinkAnhs = linkAnhs;
-        LuotXem = luotXem;
-        BinhLuans = binhLuans;
-    }
-
-    public int getLuotXem() {
-        return LuotXem;
-    }
-
-    public void setLuotXem(int luotXem) {
-        LuotXem = luotXem;
     }
 
     public String get_id() {
@@ -82,22 +66,6 @@ public class Chapter implements Serializable {
         Truyen = truyen;
     }
 
-    public String[] getLinkAnhs() {
-        return LinkAnhs;
-    }
-
-    public void setLinkAnhs(String[] linkAnhs) {
-        LinkAnhs = linkAnhs;
-    }
-
-    public BinhLuan[] getBinhLuans() {
-        return BinhLuans;
-    }
-
-    public void setBinhLuans(BinhLuan[] binhLuans) {
-        BinhLuans = binhLuans;
-    }
-
     @Override
     public String toString() {
         return "Chapter{" +
@@ -106,9 +74,6 @@ public class Chapter implements Serializable {
                 ", NgayNhap='" + NgayNhap + '\'' +
                 ", TrangThai=" + TrangThai +
                 ", Truyen='" + Truyen + '\'' +
-                ", LinkAnhs=" + Arrays.toString(LinkAnhs) +
-                ", LuotXem=" + LuotXem +
-                ", BinhLuans=" + Arrays.toString(BinhLuans) +
                 '}';
     }
 }

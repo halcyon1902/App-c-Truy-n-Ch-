@@ -48,9 +48,6 @@
         <activity
             android:name=".function.GetTruyen"
             android:exported="false" />
-        <activity
-            android:name=".function.GetChapter"
-            android:exported="false" />
 
     </application>
 
