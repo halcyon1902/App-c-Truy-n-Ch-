@@ -1,25 +1,20 @@
 package com.example.readingapp.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.readingapp.R;
 import com.example.readingapp.model.TheLoai;
-import com.example.readingapp.ui.SearchActivity;
 
 import java.util.List;
 
 public class TheLoaiAdapter extends RecyclerView.Adapter<TheLoaiAdapter.TheLoaiViewHolder> {
-
-
     private Context context;
     private List<TheLoai> mlistTheLoai;
 
@@ -43,15 +38,6 @@ public class TheLoaiAdapter extends RecyclerView.Adapter<TheLoaiAdapter.TheLoaiV
         if (theLoai == null)
             return;
         holder.tvTenTheLoai.setText(theLoai.getTenTheLoai());
-        // hien gach chan o duoi text
-        holder.cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, SearchActivity.class);
-                intent.putExtra("clickTenTheLoai", theLoai.getTenTheLoai());
-                context.startActivity(intent);
-            }
-        });
     }
 
     @Override
@@ -64,11 +50,9 @@ public class TheLoaiAdapter extends RecyclerView.Adapter<TheLoaiAdapter.TheLoaiV
     public static class TheLoaiViewHolder extends RecyclerView.ViewHolder {
 
         private TextView tvTenTheLoai;
-        private CardView cardView;
 
         public TheLoaiViewHolder(@NonNull View itemView) {
             super(itemView);
-            cardView = itemView.findViewById(R.id.crd_theloai);
             tvTenTheLoai = itemView.findViewById(R.id.tv_item_the_loai);
         }
     }

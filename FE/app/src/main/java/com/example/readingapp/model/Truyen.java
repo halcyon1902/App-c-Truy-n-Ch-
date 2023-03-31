@@ -11,12 +11,13 @@ public class Truyen implements Serializable {
     private boolean TinhTrang;
     private String GioiThieu;
     private String AnhBia;
-    private String TacGias;
+    private String TacGia;
+    private Chapter[] Chapters;
 
     public Truyen() {
     }
 
-    public Truyen(String _id, String tenTruyen, String[] theLoais, boolean trangThai, boolean tinhTrang, String gioiThieu, String anhBia, String tacGias) {
+    public Truyen(String _id, String tenTruyen, String[] theLoais, boolean trangThai, boolean tinhTrang, String gioiThieu, String anhBia, String tacGia, Chapter[] chapters) {
         this._id = _id;
         TenTruyen = tenTruyen;
         TheLoais = theLoais;
@@ -24,9 +25,9 @@ public class Truyen implements Serializable {
         TinhTrang = tinhTrang;
         GioiThieu = gioiThieu;
         AnhBia = anhBia;
-        TacGias = tacGias;
+        TacGia = tacGia;
+        Chapters = chapters;
     }
-
 
     @Override
     public String toString() {
@@ -38,11 +39,10 @@ public class Truyen implements Serializable {
                 ", TinhTrang=" + TinhTrang +
                 ", GioiThieu='" + GioiThieu + '\'' +
                 ", AnhBia='" + AnhBia + '\'' +
-                ", TacGias=" + TacGias +
-//                ", Chapters=" + Arrays.toString(Chapters) +
+                ", TacGia=" + TacGia +
+                ", Chapters=" + Arrays.toString(Chapters) +
                 '}';
     }
-
 
     public String get_id() {
         return _id;
@@ -100,11 +100,19 @@ public class Truyen implements Serializable {
         AnhBia = anhBia;
     }
 
-    public String getTacGias() {
-        return TacGias;
+    public String getTacGia() {
+        return TacGia;
     }
 
-    public void setTacGias(String tacGias) {
-        TacGias = tacGias;
+    public void setTacGia(String tacGia) {
+        TacGia = tacGia;
+    }
+
+    public Chapter[] getChapters() {
+        return Chapters;
+    }
+
+    public void setChapters(Chapter[] chapters) {
+        Chapters = chapters;
     }
 }

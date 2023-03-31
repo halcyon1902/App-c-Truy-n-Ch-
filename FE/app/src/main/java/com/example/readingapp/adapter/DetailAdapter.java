@@ -37,6 +37,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
             return;
         }
         holder.tv_chapter.setText(chapter.getTenChapter());
+        holder.txtnoidungtruyen.setText(chapter.getNoiDung());
     }
 
     @Override
@@ -48,11 +49,12 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private final TextView tv_chapter;
+        private final TextView tv_chapter, txtnoidungtruyen;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tv_chapter = itemView.findViewById(R.id.tv_chapter);
+            txtnoidungtruyen = itemView.findViewById(R.id.txtnoidungtruyen);
         }
     }
 }

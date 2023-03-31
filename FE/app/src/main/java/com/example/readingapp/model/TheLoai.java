@@ -6,20 +6,17 @@ public class TheLoai implements Serializable {
 
     private String _id;
     private String TenTheLoai;
-    private boolean TrangThai;
 
     public TheLoai() {
     }
 
     public TheLoai(String tenTheLoai, boolean trangThai) {
         TenTheLoai = tenTheLoai;
-        TrangThai = trangThai;
     }
 
     public TheLoai(String _id, String tenTheLoai, boolean trangThai) {
         this._id = _id;
         TenTheLoai = tenTheLoai;
-        TrangThai = trangThai;
     }
 
     public String getTenTheLoai() {
@@ -28,14 +25,6 @@ public class TheLoai implements Serializable {
 
     public void setTenTheLoai(String tenTheLoai) {
         TenTheLoai = tenTheLoai;
-    }
-
-    public boolean isTrangThai() {
-        return TrangThai;
-    }
-
-    public void setTrangThai(boolean trangThai) {
-        TrangThai = trangThai;
     }
 
     public String get_id() {
@@ -51,7 +40,6 @@ public class TheLoai implements Serializable {
         return "TheLoai{" +
                 "_id='" + _id + '\'' +
                 ", TenTheLoai='" + TenTheLoai + '\'' +
-                ", TrangThai=" + TrangThai +
                 '}';
     }
 }

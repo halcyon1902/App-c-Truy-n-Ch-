@@ -16,11 +16,6 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".ui.SearchActivity"
-            android:exported="false"
-            android:label="@string/title_activity_search"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity
             android:name=".mainscreen.MainScreen"
             android:exported="true"
             android:label="@string/app_name">
@@ -48,7 +43,12 @@
         <activity
             android:name=".function.GetTruyen"
             android:exported="false" />
-
+        <activity
+            android:name=".function.GetChapter"
+            android:exported="false" />
+        <activity
+            android:name=".ui.SearchTruyen"
+            android:exported="false" />
     </application>
 
 </manifest>

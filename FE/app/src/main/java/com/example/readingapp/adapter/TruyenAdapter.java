@@ -18,16 +18,17 @@ import com.example.readingapp.R;
 import com.example.readingapp.function.GetTruyen;
 import com.example.readingapp.model.Truyen;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TruyenAdapter extends RecyclerView.Adapter<TruyenAdapter.TruyenTranhViewHolder> {
     private Context context;
-    private List<Truyen> mListTruyenTranh;
+    private List<Truyen> mListTruyen;
 
     @SuppressLint("NotifyDataSetChanged")
-    public TruyenAdapter(Context context, List<Truyen> mListTruyenTranh) {
+    public TruyenAdapter(Context context, List<Truyen> mListTruyen) {
         this.context = context;
-        this.mListTruyenTranh = mListTruyenTranh;
+        this.mListTruyen = mListTruyen;
         notifyDataSetChanged();
     }
 
@@ -40,9 +41,9 @@ public class TruyenAdapter extends RecyclerView.Adapter<TruyenAdapter.TruyenTran
 
     @Override
     public void onBindViewHolder(@NonNull TruyenTranhViewHolder holder, int position) {
-        Truyen truyen = mListTruyenTranh.get(position);
+        Truyen truyen = mListTruyen.get(position);
         if (truyen != null) {
-            holder.tenTruyebTranh.setText(truyen.getTenTruyen());
+            holder.tenTruyen.setText(truyen.getTenTruyen());
             Glide.with(context).load(truyen.getAnhBia()).into(holder.imgAnhBia);
             holder.crvTruyen.setOnClickListener(v -> {
                 //Click vào chi tiết truyện
@@ -53,27 +54,33 @@ public class TruyenAdapter extends RecyclerView.Adapter<TruyenAdapter.TruyenTran
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    public void filterList(ArrayList<Truyen> filteredList) {
+        mListTruyen = filteredList;
+        notifyDataSetChanged();
+    }
+
     public void release() {
         context = null;
     }
 
     @Override
     public int getItemCount() {
-        if (mListTruyenTranh != null)
-            return mListTruyenTranh.size();
+        if (mListTruyen != null)
+            return mListTruyen.size();
         return 0;
     }
 
     public static class TruyenTranhViewHolder extends RecyclerView.ViewHolder {
         private final CardView crvTruyen;
-        private final TextView tenTruyebTranh;
+        private final TextView tenTruyen;
         private final ImageView imgAnhBia;
 
 
         public TruyenTranhViewHolder(@NonNull View itemView) {
             super(itemView);
             crvTruyen = itemView.findViewById(R.id.crv_TruyenTranh);
-            tenTruyebTranh = itemView.findViewById(R.id.tv_TenTruyen);
+            tenTruyen = itemView.findViewById(R.id.tv_TenTruyen);
             imgAnhBia = itemView.findViewById(R.id.imgv_AnhBia);
         }
     }

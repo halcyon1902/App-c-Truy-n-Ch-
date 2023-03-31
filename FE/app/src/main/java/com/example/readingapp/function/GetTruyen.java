@@ -3,7 +3,6 @@ package com.example.readingapp.function;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
@@ -17,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.readingapp.R;
+import com.example.readingapp.adapter.ChapterAdapter;
 import com.example.readingapp.adapter.TheLoaiAdapter;
 import com.example.readingapp.api.ApiService;
 import com.example.readingapp.model.Chapter;
@@ -26,6 +26,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import retrofit2.Call;
@@ -33,24 +34,20 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class GetTruyen extends AppCompatActivity {
-    private static final String MY_PREFERENCE_NAME = "USER_ID";
     private final Context context = this;
-    String id = null;
     private TextView tvTenTruyen, tvTinhTrang, tvNoiDung, tvTongChuong, txt_tac_gia;
     private ImageView imgAnhBia, imgAnhNen, fav;
     private RecyclerView rcvTheLoai, rcvChapter;
     private List<String> listIDTheLoai;
     private List<TheLoai> listTheLoai;
     List<Chapter> mlistChapter;
-
+    private ChapterAdapter chapterAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setFullScreen();
         setContentView(R.layout.activity_get_truyen);
-        SharedPreferences sharedPreferences = getSharedPreferences(MY_PREFERENCE_NAME, MODE_PRIVATE);
-        id = sharedPreferences.getString("value", "");
         // lấy intent
         Intent intent = getIntent();
         Truyen truyen = (Truyen) intent.getSerializableExtra("clickTruyen");
@@ -72,15 +69,18 @@ public class GetTruyen extends AppCompatActivity {
     private void hienThiTruyen(Truyen truyen) {
         if (truyen != null && truyen.isTrangThai()) {
             listIDTheLoai = Arrays.asList(truyen.getTheLoais());
-            txt_tac_gia.setText(truyen.getTacGias());
-            //mlistChapter = Arrays.asList(truyen.getChapters());
+            //Hiển thị chapter
+            mlistChapter = Arrays.asList(truyen.getChapters());
+            Collections.reverse(mlistChapter);
+            chapterAdapter = new ChapterAdapter(mlistChapter, context);
+            rcvChapter.setAdapter(chapterAdapter);
             //Hiển thị thể loại
             for (int i = 0; i < listIDTheLoai.size(); i++) {
                 ApiService.apiService.GetTheLoai(listIDTheLoai.get(i)).enqueue(new Callback<TheLoai>() {
                     @Override
                     public void onResponse(@NonNull Call<TheLoai> call, @NonNull Response<TheLoai> response) {
                         TheLoai theLoai = response.body();
-                        if (theLoai != null && theLoai.isTrangThai()) {
+                        if (theLoai != null) {
                             listTheLoai.add(theLoai);
                         }
                         TheLoaiAdapter theLoaiAdapter = new TheLoaiAdapter(listTheLoai, GetTruyen.this);
@@ -92,24 +92,20 @@ public class GetTruyen extends AppCompatActivity {
                     }
                 });
             }
-
-            //hiển thị thông tin truyện
-            tvTenTruyen.setText(truyen.getTenTruyen());
-            if (truyen.isTrangThai()) {
-                tvTinhTrang.setText("Tình trạng: Hoàn thành");
-            } else {
-                tvTinhTrang.setText("Tình trạng: Đang tiến thành");
-            }
-            tvNoiDung.setText(truyen.getGioiThieu());
-          //  tvTongChuong.setText("Tổng chapter: " + mlistChapter.size());
-            Picasso.get().load(truyen.getAnhBia()).into(imgAnhBia);
-            Picasso.get().load(truyen.getAnhBia()).into(imgAnhNen);
         }
-    }
-
-    private void setFullScreen() {
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        //hiển thị thông tin truyện
+        tvTenTruyen.setText(truyen.getTenTruyen());
+        if (truyen.isTrangThai()) {
+            tvTinhTrang.setText("Tình trạng: Hoàn thành");
+        } else {
+            tvTinhTrang.setText("Tình trạng: Đang tiến thành");
+        }
+        tvNoiDung.setText(truyen.getGioiThieu());
+        tvTongChuong.setText("Tổng chapter: " + mlistChapter.size());
+        //Hiển thị tác giả
+        txt_tac_gia.setText(truyen.getTacGia());
+        Picasso.get().load(truyen.getAnhBia()).into(imgAnhBia);
+        Picasso.get().load(truyen.getAnhBia()).into(imgAnhNen);
     }
 
     private void init() {
@@ -117,11 +113,16 @@ public class GetTruyen extends AppCompatActivity {
         fav = findViewById(R.id.btn_fav);
         tvTinhTrang = findViewById(R.id.tv_tinhtrang_truyen);
         tvNoiDung = findViewById(R.id.tv_noi_dung_truyen);
+        txt_tac_gia = findViewById(R.id.txt_tac_gia);
         tvTongChuong = findViewById(R.id.tv_tong_chapter);
         imgAnhBia = findViewById(R.id.manga_cover);
         imgAnhNen = findViewById(R.id.backdrop);
         rcvTheLoai = findViewById(R.id.rcv_The_Loai);
-        txt_tac_gia = findViewById(R.id.txt_tac_gia);
         rcvChapter = findViewById(R.id.rcv_chapter);
+    }
+
+    private void setFullScreen() {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 }
