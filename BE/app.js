@@ -3,16 +3,17 @@ const cors = require("cors");
 const app = express();
 const sessions = require("express-session");
 const mongoose = require("mongoose");
-var bodyParser = require("body-parser"); //bodyParser trả về một function hoạt động như một middleware. Chức năng lắng nghe trên req.on (\'data\') và xây dựng req.body từ các đoạn dữ liệu mà nó nhận được.
+var bodyParser = require("body-parser");
 const morgan = require("morgan");
 const dotenv = require("dotenv");
 const bcrypt = require("bcrypt");
+const nodemailer = require("nodemailer");
+const flash = require("express-flash");
 dotenv.config();
 const tacgiaRoute = require("./routes/TacGia");
 const truyenRoute = require("./routes/Truyen");
 const taikhoanRoute = require("./routes/TaiKhoan");
 const chapterRoute = require("./routes/Chapter");
-const binhluanRoute = require("./routes/BinhLuan");
 const theloaiRoute = require("./routes/TheLoai");
 //model
 const { Truyen, TacGia, TheLoai, Chapter, TaiKhoan } = require("./model/model");
@@ -23,9 +24,8 @@ app.use(
     extended: true,
   })
 );
-//CORS là một cơ chế cho phép nhiều tài nguyên khác nhau (fonts, Javascript, v.v…) của một trang web có thể được truy vấn từ domain khác với domain của trang
+app.use(flash());
 app.use(cors());
-// khi send request sẽ thông báo dưới terminal
 app.use(morgan("common"));
 //sử dụng session để kiểm tra login
 app.use(
@@ -57,7 +57,6 @@ app.use("/TheLoai", theloaiRoute);
 app.use("/Truyen", truyenRoute);
 app.use("/TaiKhoan", taikhoanRoute);
 app.use("/Chapter", chapterRoute);
-app.use("/BinhLuan", binhluanRoute);
 //#endregion
 //#region view engine
 app.use(express.static(__dirname + "/public"));
@@ -667,6 +666,57 @@ app.post("/chapter/update/:id", (req, res) => {
       res.render("../views/chapter/updateChapter", { message: 0, item });
     } else {
       res.redirect("/story");
+    }
+  });
+});
+//#endregion
+//#region nodemailer
+app.get("/index", function (req, res) {
+  res.render("index.ejs");
+});
+app.post("/send-mail", function (req, res) {
+  //Tiến hành gửi mail, nếu có gì đó bạn có thể xử lý trước khi gửi mail
+  var transporter = nodemailer.createTransport({
+    // config mail server
+    host: "smtp.gmail.com",
+    service: "gmail",
+    port: 465,
+    secure: true,
+    auth: {
+      user: "halcyon1902@gmail.com",
+      pass: "zrxfwyejuvijuvju",
+    },
+    tls: {
+      // do not fail on invalid certs
+      rejectUnauthorized: false,
+    },
+  });
+  const content = `
+  <div style="max-width: 600px; margin: auto">
+    <div style="background-color: #003375; padding: 20px; text-align: center">
+      <img src="/assets/img/icon.ico" alt="Logo" style="width: 200px">
+    </div>
+    <div style="padding: 20px">
+      <h3>Xin chào,</h3>
+      <p>Bạn đã gửi yêu cầu khôi phục mật khẩu. Đây là đường link để cập nhật mật khẩu mới:</p>
+      <p><a href="" style="color: #0085ff">https://example.com/reset-password/</a></p>
+      <p>Nếu bạn không yêu cầu thay đổi mật khẩu, thì hãy bỏ qua email này.</p>
+      <p style="font-style: italic">Email này được tự động tạo ra, vui lòng không trả lời lại.</p>
+    </div>
+  </div>
+`;
+  var mainOptions = {
+    from: "ReadingApp",
+    to: req.body.mail,
+    subject: "Recovery Password",
+    html: content,
+  };
+  transporter.sendMail(mainOptions, function (err, info) {
+    if (err) {
+      console.log(err);
+      res.redirect("/index");
+    } else {
+      res.redirect("/index");
     }
   });
 });
