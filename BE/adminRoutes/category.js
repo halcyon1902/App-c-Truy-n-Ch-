@@ -1,6 +1,5 @@
 const express = require("express").Router();
 const catecontroller = require("../admincontroller/cateController");
-const middlewarecontroller = require("../admincontroller/middlewareController");
 express.get("/", catecontroller.GetCate);
 express.get("/create", catecontroller.GetCreateCate);
 express.post("/create", catecontroller.PostCreateCate);
