@@ -1,9 +1,10 @@
 const { Truyen, TacGia, TheLoai, Chapter, TaiKhoan } = require("../model/model");
+const jwt = require("jsonwebtoken");
 const catecontroller = {
   GetCate: async (req, res) => {
-    session = req.session;
-    if (session.userid) {
-      TaiKhoan.findOne({ TaiKhoan: session.userid }, function (err, item) {
+    const refreshToken = req.cookies.refreshToken;
+    if (refreshToken) {
+      jwt.verify(refreshToken, process.env.JWT_REFRESH_TOKEN, async (err, item) => {
         TheLoai.find(function (err, items) {
           if (err) {
             console.log(err);
@@ -18,9 +19,9 @@ const catecontroller = {
     }
   },
   GetCreateCate: async (req, res) => {
-    session = req.session;
-    if (session.userid) {
-      TaiKhoan.findOne({ TaiKhoan: session.userid }, function (err, item) {
+    const refreshToken = req.cookies.refreshToken;
+    if (refreshToken) {
+      jwt.verify(refreshToken, process.env.JWT_REFRESH_TOKEN, async (err, item) => {
         res.render("../views/category/addCategory", { message: 2, item });
       });
     } else {
@@ -31,7 +32,9 @@ const catecontroller = {
     var cate = new TheLoai({
       TenTheLoai: req.body.TenTheLoai,
     });
-    TaiKhoan.findOne({ TaiKhoan: session.userid }, function (err, item) {
+    const refreshToken = req.cookies.refreshToken;
+    if (refreshToken) {
+      jwt.verify(refreshToken, process.env.JWT_REFRESH_TOKEN, async (err, item) => {
       cate.save(function (err) {
         if (err) {
           console.log("save category error:" + err);
@@ -42,11 +45,12 @@ const catecontroller = {
         }
       });
     });
-  },
+  }
+},
   GetUpdateCate: async (req, res) => {
-    session = req.session;
-    if (session.userid) {
-      TaiKhoan.findOne({ TaiKhoan: session.userid }, function (err, item) {
+    const refreshToken = req.cookies.refreshToken;
+    if (refreshToken) {
+      jwt.verify(refreshToken, process.env.JWT_REFRESH_TOKEN, async (err, item) => {
         TheLoai.findById(req.params.id, function (error, cate) {
           if (error) {
           } else {

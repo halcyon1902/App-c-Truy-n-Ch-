@@ -1,5 +1,5 @@
 const express = require("express").Router();
-const authorcontroller = require("../admincontroller/authorController");
+const authorcontroller = require("../adminController/authorController");
 express.get("/", authorcontroller.GetAuthor);
 express.get("/create", authorcontroller.GetCreateAuthor);
 express.post("/create", authorcontroller.PostCreateAuthor);

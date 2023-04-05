@@ -1,9 +1,10 @@
 const { Truyen, TacGia, TheLoai, Chapter, TaiKhoan } = require("../model/model");
+const jwt = require("jsonwebtoken");
 const usercontroller = {
   GetStory: async (req, res) => {
-    session = req.session;
-    if (session.userid) {
-      TaiKhoan.findOne({ TaiKhoan: session.userid }, function (err, item) {
+    const refreshToken = req.cookies.refreshToken;
+    if (refreshToken) {
+      jwt.verify(refreshToken, process.env.JWT_REFRESH_TOKEN, async (err, item) => {
         Truyen.find(function (err, items) {
           if (err) {
             console.log(err);
@@ -19,9 +20,9 @@ const usercontroller = {
   },
   //show page tạo user
   GetCreateStory: async (req, res) => {
-    session = req.session;
-    if (session.userid) {
-      TaiKhoan.findOne({ TaiKhoan: session.userid }, async function (err, item) {
+    const refreshToken = req.cookies.refreshToken;
+    if (refreshToken) {
+      jwt.verify(refreshToken, process.env.JWT_REFRESH_TOKEN, async (err, item) => {
         const author = await TacGia.find();
         const category = await TheLoai.find();
         res.render("../views/story/addStory", { message: 2, item, author, category });
@@ -32,9 +33,9 @@ const usercontroller = {
   },
   //thêm truyện
   PostCreateStory: async (req, res) => {
-    session = req.session;
-    if (session.userid) {
-      TaiKhoan.findOne({ TaiKhoan: session.userid }, async function (err, item) {
+    const refreshToken = req.cookies.refreshToken;
+    if (refreshToken) {
+      jwt.verify(refreshToken, process.env.JWT_REFRESH_TOKEN, async (err, item) => {
         try {
           const truyen = new Truyen({
             TenTruyen: req.body.TenTruyen,
@@ -58,9 +59,9 @@ const usercontroller = {
   },
   //chi tiết truyện
   GetDetailStory: async (req, res) => {
-    session = req.session;
-    if (session.userid) {
-      TaiKhoan.findOne({ TaiKhoan: session.userid }, async function (err, item) {
+    const refreshToken = req.cookies.refreshToken;
+    if (refreshToken) {
+      jwt.verify(refreshToken, process.env.JWT_REFRESH_TOKEN, async (err, item) => {
         try {
           const truyen = await Truyen.findById(req.params.id).populate("Chapters");
           const tacgia = truyen.TacGia;
@@ -93,36 +94,34 @@ const usercontroller = {
   },
   // Show update story form
   GetUpdateStory: async (req, res) => {
-    try {
-      const session = req.session;
-      if (!session.userid) {
-        return res.redirect("/story");
-      }
-      const item = await TaiKhoan.findOne({ TaiKhoan: session.userid });
-      const truyen = await Truyen.findById(req.params.id);
-      const authors = await TacGia.find();
-      const categories = await TheLoai.find();
-      const theloai = truyen.TheLoais.toString();
-      const temp = theloai.split(",").map((str) => str.trim());
-      async function retrieveAsync() {
-        const selectedCategories = [];
-        for (const id of temp) {
-          try {
-            const item2 = await TheLoai.findById(id).exec();
-            if (item2) {
-              selectedCategories.push(item2.TenTheLoai);
+    const refreshToken = req.cookies.refreshToken;
+    if (refreshToken) {
+      jwt.verify(refreshToken, process.env.JWT_REFRESH_TOKEN, async (err, item) => {
+        const truyen = await Truyen.findById(req.params.id);
+        const authors = await TacGia.find();
+        const categories = await TheLoai.find();
+        const theloai = truyen.TheLoais.toString();
+        const temp = theloai.split(",").map((str) => str.trim());
+        async function retrieveAsync() {
+          const selectedCategories = [];
+          for (const id of temp) {
+            try {
+              const item = await TheLoai.findById(id).exec();
+              if (item) {
+                selectedCategories.push(item.TenTheLoai);
+              }
+            } catch (err) {
+              console.error(err);
             }
-          } catch (err) {
-            console.error(err);
           }
+          return selectedCategories; // Trả về kết quả cho hàm
         }
-        return selectedCategories; // Trả về kết quả cho hàm
-      }
-      // Get the list of selected categories
-      const selectedCategories = await retrieveAsync();
-      // Render the form with selected categories
-      res.render("../views/story/updateStory", { message: 2, truyen, item, authors, categories, author: authors, selectedCategories });
-    } catch (err) {
+        // Get the list of selected categories
+        const selectedCategories = await retrieveAsync();
+        // Render the form with selected categories
+        res.render("../views/story/updateStory", { message: 2, truyen, item, authors, categories, author: authors, selectedCategories });
+      });
+    } else {
       console.log(err);
       res.redirect("/story");
     }
@@ -164,25 +163,26 @@ const usercontroller = {
     }
   },
   //show chapter detail
-  PostUpdateAuthor: async (req, res) => {
-    session = req.session;
-    if (session.userid) {
-      TaiKhoan.findOne({ TaiKhoan: session.userid }, async function (err, item) {
+  GetDetailChapter: async (req, res) => {
+    const refreshToken = req.cookies.refreshToken;
+    if (refreshToken) {
+      jwt.verify(refreshToken, process.env.JWT_REFRESH_TOKEN, async (err, item) => {
         try {
           const chapter = await Chapter.findById(req.params.id);
           res.render("../views/chapter/detailChapter", { chapter, item });
         } catch (err) {
-          res.status(500).json(err);
+          console.log(err);
         }
       });
     } else {
-      res.redirect("/login");
+      res.redirect("/story");
     }
   },
-  PostUpdateAuthor: async (req, res) => {
-    session = req.session;
-    if (session.userid) {
-      TaiKhoan.findOne({ TaiKhoan: session.userid }, async function (err, item) {
+  // Show create chapter
+  GetCreateChapter: async (req, res) => {
+    const refreshToken = req.cookies.refreshToken;
+    if (refreshToken) {
+      jwt.verify(refreshToken, process.env.JWT_REFRESH_TOKEN, async (err, item) => {
         try {
           const truyen = await Truyen.findById(req.params.id);
           res.render("../views/chapter/addChapter", { item, truyen, message: 2 });
@@ -194,10 +194,11 @@ const usercontroller = {
       res.redirect("/login");
     }
   },
-  PostUpdateAuthor: async (req, res) => {
-    session = req.session;
-    if (session.userid) {
-      TaiKhoan.findOne({ TaiKhoan: session.userid }, async function (err, item) {
+  // post create chapter
+  PostCreateChapter: async (req, res) => {
+    const refreshToken = req.cookies.refreshToken;
+    if (refreshToken) {
+      jwt.verify(refreshToken, process.env.JWT_REFRESH_TOKEN, async (err, item) => {
         const truyen = await Truyen.findById(req.params.id);
         try {
           const chapter = new Chapter({
@@ -216,10 +217,10 @@ const usercontroller = {
     }
   },
   //show chapter detail
-  PostUpdateAuthor: async (req, res) => {
-    session = req.session;
-    if (session.userid) {
-      TaiKhoan.findOne({ TaiKhoan: session.userid }, async function (err, item) {
+  GetDetailChapter: async (req, res) => {
+    const refreshToken = req.cookies.refreshToken;
+    if (refreshToken) {
+      jwt.verify(refreshToken, process.env.JWT_REFRESH_TOKEN, async (err, item) => {
         try {
           const chapter = await Chapter.findById(req.params.id);
           res.render("../views/chapter/detailChapter", { chapter, item });
@@ -232,24 +233,26 @@ const usercontroller = {
     }
   },
   //show update chapter
-  PostUpdateAuthor: async (req, res) => {
-    session = req.session;
-    if (session.userid) {
-      Chapter.findOne({ TaiKhoan: session.userid }, async function (err, item) {
-        try {
-          const chapter = await Chapter.findById(req.params.id);
-          console.log(chapter);
-          res.render("../views/chapter/updateChapter", { message: 2, chapter, item });
-        } catch (err) {
-          console.log(err);
-        }
+  GetUpdateChapter: async (req, res) => {
+    const refreshToken = req.cookies.refreshToken;
+    if (refreshToken) {
+      jwt.verify(refreshToken, process.env.JWT_REFRESH_TOKEN, async (err, item) => {
+        Chapter.findOne({}, async function (err, item) {
+          try {
+            const chapter = await Chapter.findById(req.params.id);
+            console.log(chapter);
+            res.render("../views/chapter/updateChapter", { message: 2, chapter, item });
+          } catch (err) {
+            console.log(err);
+          }
+        });
       });
     } else {
       res.redirect("/story");
     }
   },
   ////update chapter
-  PostUpdateAuthor: async (req, res) => {
+  PostUpdateChapter: async (req, res) => {
     var update = {
       TenChapter: req.body.TenChapter,
       NoiDung: req.body.NoiDung,
