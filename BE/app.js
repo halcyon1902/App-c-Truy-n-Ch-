@@ -3,7 +3,8 @@ const cors = require("cors");
 const app = express();
 const sessions = require("express-session");
 const mongoose = require("mongoose");
-var bodyParser = require("body-parser");
+const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
 const dotenv = require("dotenv");
 const bcrypt = require("bcrypt");
@@ -19,6 +20,7 @@ app.use(
     extended: true,
   })
 );
+app.use(cookieParser());
 app.use(flash());
 app.use(cors());
 app.use(morgan("common"));

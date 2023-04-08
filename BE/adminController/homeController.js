@@ -1,10 +1,17 @@
-const { Truyen, TacGia, TheLoai, Chapter, TaiKhoan } = require("../model/model");
+const { TaiKhoan } = require("../model/model");
+const jwt = require("jsonwebtoken");
 const authorcontroller = {
   home: async (req, res) => {
-    session = req.session;
-    if (session.userid) {
-      TaiKhoan.findOne({ TaiKhoan: session.userid }, function (err, item) {
-        res.render("HomePage", { item });
+    const refreshToken = req.cookies.refreshToken;
+    if (refreshToken) {
+      jwt.verify(refreshToken, process.env.JWT_REFRESH_TOKEN, async (err, user) => {
+        if (err) {
+          res.redirect("/login");
+        } else {
+          TaiKhoan.findOne({ TaiKhoan: user.TaiKhoan }, function (err, item) {
+            res.render("HomePage", { item });
+          });
+        }
       });
     } else {
       res.redirect("/login");

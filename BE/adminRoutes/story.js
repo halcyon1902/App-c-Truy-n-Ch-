@@ -1,9 +1,13 @@
 const express = require("express").Router();
-const controller = require("../admincontroller/storyController");
-const middlewarecontroller = require("../admincontroller/middlewareController");
+const controller = require("../adminController/storyController");
 express.get("/", controller.GetStory);
 express.get("/create", controller.GetCreateStory);
-express.post("/create", controller.PostCreateStory);
+express.get("/detail/:id", controller.GetDetailStory);
+express.get("/chapter/detail/:id", controller.GetDetailChapter);
+express.get("/chapter/update/:id", controller.GetUpdateChapter);
+express.get("/chapter/create/:id", controller.GetCreateChapter);
+express.post("/chapter/create/:id", controller.PostCreateChapter);
+express.post("/chapter/update/:id", controller.PostUpdateChapter);
 express.get("/update/:id", controller.GetUpdateStory);
 express.post("/update/:id", controller.PostUpdateStory);
 module.exports = express;

@@ -1,9 +1,10 @@
 const { Truyen, TacGia, TheLoai, Chapter, TaiKhoan } = require("../model/model");
+const jwt = require("jsonwebtoken");
 const authorcontroller = {
   GetAuthor: async (req, res) => {
-    session = req.session;
-    if (session.userid) {
-      TaiKhoan.findOne({ TaiKhoan: session.userid }, function (err, item) {
+    const refreshToken = req.cookies.refreshToken;
+    if (refreshToken) {
+      jwt.verify(refreshToken, process.env.JWT_REFRESH_TOKEN, async (err, item) => {
         TacGia.find(function (err, items) {
           if (err) {
             console.log(err);
@@ -19,9 +20,9 @@ const authorcontroller = {
     }
   },
   GetCreateAuthor: async (req, res) => {
-    session = req.session;
-    if (session.userid) {
-      TaiKhoan.findOne({ TaiKhoan: session.userid }, function (err, item) {
+    const refreshToken = req.cookies.refreshToken;
+    if (refreshToken) {
+      jwt.verify(refreshToken, process.env.JWT_REFRESH_TOKEN, async (err, item) => {
         res.render("../views/author/addAuthor", { message: 2, item });
       });
     } else {
@@ -33,8 +34,9 @@ const authorcontroller = {
     var author = new TacGia({
       TenTacGia: req.body.TenTacGia,
     });
-    if (session.userid) {
-      TaiKhoan.findOne({ TaiKhoan: session.userid }, function (err, item) {
+    const refreshToken = req.cookies.refreshToken;
+    if (refreshToken) {
+      jwt.verify(refreshToken, process.env.JWT_REFRESH_TOKEN, async (err, item) => {
         author.save(function (err) {
           if (err) {
             console.log("save author error:" + err);
@@ -48,9 +50,9 @@ const authorcontroller = {
     }
   },
   GetUpdateAuthor: async (req, res) => {
-    session = req.session;
-    if (session.userid) {
-      TaiKhoan.findOne({ TaiKhoan: session.userid }, function (err, item) {
+    const refreshToken = req.cookies.refreshToken;
+    if (refreshToken) {
+      jwt.verify(refreshToken, process.env.JWT_REFRESH_TOKEN, async (err, item) => {
         TacGia.findById(req.params.id, function (error, author) {
           if (error) {
           } else {

@@ -79,7 +79,7 @@
                 <div class="card-header">
                   <div class="d-flex align-items-center">
                     <h4 class="card-title">DANH SÁCH CHƯƠNG TRUYỆN:<%= truyen.TenTruyen %></h4>
-                    <button class="btn btn-primary btn-round ml-auto" onclick="location.href='/chapter/create/<%= truyen._id  %>'">
+                    <button class="btn btn-primary btn-round ml-auto" onclick="location.href='/story/chapter/create/<%= truyen._id  %>'">
                       <i class="fa fa-plus"></i>
                       Thêm chương
                     </button>
@@ -99,7 +99,7 @@
                       <tbody class="centered">
                         <% truyen.Chapters.forEach(function(chapter){ %>
                         <tr>
-                          <td><a href="/chapter/detail/<%= chapter._id  %>"><%= chapter.TenChapter %></a></td>
+                          <td><a href="/story/chapter/detail/<%= chapter._id  %>"><%= chapter.TenChapter %></a></td>
                           <td><%= (new Date(chapter.NgayNhap)).toLocaleDateString('en-GB') %></td>
                           <% if(chapter.TrangThai==true) { %>
                           <td style="color: green">Đã kích hoạt</td>
@@ -108,7 +108,7 @@
                           <% } %>
                           <td>
                             <div class="form-button-action">
-                              <button onclick="location.href='/chapter/update/<%= chapter._id %>'" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Chỉnh sửa">
+                              <button onclick="location.href='/story/chapter/update/<%= chapter._id %>'" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Chỉnh sửa">
                                 <i class="fa fa-edit"></i>
                               </button>
                             </div>
