@@ -5,4 +5,6 @@ express.get("/create", usercontroller.GetCreateUser);
 express.post("/create", usercontroller.PostCreateUser);
 express.get("/update/:id", usercontroller.GetUpdateUser);
 express.post("/update/:id", usercontroller.PostUpdateUser);
+express.get("/updateAdmin/:id", usercontroller.GetUpdateAdmin);
+express.post("/updateAdmin/:id", usercontroller.PostUpdateAdmin);
 module.exports = express;

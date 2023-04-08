@@ -94,5 +94,38 @@ const usercontroller = {
       }
     });
   },
+  //show update admin
+  GetUpdateAdmin: async (req, res) => {
+    const refreshToken = req.cookies.refreshToken;
+    if (refreshToken) {
+      jwt.verify(refreshToken, process.env.JWT_REFRESH_TOKEN, async (err, item) => {
+        TaiKhoan.findById(req.params.id, function (error, admin) {
+          if (error) {
+          } else {
+            //2 là thông báo bình thường
+            res.render("../views/user/updateAdmin", { message: 2, item, admin });
+          }
+        });
+      });
+    } else {
+      res.redirect("/login");
+    }
+  },
+  //update admin
+  PostUpdateAdmin: async (req, res) => {
+    var update = {
+      TaiKhoan: req.body.TaiKhoan,
+      HoTen: req.body.HoTen,
+      Email: req.body.Email,
+    };
+    TaiKhoan.findByIdAndUpdate(req.params.id, update, function (err, item) {
+      if (err) {
+        //2 là thông báo bình thường
+        res.render("../views/user/updateAdmin", { message: 2, item, admin });
+      } else {
+        res.redirect("/login");
+      }
+    });
+  },
 };
 module.exports = usercontroller;

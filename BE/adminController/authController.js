@@ -57,6 +57,7 @@ const authcontroller = {
       return res.status(500).json(err);
     }
   },
+  //logout
   GetLogout: async (req, res) => {
     res.clearCookie("refreshToken");
     refreshTokenList = refreshTokenList.filter((token) => token !== req.cookies.refreshToken);
