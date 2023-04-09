@@ -3,22 +3,15 @@ const jwt = require("jsonwebtoken");
 
 const authorcontroller = {
   GetAuthor: async (req, res) => {
-    const accessToken = req.cookies.accessToken;
-    if (accessToken) {
-      jwt.verify(accessToken, process.env.JWT_ACCESS_KEY, async (err, item) => {
-        TacGia.find(function (err, items) {
-          if (err) {
-            console.log(err);
-            res.render("../views/author/author", { listauthor: [], item });
-          } else {
-            res.render("../views/author/author", { listauthor: items, item });
-          }
-        });
-      });
-    } else {
-      console.log("Chưa đăng nhập");
-      res.redirect("/login");
-    }
+    item = req.admin;
+    TacGia.find(function (err, items) {
+      if (err) {
+        console.log(err);
+        res.render("../views/author/author", { listauthor: [], item });
+      } else {
+        res.render("../views/author/author", { listauthor: items, item });
+      }
+    });
   },
   GetCreateAuthor: async (req, res) => {
     const accessToken = req.cookies.accessToken;

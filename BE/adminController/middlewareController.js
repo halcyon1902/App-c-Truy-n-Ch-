@@ -8,7 +8,6 @@ const middlewareController = {
         if (err) {
           res.redirect("/login");
         } else {
-          console.log(item);
           TaiKhoan.findOne({ TaiKhoan: item.TaiKhoan }, function (err, admin) {
             req.admin = admin;
             next();

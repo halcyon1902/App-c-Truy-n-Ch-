@@ -5,7 +5,7 @@ const usercontroller = {
     const accessToken = req.cookies.accessToken;
     if (accessToken) {
       jwt.verify(accessToken, process.env.JWT_ACCESS_KEY, async (err, item) => {
-        TaiKhoan.find(function (err, items) {
+        TaiKhoan.find({ TaiKhoan: item.TaiKhoan }, function (err, items) {
           if (err) {
             console.log(err);
             res.render("../views/user/user", { listuser: [], item });

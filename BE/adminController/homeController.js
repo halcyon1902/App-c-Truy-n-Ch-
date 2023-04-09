@@ -2,8 +2,7 @@ const { TaiKhoan } = require("../model/model");
 const jwt = require("jsonwebtoken");
 const authorcontroller = {
   home: async (req, res) => {
-    item = req.admin;
-    console.log(item);
+    const item = req.admin;
     res.render("HomePage", { item });
   },
 };
