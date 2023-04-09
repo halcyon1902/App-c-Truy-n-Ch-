@@ -143,9 +143,8 @@
             android:layout_width="90dp"
             android:layout_height="90dp"
             android:layout_centerHorizontal="true"
-            android:background="@color/orange"
             android:padding="5dp"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@drawable/baseline_account_box_24" />
     </RelativeLayout>
 
     <ScrollView
@@ -424,9 +423,8 @@
     <Button
         android:id="@+id/btn_LogOut"
         android:layout_width="wrap_content"
-        android:layout_height="70dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="@color/blue_soft"
         android:text="@string/ttcn_dangxuat"
         android:textColor="@color/black"
         android:textSize="15sp" />

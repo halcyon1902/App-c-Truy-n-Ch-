@@ -2,6 +2,7 @@ package com.example.readingapp.model;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Date;
 
 public class Truyen implements Serializable {
     private String _id;
@@ -11,13 +12,44 @@ public class Truyen implements Serializable {
     private boolean TinhTrang;
     private String GioiThieu;
     private String AnhBia;
+    private int LuotThich;
+    private int LuotXem;
+    private int LuotXemThang;
+    private Date NgayXepHang;
     private String TacGia;
     private Chapter[] Chapters;
 
-    public Truyen() {
+    public Truyen(boolean trangThai, boolean tinhTrang, int luotThich, int luotXem, int luotXemThang, Date ngayXepHang) {
+        TrangThai = trangThai;
+        TinhTrang = tinhTrang;
+        LuotThich = luotThich;
+        LuotXem = luotXem;
+        LuotXemThang = luotXemThang;
+        NgayXepHang = ngayXepHang;
     }
 
-    public Truyen(String _id, String tenTruyen, String[] theLoais, boolean trangThai, boolean tinhTrang, String gioiThieu, String anhBia, String tacGia, Chapter[] chapters) {
+    public Truyen(boolean trangThai, boolean tinhTrang, int luotXemThang, Date ngayXepHang) {
+        TrangThai = trangThai;
+        TinhTrang = tinhTrang;
+        LuotXemThang = luotXemThang;
+        NgayXepHang = ngayXepHang;
+    }
+
+    public Truyen(boolean trangThai, boolean tinhTrang, int luotXem) {
+        TrangThai = trangThai;
+        TinhTrang = tinhTrang;
+        LuotXem = luotXem;
+    }
+
+    public Truyen(boolean trangThai, boolean tinhTrang, int luotXem, int luotXemThang, Date ngayXepHang) {
+        TrangThai = trangThai;
+        TinhTrang = tinhTrang;
+        LuotXem = luotXem;
+        LuotXemThang = luotXemThang;
+        NgayXepHang = ngayXepHang;
+    }
+
+    public Truyen(String _id, String tenTruyen, String[] theLoais, boolean trangThai, boolean tinhTrang, String gioiThieu, String anhBia, int luotThich, int luotXem, int luotXemThang, Date ngayXepHang, String tacGia, Chapter[] chapters) {
         this._id = _id;
         TenTruyen = tenTruyen;
         TheLoais = theLoais;
@@ -25,9 +57,25 @@ public class Truyen implements Serializable {
         TinhTrang = tinhTrang;
         GioiThieu = gioiThieu;
         AnhBia = anhBia;
+        LuotThich = luotThich;
+        LuotXem = luotXem;
+        LuotXemThang = luotXemThang;
+        NgayXepHang = ngayXepHang;
         TacGia = tacGia;
         Chapters = chapters;
     }
+
+
+    public Truyen(boolean trangThai, boolean tinhTrang, int luotThich, int luotXem) {
+        TrangThai = trangThai;
+        TinhTrang = tinhTrang;
+        LuotThich = luotThich;
+        LuotXem = luotXem;
+    }
+
+    public Truyen() {
+    }
+
 
     @Override
     public String toString() {
@@ -39,6 +87,10 @@ public class Truyen implements Serializable {
                 ", TinhTrang=" + TinhTrang +
                 ", GioiThieu='" + GioiThieu + '\'' +
                 ", AnhBia='" + AnhBia + '\'' +
+                ", LuotThich=" + LuotThich +
+                ", LuotXem=" + LuotXem +
+                ", LuotXemThang=" + LuotXemThang +
+                ", NgayXepHang=" + NgayXepHang +
                 ", TacGia=" + TacGia +
                 ", Chapters=" + Arrays.toString(Chapters) +
                 '}';
@@ -98,6 +150,38 @@ public class Truyen implements Serializable {
 
     public void setAnhBia(String anhBia) {
         AnhBia = anhBia;
+    }
+
+    public int getLuotThich() {
+        return LuotThich;
+    }
+
+    public void setLuotThich(int luotThich) {
+        LuotThich = luotThich;
+    }
+
+    public int getLuotXem() {
+        return LuotXem;
+    }
+
+    public void setLuotXem(int luotXem) {
+        LuotXem = luotXem;
+    }
+
+    public int getLuotXemThang() {
+        return LuotXemThang;
+    }
+
+    public void setLuotXemThang(int luotXemThang) {
+        LuotXemThang = luotXemThang;
+    }
+
+    public Date getNgayXepHang() {
+        return NgayXepHang;
+    }
+
+    public void setNgayXepHang(Date ngayXepHang) {
+        NgayXepHang = ngayXepHang;
     }
 
     public String getTacGia() {

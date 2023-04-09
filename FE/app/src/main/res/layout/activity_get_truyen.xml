@@ -119,6 +119,7 @@
             android:id="@+id/txt_tac_gia"
             android:layout_width="wrap_content"
             android:text="ua alo"
+            android:layout_marginLeft="10dp"
             android:textSize="15sp"
             android:textColor="@color/white"
             android:layout_height="wrap_content" />
@@ -128,7 +129,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:text=""
+            android:text="dsad"
             android:textColor="@color/white"
             android:textSize="15sp" />
 
