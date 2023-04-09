@@ -2,9 +2,9 @@ const { TaiKhoan } = require("../model/model");
 const jwt = require("jsonwebtoken");
 const authorcontroller = {
   home: async (req, res) => {
-    const refreshToken = req.cookies.refreshToken;
-    if (refreshToken) {
-      jwt.verify(refreshToken, process.env.JWT_REFRESH_TOKEN, async (err, user) => {
+    const accessToken = req.cookies.accessToken;
+    if (accessToken) {
+      jwt.verify(accessToken, process.env.JWT_ACCESS_KEY, async (err, user) => {
         if (err) {
           res.redirect("/login");
         } else {

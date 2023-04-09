@@ -1,12 +1,11 @@
 const { TaiKhoan } = require("../model/model");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-let refreshTokenList = [];
 const authcontroller = {
   GetLogin: (req, res) => {
-    const refreshToken = req.cookies.refreshToken;
-    if (refreshToken) {
-      jwt.verify(refreshToken, process.env.JWT_REFRESH_TOKEN, (err, user) => {
+    const accessToken = req.cookies.accessToken;
+    if (accessToken) {
+      jwt.verify(accessToken, process.env.JWT_ACCESS_KEY, (err, user) => {
         if (err) {
           res.render("Login", { message: 2 });
         }
@@ -38,16 +37,7 @@ const authcontroller = {
           process.env.JWT_ACCESS_KEY,
           { expiresIn: "1d" }
         );
-        const refreshToken = jwt.sign(
-          {
-            id: admin.id,
-            TaiKhoan: admin.TaiKhoan,
-          },
-          process.env.JWT_REFRESH_TOKEN,
-          { expiresIn: "7d" }
-        );
-        refreshTokenList.push(refreshToken);
-        res.cookie("refreshToken", refreshToken, { httpOnly: true, secure: true, path: "/", sameSite: "strict" });
+        res.cookie("accessToken", accessToken, { httpOnly: true, secure: true, path: "/", sameSite: "strict" });
         res.redirect("/");
       } else {
         return res.render("Login", { message: 4 });
@@ -59,9 +49,16 @@ const authcontroller = {
   },
   //logout
   GetLogout: async (req, res) => {
-    res.clearCookie("refreshToken");
-    refreshTokenList = refreshTokenList.filter((token) => token !== req.cookies.refreshToken);
-    res.redirect("/");
+    const accessToken = req.cookies.accessToken;
+    if (accessToken) {
+      jwt.verify(accessToken, process.env.JWT_ACCESS_KEY, (err, user) => {
+        if (err) {
+        }
+        res.clearCookie("accessToken");
+        res.redirect("/");
+      });
+    } else {
+    }
   },
 };
 module.exports = authcontroller;

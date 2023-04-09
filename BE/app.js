@@ -81,8 +81,8 @@ app.post("/send-mail", function (req, res) {
     port: 465,
     secure: true,
     auth: {
-      user: "halcyon1902@gmail.com",
-      pass: "zrxfwyejuvijuvju",
+      user: process.env.MAIL,
+      pass: process.env.PASS,
     },
     tls: {
       // do not fail on invalid certs
@@ -103,6 +103,7 @@ app.post("/send-mail", function (req, res) {
     </div>
   </div>
 `;
+
   var mainOptions = {
     from: "ReadingApp",
     to: req.body.mail,

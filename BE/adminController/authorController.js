@@ -2,9 +2,9 @@ const { Truyen, TacGia, TheLoai, Chapter, TaiKhoan } = require("../model/model")
 const jwt = require("jsonwebtoken");
 const authorcontroller = {
   GetAuthor: async (req, res) => {
-    const refreshToken = req.cookies.refreshToken;
-    if (refreshToken) {
-      jwt.verify(refreshToken, process.env.JWT_REFRESH_TOKEN, async (err, item) => {
+    const accessToken = req.cookies.accessToken;
+    if (accessToken) {
+      jwt.verify(accessToken, process.env.JWT_ACCESS_KEY, async (err, item) => {
         TacGia.find(function (err, items) {
           if (err) {
             console.log(err);
