@@ -1,5 +1,6 @@
 const { Truyen, TacGia, TheLoai, Chapter, TaiKhoan } = require("../model/model");
 const jwt = require("jsonwebtoken");
+
 const authorcontroller = {
   GetAuthor: async (req, res) => {
     const accessToken = req.cookies.accessToken;

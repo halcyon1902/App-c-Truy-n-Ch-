@@ -1,4 +1,5 @@
 const express = require("express").Router();
 const controller = require("../adminController/homeController");
-express.get("/", controller.home);
+const middlewarecontroller = require("../adminController/middlewareController");
+express.get("/", middlewarecontroller.verifyToken, controller.home);
 module.exports = express;
