@@ -20,9 +20,9 @@ const authorcontroller = {
     }
   },
   GetCreateAuthor: async (req, res) => {
-    const refreshToken = req.cookies.refreshToken;
-    if (refreshToken) {
-      jwt.verify(refreshToken, process.env.JWT_REFRESH_TOKEN, async (err, item) => {
+    const accessToken = req.cookies.accessToken;
+    if (accessToken) {
+      jwt.verify(accessToken, process.env.JWT_ACCESS_KEY, async (err, item) => {
         res.render("../views/author/addAuthor", { message: 2, item });
       });
     } else {
@@ -34,9 +34,9 @@ const authorcontroller = {
     var author = new TacGia({
       TenTacGia: req.body.TenTacGia,
     });
-    const refreshToken = req.cookies.refreshToken;
-    if (refreshToken) {
-      jwt.verify(refreshToken, process.env.JWT_REFRESH_TOKEN, async (err, item) => {
+    const accessToken = req.cookies.accessToken;
+    if (accessToken) {
+      jwt.verify(accessToken, process.env.JWT_ACCESS_KEY, async (err, item) => {
         author.save(function (err) {
           if (err) {
             console.log("save author error:" + err);
@@ -50,9 +50,9 @@ const authorcontroller = {
     }
   },
   GetUpdateAuthor: async (req, res) => {
-    const refreshToken = req.cookies.refreshToken;
-    if (refreshToken) {
-      jwt.verify(refreshToken, process.env.JWT_REFRESH_TOKEN, async (err, item) => {
+    const accessToken = req.cookies.accessToken;
+    if (accessToken) {
+      jwt.verify(accessToken, process.env.JWT_ACCESS_KEY, async (err, item) => {
         TacGia.findById(req.params.id, function (error, author) {
           if (error) {
           } else {

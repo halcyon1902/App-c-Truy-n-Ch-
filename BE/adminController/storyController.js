@@ -2,9 +2,9 @@ const { Truyen, TacGia, TheLoai, Chapter, TaiKhoan } = require("../model/model")
 const jwt = require("jsonwebtoken");
 const usercontroller = {
   GetStory: async (req, res) => {
-    const refreshToken = req.cookies.refreshToken;
-    if (refreshToken) {
-      jwt.verify(refreshToken, process.env.JWT_REFRESH_TOKEN, async (err, item) => {
+    const accessToken = req.cookies.accessToken;
+    if (accessToken) {
+      jwt.verify(accessToken, process.env.JWT_ACCESS_KEY, async (err, item) => {
         Truyen.find(function (err, items) {
           if (err) {
             console.log(err);
@@ -20,9 +20,9 @@ const usercontroller = {
   },
   //show page tạo user
   GetCreateStory: async (req, res) => {
-    const refreshToken = req.cookies.refreshToken;
-    if (refreshToken) {
-      jwt.verify(refreshToken, process.env.JWT_REFRESH_TOKEN, async (err, item) => {
+    const accessToken = req.cookies.accessToken;
+    if (accessToken) {
+      jwt.verify(accessToken, process.env.JWT_ACCESS_KEY, async (err, item) => {
         const author = await TacGia.find();
         const category = await TheLoai.find();
         res.render("../views/story/addStory", { message: 2, item, author, category });
@@ -33,9 +33,9 @@ const usercontroller = {
   },
   //thêm truyện
   PostCreateStory: async (req, res) => {
-    const refreshToken = req.cookies.refreshToken;
-    if (refreshToken) {
-      jwt.verify(refreshToken, process.env.JWT_REFRESH_TOKEN, async (err, item) => {
+    const accessToken = req.cookies.accessToken;
+    if (accessToken) {
+      jwt.verify(accessToken, process.env.JWT_ACCESS_KEY, async (err, item) => {
         try {
           const truyen = new Truyen({
             TenTruyen: req.body.TenTruyen,
@@ -59,9 +59,9 @@ const usercontroller = {
   },
   //chi tiết truyện
   GetDetailStory: async (req, res) => {
-    const refreshToken = req.cookies.refreshToken;
-    if (refreshToken) {
-      jwt.verify(refreshToken, process.env.JWT_REFRESH_TOKEN, async (err, item) => {
+    const accessToken = req.cookies.accessToken;
+    if (accessToken) {
+      jwt.verify(accessToken, process.env.JWT_ACCESS_KEY, async (err, item) => {
         try {
           const truyen = await Truyen.findById(req.params.id).populate("Chapters");
           const tacgia = truyen.TacGia;
@@ -94,9 +94,9 @@ const usercontroller = {
   },
   // Show update story form
   GetUpdateStory: async (req, res) => {
-    const refreshToken = req.cookies.refreshToken;
-    if (refreshToken) {
-      jwt.verify(refreshToken, process.env.JWT_REFRESH_TOKEN, async (err, item) => {
+    const accessToken = req.cookies.accessToken;
+    if (accessToken) {
+      jwt.verify(accessToken, process.env.JWT_ACCESS_KEY, async (err, item) => {
         const truyen = await Truyen.findById(req.params.id);
         const authors = await TacGia.find();
         const categories = await TheLoai.find();
@@ -164,9 +164,9 @@ const usercontroller = {
   },
   //show chapter detail
   GetDetailChapter: async (req, res) => {
-    const refreshToken = req.cookies.refreshToken;
-    if (refreshToken) {
-      jwt.verify(refreshToken, process.env.JWT_REFRESH_TOKEN, async (err, item) => {
+    const accessToken = req.cookies.accessToken;
+    if (accessToken) {
+      jwt.verify(accessToken, process.env.JWT_ACCESS_KEY, async (err, item) => {
         try {
           const chapter = await Chapter.findById(req.params.id);
           res.render("../views/chapter/detailChapter", { chapter, item });
@@ -180,9 +180,9 @@ const usercontroller = {
   },
   // Show create chapter
   GetCreateChapter: async (req, res) => {
-    const refreshToken = req.cookies.refreshToken;
-    if (refreshToken) {
-      jwt.verify(refreshToken, process.env.JWT_REFRESH_TOKEN, async (err, item) => {
+    const accessToken = req.cookies.accessToken;
+    if (accessToken) {
+      jwt.verify(accessToken, process.env.JWT_ACCESS_KEY, async (err, item) => {
         try {
           const truyen = await Truyen.findById(req.params.id);
           res.render("../views/chapter/addChapter", { item, truyen, message: 2 });
@@ -196,9 +196,9 @@ const usercontroller = {
   },
   // post create chapter
   PostCreateChapter: async (req, res) => {
-    const refreshToken = req.cookies.refreshToken;
-    if (refreshToken) {
-      jwt.verify(refreshToken, process.env.JWT_REFRESH_TOKEN, async (err, item) => {
+    const accessToken = req.cookies.accessToken;
+    if (accessToken) {
+      jwt.verify(accessToken, process.env.JWT_ACCESS_KEY, async (err, item) => {
         const truyen = await Truyen.findById(req.params.id);
         try {
           const chapter = new Chapter({
@@ -218,9 +218,9 @@ const usercontroller = {
   },
   //show chapter detail
   GetDetailChapter: async (req, res) => {
-    const refreshToken = req.cookies.refreshToken;
-    if (refreshToken) {
-      jwt.verify(refreshToken, process.env.JWT_REFRESH_TOKEN, async (err, item) => {
+    const accessToken = req.cookies.accessToken;
+    if (accessToken) {
+      jwt.verify(accessToken, process.env.JWT_ACCESS_KEY, async (err, item) => {
         try {
           const chapter = await Chapter.findById(req.params.id);
           res.render("../views/chapter/detailChapter", { chapter, item });
@@ -234,9 +234,9 @@ const usercontroller = {
   },
   //show update chapter
   GetUpdateChapter: async (req, res) => {
-    const refreshToken = req.cookies.refreshToken;
-    if (refreshToken) {
-      jwt.verify(refreshToken, process.env.JWT_REFRESH_TOKEN, async (err, item) => {
+    const accessToken = req.cookies.accessToken;
+    if (accessToken) {
+      jwt.verify(accessToken, process.env.JWT_ACCESS_KEY, async (err, item) => {
         Chapter.findOne({}, async function (err, item) {
           try {
             const chapter = await Chapter.findById(req.params.id);

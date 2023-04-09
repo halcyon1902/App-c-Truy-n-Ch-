@@ -2,9 +2,9 @@ const { Truyen, TacGia, TheLoai, Chapter, TaiKhoan } = require("../model/model")
 const jwt = require("jsonwebtoken");
 const catecontroller = {
   GetCate: async (req, res) => {
-    const refreshToken = req.cookies.refreshToken;
-    if (refreshToken) {
-      jwt.verify(refreshToken, process.env.JWT_REFRESH_TOKEN, async (err, item) => {
+    const accessToken = req.cookies.accessToken;
+    if (accessToken) {
+      jwt.verify(accessToken, process.env.JWT_ACCESS_KEY, async (err, item) => {
         TheLoai.find(function (err, items) {
           if (err) {
             console.log(err);
@@ -19,9 +19,9 @@ const catecontroller = {
     }
   },
   GetCreateCate: async (req, res) => {
-    const refreshToken = req.cookies.refreshToken;
-    if (refreshToken) {
-      jwt.verify(refreshToken, process.env.JWT_REFRESH_TOKEN, async (err, item) => {
+    const accessToken = req.cookies.accessToken;
+    if (accessToken) {
+      jwt.verify(accessToken, process.env.JWT_ACCESS_KEY, async (err, item) => {
         res.render("../views/category/addCategory", { message: 2, item });
       });
     } else {
@@ -32,9 +32,9 @@ const catecontroller = {
     var cate = new TheLoai({
       TenTheLoai: req.body.TenTheLoai,
     });
-    const refreshToken = req.cookies.refreshToken;
-    if (refreshToken) {
-      jwt.verify(refreshToken, process.env.JWT_REFRESH_TOKEN, async (err, item) => {
+    const accessToken = req.cookies.accessToken;
+    if (accessToken) {
+      jwt.verify(accessToken, process.env.JWT_ACCESS_KEY, async (err, item) => {
       cate.save(function (err) {
         if (err) {
           console.log("save category error:" + err);
@@ -48,9 +48,9 @@ const catecontroller = {
   }
 },
   GetUpdateCate: async (req, res) => {
-    const refreshToken = req.cookies.refreshToken;
-    if (refreshToken) {
-      jwt.verify(refreshToken, process.env.JWT_REFRESH_TOKEN, async (err, item) => {
+    const accessToken = req.cookies.accessToken;
+    if (accessToken) {
+      jwt.verify(accessToken, process.env.JWT_ACCESS_KEY, async (err, item) => {
         TheLoai.findById(req.params.id, function (error, cate) {
           if (error) {
           } else {

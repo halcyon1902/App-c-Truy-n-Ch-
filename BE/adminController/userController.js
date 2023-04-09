@@ -2,9 +2,9 @@ const { Truyen, TacGia, TheLoai, Chapter, TaiKhoan } = require("../model/model")
 const jwt = require("jsonwebtoken");
 const usercontroller = {
   GetUser: async (req, res) => {
-    const refreshToken = req.cookies.refreshToken;
-    if (refreshToken) {
-      jwt.verify(refreshToken, process.env.JWT_REFRESH_TOKEN, async (err, item) => {
+    const accessToken = req.cookies.accessToken;
+    if (accessToken) {
+      jwt.verify(accessToken, process.env.JWT_ACCESS_KEY, async (err, item) => {
         TaiKhoan.find(function (err, items) {
           if (err) {
             console.log(err);
@@ -23,9 +23,9 @@ const usercontroller = {
     }
   },
   GetCreateUser: async (req, res) => {
-    const refreshToken = req.cookies.refreshToken;
-    if (refreshToken) {
-      jwt.verify(refreshToken, process.env.JWT_REFRESH_TOKEN, async (err, item) => {
+    const accessToken = req.cookies.accessToken;
+    if (accessToken) {
+      jwt.verify(accessToken, process.env.JWT_ACCESS_KEY, async (err, item) => {
         res.render("../views/user/addUser", { message: 2, item });
       });
     } else {
@@ -33,9 +33,9 @@ const usercontroller = {
     }
   },
   PostCreateUser: async (req, res) => {
-    const refreshToken = req.cookies.refreshToken;
-    if (refreshToken) {
-      jwt.verify(refreshToken, process.env.JWT_REFRESH_TOKEN, async (err, item) => {
+    const accessToken = req.cookies.accessToken;
+    if (accessToken) {
+      jwt.verify(accessToken, process.env.JWT_ACCESS_KEY, async (err, item) => {
         try {
           if (req.body.MatKhau != req.body.XacNhanMatKhau) {
             //thông báo xác nhận mật khẩu sai
@@ -62,9 +62,9 @@ const usercontroller = {
     }
   },
   GetUpdateUser: async (req, res) => {
-    const refreshToken = req.cookies.refreshToken;
-    if (refreshToken) {
-      jwt.verify(refreshToken, process.env.JWT_REFRESH_TOKEN, async (err, item) => {
+    const accessToken = req.cookies.accessToken;
+    if (accessToken) {
+      jwt.verify(accessToken, process.env.JWT_ACCESS_KEY, async (err, item) => {
         TaiKhoan.findById(req.params.id, function (error, user) {
           if (error) {
           } else {
@@ -96,9 +96,9 @@ const usercontroller = {
   },
   //show update admin
   GetUpdateAdmin: async (req, res) => {
-    const refreshToken = req.cookies.refreshToken;
-    if (refreshToken) {
-      jwt.verify(refreshToken, process.env.JWT_REFRESH_TOKEN, async (err, item) => {
+    const accessToken = req.cookies.accessToken;
+    if (accessToken) {
+      jwt.verify(accessToken, process.env.JWT_ACCESS_KEY, async (err, item) => {
         TaiKhoan.findById(req.params.id, function (error, admin) {
           if (error) {
           } else {
