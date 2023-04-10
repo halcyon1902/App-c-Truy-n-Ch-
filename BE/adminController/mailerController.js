@@ -21,13 +21,13 @@ const authcontroller = {
       },
     });
     const admin = await TaiKhoan.findOne({ Email: req.body.mail });
-    console.log(admin);
     const token = await jwt.sign(
       {
         id: admin.id,
+        TaiKhoan: admin.TaiKhoan,
       },
       process.env.JWT_RESETPASS_TOKEN,
-      { expiresIn: "600" }
+      { expiresIn: "600s" }
     );
     const content = `
     <div style="max-width: 600px; margin: auto">
@@ -54,7 +54,7 @@ const authcontroller = {
         console.log(err);
         res.redirect("/resetPass");
       } else {
-        res.cookie("token", token, { httpOnly: true, secure: true, path: "/", sameSite: "strict" });
+        res.cookie("token", token, { maxAge: 900000, httpOnly: true });
         res.redirect("/login");
       }
     });
@@ -64,33 +64,19 @@ const authcontroller = {
   },
   PostUpdate: async (req, res) => {
     try {
-      const token = req.cookies.token;
-      console.log(token);
-      if (token) {
-        jwt.verify(token, process.env.JWT_RESETPASS_TOKEN, async (err, item) => {
-          console.log(item);
-          if (err) {
-            console.log(err);
-          }
-          const taikhoan = await TaiKhoan.findById(item.id, async function (error, items) {
-            console.log(items);
-            if (error) {
-              const message = "Thay đổi mật khẩu không thành công";
-              console.log(err);
-              res.render("ResetPass", message);
-            } else {
-              const salt = await bcrypt.genSalt(10);
-              const hashed = await bcrypt.hash(req.body.MatKhau, salt);
-              await taikhoan.updateOne({ $set: { MatKhau: hashed } });
-              const message = "Thay đổi mật khẩu thành công";
-              res.render("ResetPass", message);
-            }
-          });
-        });
+      const item = req.admin;
+      const taikhoan = await TaiKhoan.findById(item.id).exec();
+      if (!taikhoan) {
+        console.log("Không tìm thấy tài khoản");
       }
+      const salt = await bcrypt.genSalt(10);
+      const hashed = await bcrypt.hash(req.body.MatKhau, salt);
+      taikhoan.MatKhau = hashed;
+      await taikhoan.save();
+      console.log("Cập nhật thành công");
+      res.redirect("/login");
     } catch (err) {
-      const message = "Thay đổi mật khẩu thành công";
-      res.render("ResetPass", message);
+      console.log(err.message);
     }
   },
 };

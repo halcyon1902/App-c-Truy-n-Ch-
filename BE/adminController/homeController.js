@@ -1,4 +1,3 @@
-const { TaiKhoan } = require("../model/model");
 const jwt = require("jsonwebtoken");
 const authorcontroller = {
   home: async (req, res) => {
