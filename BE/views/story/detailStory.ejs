@@ -1,123 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
-  <!-- Head -->
-  <%- include("../blocks/head.ejs") %>
-  <!-- End Head -->
-  <style>
-    .centered {
-      text-align: center;
-      vertical-align: middle;
-    }
-  </style>
+<!-- Head -->
+<%- include("../blocks/head.ejs") %>
+<!-- End Head -->
+<style>
+  .centered {
+    text-align: center;
+    vertical-align: middle;
+  }
+</style>
 
-  <body>
-    <div class="wrapper">
-      <div class="main-header">
-        <!-- Logo Header -->
-        <%- include("../blocks/logoheader.ejs") %>
-        <!-- End Logo Header -->
+<body>
+  <div class="wrapper">
+    <div class="main-header">
+      <!-- Logo Header -->
+      <%- include("../blocks/logoheader.ejs") %>
+      <!-- End Logo Header -->
 
-        <!-- Navbar Header -->
-        <%- include("../blocks/navbarheader.ejs") %>
-        <!-- End Navbar -->
-      </div>
-      <!-- Sidebar -->
-      <%- include("../blocks/sidebar.ejs") %>
-      <!-- End Sidebar -->
-      <!-- Main board -->
-      <div class="main-panel">
-        <div class="content">
-          <div class="page-inner">
-            <div class="page-header">
-              <h4 class="page-title">ReadingApp</h4>
-              <ul class="breadcrumbs">
-                <li class="nav-home">
-                  <a href="/">
-                    <i class="flaticon-home"></i>
-                  </a>
-                </li>
-                <li class="separator">
-                  <i class="flaticon-right-arrow"></i>
-                </li>
-                <li class="nav-item">
-                  <a href="/story">Danh sách truyện</a>
-                </li>
-              </ul>
-            </div>
-            <form style="width: 2000px" method="get" action="">
-              <div class="row">
-                <div class="col-md-4">
-                  <!-- Tên truyện -->
-                  <div class="form-group input-with-icon">
-                    <label for="TenTruyen">Tên truyện</label>
-                    <div><%= truyen.TenTruyen %></div>
-                  </div>
-                  <!-- Mô tả truyện -->
-                  <div class="form-group">
-                    <label for="GioiThieu">Mô tả</label>
-                    <div><%= truyen.GioiThieu %></div>
-                  </div>
-                  <!-- Tác giả truyện -->
-                  <div class="form-group input-with-icon">
-                    <label for="TacGia">Tác giả</label>
-                    <div><%= author.TenTacGia %></div>
-                  </div>
-                  <!-- Thể loại truyện -->
-                  <div class="form-group input-with-icon">
-                    <label for="TheLoai">Thể loại</label>
-                    <div><%= tempArray%></div>
-                  </div>
+      <!-- Navbar Header -->
+      <%- include("../blocks/navbarheader.ejs") %>
+      <!-- End Navbar -->
+    </div>
+    <!-- Sidebar -->
+    <%- include("../blocks/sidebar.ejs") %>
+    <!-- End Sidebar -->
+    <!-- Main board -->
+    <div class="main-panel">
+      <div class="content">
+        <div class="page-inner">
+          <div class="page-header">
+            <h4 class="page-title">ReadingApp</h4>
+            <ul class="breadcrumbs">
+              <li class="nav-home">
+                <a href="/">
+                  <i class="flaticon-home"></i>
+                </a>
+              </li>
+              <li class="separator">
+                <i class="flaticon-right-arrow"></i>
+              </li>
+              <li class="nav-item">
+                <a href="/story">Danh sách truyện</a>
+              </li>
+            </ul>
+          </div>
+          <form style="width: 2000px" method="get" action="">
+            <div class="row">
+              <div class="col-md-4">
+                <!-- Tên truyện -->
+                <div class="form-group input-with-icon">
+                  <label for="TenTruyen">Tên truyện</label>
+                  <div><%= truyen.TenTruyen %></div>
                 </div>
-                <div class="col-md-8">
-                  <!-- Ảnh bìa truyện -->
-                  <img src="<%=truyen.AnhBia%>" class="img-fluid" alt="Responsive image" />
+                <!-- Mô tả truyện -->
+                <div class="form-group">
+                  <label for="GioiThieu">Mô tả</label>
+                  <div><%= truyen.GioiThieu %></div>
+                </div>
+                <!-- Tác giả truyện -->
+                <div class="form-group input-with-icon">
+                  <label for="TacGia">Tác giả</label>
+                  <div><%= author.TenTacGia %></div>
+                </div>
+                <!-- Thể loại truyện -->
+                <div class="form-group input-with-icon">
+                  <label for="TheLoai">Thể loại</label>
+                  <div><%= tempArray%></div>
                 </div>
               </div>
-            </form>
-            <div class="col-md-12">
-              <div class="card">
-                <div class="card-header">
-                  <div class="d-flex align-items-center">
-                    <h4 class="card-title">DANH SÁCH CHƯƠNG TRUYỆN:<%= truyen.TenTruyen %></h4>
-                    <button class="btn btn-primary btn-round ml-auto" onclick="location.href='/chapter/create/<%= truyen._id  %>'">
-                      <i class="fa fa-plus"></i>
-                      Thêm chương
-                    </button>
-                  </div>
+              <div class="col-md-8">
+                <!-- Ảnh bìa truyện -->
+                <img src="<%=truyen.AnhBia%>" class="img-fluid" alt="Responsive image" />
+              </div>
+            </div>
+          </form>
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header">
+                <div class="d-flex align-items-center">
+                  <h4 class="card-title">DANH SÁCH CHƯƠNG TRUYỆN:<%= truyen.TenTruyen %></h4>
+                  <a class="btn btn-primary btn-round ml-auto" href="/story/chapter/create/<%= truyen._id  %>">
+                    <i class="fa fa-plus"></i>
+                    Thêm chương
+                  </a>
                 </div>
-                <div class="card-body">
-                  <div class="table-responsive">
-                    <table id="add-row" class="display table table-striped table-hover">
-                      <thead>
-                        <tr class="centered">
-                          <th>TÊN CHƯƠNG</th>
-                          <th>NGÀY NHẬP</th>
-                          <th>TRẠNG THÁI</th>
-                          <th>Action</th>
-                        </tr>
-                      </thead>
-                      <tbody class="centered">
-                        <% truyen.Chapters.forEach(function(chapter){ %>
-                        <tr>
-                          <td><a href="/chapter/detail/<%= chapter._id  %>"><%= chapter.TenChapter %></a></td>
-                          <td><%= (new Date(chapter.NgayNhap)).toLocaleDateString('en-GB') %></td>
-                          <% if(chapter.TrangThai==true) { %>
-                          <td style="color: green">Đã kích hoạt</td>
-                          <% } else { %>
-                          <td style="color: red">Chưa kích hoạt</td>
-                          <% } %>
-                          <td>
-                            <div class="form-button-action">
-                              <button onclick="location.href='/chapter/update/<%= chapter._id %>'" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Chỉnh sửa">
-                                <i class="fa fa-edit"></i>
-                              </button>
-                            </div>
-                          </td>
-                        </tr>
-                        <% }); %>
-                      </tbody>
-                    </table>
-                  </div>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table id="add-row" class="display table table-striped table-hover">
+                    <thead>
+                      <tr class="centered">
+                        <th>TÊN CHƯƠNG</th>
+                        <th>NGÀY NHẬP</th>
+                        <th>TRẠNG THÁI</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody class="centered">
+                      <% truyen.Chapters.forEach(function(chapter){ %>
+                      <tr>
+                        <td><a href="/story/chapter/detail/<%= chapter._id  %>"><%= chapter.TenChapter %></a></td>
+                        <td><%= (new Date(chapter.NgayNhap)).toLocaleDateString('en-GB') %></td>
+                        <% if(chapter.TrangThai==true) { %>
+                        <td style="color: green">Đã kích hoạt</td>
+                        <% } else { %>
+                        <td style="color: red">Chưa kích hoạt</td>
+                        <% } %>
+                        <td>
+                          <div class="form-button-action">
+                            <a href="/story/chapter/update/<%= chapter._id %>" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Chỉnh sửa">
+                              <i class="fa fa-edit"></i>
+                            </a>
+                          </div>
+                        </td>
+                      </tr>
+                      <% }); %>
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>
@@ -125,55 +124,57 @@
         </div>
       </div>
     </div>
-    <!--   Core JS Files   -->
-    <script src="../../assets/js/core/jquery.3.2.1.min.js"></script>
-    <script src="../../assets/js/core/popper.min.js"></script>
-    <script src="../../assets/js/core/bootstrap.min.js"></script>
-    <!-- jQuery UI -->
-    <script src="../../assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
-    <script src="../../assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
-    <!-- jQuery Scrollbar -->
-    <script src="../../assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
-    <!-- Datatables -->
-    <script src="../../assets/js/plugin/datatables/datatables.min.js"></script>
-    <!-- Atlantis JS -->
-    <script src="../../assets/js/atlantis.min.js"></script>
-    <!-- Atlantis DEMO methods, don't include it in your project! -->
-    <script src="../../assets/js/setting-demo2.js"></script>
-    <script>
-      $(document).ready(function () {
-        $("#basic-datatables").DataTable({});
-        $("#multi-filter-select").DataTable({
-          pageLength: 5,
-          initComplete: function () {
-            this.api()
-              .columns()
-              .every(function () {
-                var column = this;
-                var select = $('<select class="form-control"><option value=""></option></select>')
-                  .appendTo($(column.footer()).empty())
-                  .on("change", function () {
-                    var val = $.fn.dataTable.util.escapeRegex($(this).val());
+  </div>
+  <!--   Core JS Files   -->
+  <script src="../../assets/js/core/jquery.3.2.1.min.js"></script>
+  <script src="../../assets/js/core/popper.min.js"></script>
+  <script src="../../assets/js/core/bootstrap.min.js"></script>
+  <!-- jQuery UI -->
+  <script src="../../assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+  <script src="../../assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
+  <!-- jQuery Scrollbar -->
+  <script src="../../assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+  <!-- Datatables -->
+  <script src="../../assets/js/plugin/datatables/datatables.min.js"></script>
+  <!-- Atlantis JS -->
+  <script src="../../assets/js/atlantis.min.js"></script>
+  <!-- Atlantis DEMO methods, don't include it in your project! -->
+  <script src="../../assets/js/setting-demo2.js"></script>
+  <script>
+    $(document).ready(function() {
+      $("#basic-datatables").DataTable({});
+      $("#multi-filter-select").DataTable({
+        pageLength: 5,
+        initComplete: function() {
+          this.api()
+            .columns()
+            .every(function() {
+              var column = this;
+              var select = $('<select class="form-control"><option value=""></option></select>')
+                .appendTo($(column.footer()).empty())
+                .on("change", function() {
+                  var val = $.fn.dataTable.util.escapeRegex($(this).val());
 
-                    column.search(val ? "^" + val + "$" : "", true, false).draw();
-                  });
-                column
-                  .data()
-                  .unique()
-                  .sort()
-                  .each(function (d, j) {
-                    select.append('<option value="' + d + '">' + d + "</option>");
-                  });
-              });
-          },
-        });
-        // Add Row
-        $("#add-row").DataTable({
-          pageLength: 5,
-        });
-        var action =
-          '<td> <div class="form-button-action"> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"> <i class="fa fa-edit"></i> </button> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"> <i class="fa fa-times"></i> </button> </div> </td>';
+                  column.search(val ? "^" + val + "$" : "", true, false).draw();
+                });
+              column
+                .data()
+                .unique()
+                .sort()
+                .each(function(d, j) {
+                  select.append('<option value="' + d + '">' + d + "</option>");
+                });
+            });
+        },
       });
-    </script>
-  </body>
+      // Add Row
+      $("#add-row").DataTable({
+        pageLength: 5,
+      });
+      var action =
+        '<td> <div class="form-button-action"> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"> <i class="fa fa-edit"></i> </button> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"> <i class="fa fa-times"></i> </button> </div> </td>';
+    });
+  </script>
+</body>
+
 </html>

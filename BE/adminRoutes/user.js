@@ -1,8 +1,11 @@
 const express = require("express").Router();
-const usercontroller = require("../admincontroller/userController");
-express.get("/", usercontroller.GetUser);
-express.get("/create", usercontroller.GetCreateUser);
-express.post("/create", usercontroller.PostCreateUser);
-express.get("/update/:id", usercontroller.GetUpdateUser);
-express.post("/update/:id", usercontroller.PostUpdateUser);
+const usercontroller = require("../adminController/userController");
+const middlewarecontroller = require("../adminController/middlewareController");
+express.get("/", middlewarecontroller.verifyTokenAndAdmin, usercontroller.GetUser);
+express.get("/create", middlewarecontroller.verifyTokenAndAdmin, usercontroller.GetCreateUser);
+express.post("/create", middlewarecontroller.verifyTokenAndAdmin, usercontroller.PostCreateUser);
+express.get("/update/:id", middlewarecontroller.verifyTokenAndAdmin, usercontroller.GetUpdateUser);
+express.post("/update/:id", middlewarecontroller.verifyTokenAndAdmin, usercontroller.PostUpdateUser);
+express.get("/updateAdmin/:id", middlewarecontroller.verifyTokenAndAdmin, usercontroller.GetUpdateAdmin);
+express.post("/updateAdmin/:id", middlewarecontroller.verifyTokenAndAdmin, usercontroller.PostUpdateAdmin);
 module.exports = express;

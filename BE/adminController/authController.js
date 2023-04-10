@@ -7,12 +7,12 @@ const authcontroller = {
     if (accessToken) {
       jwt.verify(accessToken, process.env.JWT_ACCESS_KEY, (err, user) => {
         if (err) {
-          res.render("Login", { message: "" });
+          res.render("Login");
         }
         res.redirect("/");
       });
     } else {
-      res.render("Login", { message: "" });
+      res.render("Login");
     }
   },
   PostLogin: async (req, res) => {

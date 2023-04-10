@@ -144,6 +144,7 @@
 <script src="../assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
 <script src="../assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
 <script src="../assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+<% if (typeof message !== "undefined") { %>
 <script>
   var text = '<%= message %>';
   if (text) {
@@ -161,6 +162,7 @@
     });
   }
 </script>
+<% } %>
 </body>
 
 </html>

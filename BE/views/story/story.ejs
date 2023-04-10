@@ -49,10 +49,10 @@
               <div class="card-header">
                 <div class="d-flex align-items-center">
                   <h4 class="card-title">DANH SÁCH TRUYỆN</h4>
-                  <button class="btn btn-primary btn-round ml-auto" onclick="location.href='/story/create'">
+                  <a class="btn btn-primary btn-round ml-auto" href="/story/create">
                     <i class="fa fa-plus"></i>
                     Thêm truyện
-                  </button>
+                  </a>
                 </div>
               </div>
               <div class="card-body">
@@ -85,9 +85,9 @@
                         <% } %>
                         <td>
                           <div class="form-button-action">
-                            <button onclick="location.href='/story/update/<%= story._id %>'" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Chỉnh sửa">
+                            <a href="/story/update/<%= story._id %>" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Chỉnh sửa">
                               <i class="fa fa-edit"></i>
-                            </button>
+                            </a>
                           </div>
                         </td>
                       </tr>
