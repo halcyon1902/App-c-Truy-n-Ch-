@@ -8,7 +8,6 @@ const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
 const dotenv = require("dotenv");
 const bcrypt = require("bcrypt");
-const helmet = require("helmet");
 const nodemailer = require("nodemailer");
 const flash = require("express-flash");
 dotenv.config();
@@ -21,7 +20,6 @@ app.use(
     extended: true,
   })
 );
-app.use(helmet());
 app.use(cookieParser());
 app.use(flash());
 app.use(cors());
@@ -70,4 +68,55 @@ app.use("/resetPass", require("./adminRoutes/mailer"));
 app.use(express.static(__dirname + "/public"));
 app.set("view engine", "ejs");
 app.set("views", "./views");
+//#endregion
+//#region nodemailer
+app.get("/index", function (req, res) {
+  res.render("index.ejs");
+});
+app.post("/send-mail", function (req, res) {
+  //Tiến hành gửi mail, nếu có gì đó bạn có thể xử lý trước khi gửi mail
+  var transporter = nodemailer.createTransport({
+    // config mail server
+    host: "smtp.gmail.com",
+    service: "gmail",
+    port: 465,
+    secure: true,
+    auth: {
+      user: "halcyon1902@gmail.com",
+      pass: "zrxfwyejuvijuvju",
+    },
+    tls: {
+      // do not fail on invalid certs
+      rejectUnauthorized: false,
+    },
+  });
+  const content = `
+  <div style="max-width: 600px; margin: auto">
+    <div style="background-color: #003375; padding: 20px; text-align: center">
+      <img src="/assets/img/icon.ico" alt="Logo" style="width: 200px">
+    </div>
+    <div style="padding: 20px">
+      <h3>Xin chào,</h3>
+      <p>Bạn đã gửi yêu cầu khôi phục mật khẩu. Đây là đường link để cập nhật mật khẩu mới:</p>
+      <p><a href="" style="color: #0085ff">https://example.com/reset-password/</a></p>
+      <p>Nếu bạn không yêu cầu thay đổi mật khẩu, thì hãy bỏ qua email này.</p>
+      <p style="font-style: italic">Email này được tự động tạo ra, vui lòng không trả lời lại.</p>
+    </div>
+  </div>
+`;
+  var mainOptions = {
+    from: "ReadingApp",
+    to: req.body.mail,
+    subject: "Recovery Password",
+    html: content,
+  };
+  transporter.sendMail(mainOptions, function (err, info) {
+    if (err) {
+      console.log(err);
+      res.redirect("/index");
+    } else {
+      res.redirect("/index");
+    }
+  });
+});
 //#endregion

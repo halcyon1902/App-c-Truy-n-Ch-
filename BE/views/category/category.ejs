@@ -49,10 +49,10 @@
               <div class="card-header">
                 <div class="d-flex align-items-center">
                   <h4 class="card-title">DANH SÁCH THỂ LOẠI</h4>
-                  <a class="btn btn-primary btn-round ml-auto" href="/category/create">
+                  <button class="btn btn-primary btn-round ml-auto" onclick="location.href='/category/create'">
                     <i class="fa fa-plus"></i>
                     THÊM THỂ LOẠI
-                  </a>
+                  </button>
                 </div>
               </div>
               <div class="card-body">
@@ -70,9 +70,9 @@
                         <td><%= cate.TenTheLoai %></td>
                         <td>
                           <div class="form-button-action">
-                            <a href="/category/update/<%= cate._id %>" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Chỉnh sửa">
+                            <button onclick="location.href='/category/update/<%= cate._id %>'" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Chỉnh sửa">
                               <i class="fa fa-edit"></i>
-                            </a>
+                            </button>
                           </div>
                         </td>
                       </tr>

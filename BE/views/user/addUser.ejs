@@ -1,170 +1,172 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <%- include("../blocks/head.ejs") %>
+  </head>
+  <style>
+    .input-with-icon {
+      position: relative;
+    }
 
-<head>
-  <%- include("../blocks/head.ejs") %>
-</head>
-<style>
-  .input-with-icon {
-    position: relative;
-  }
+    .field-icon {
+      margin-right: 30px;
+      position: absolute;
+      right: 0;
+      top: 65%;
+      transform: translateY(-50%);
+      cursor: pointer;
+    }
+    .form-control {
+      padding-right: 30px;
+    }
+  </style>
+  <body>
+    <div class="wrapper">
+      <div class="main-header">
+        <!-- Logo Header -->
+        <%- include("../blocks/logoheader.ejs") %>
+        <!-- End Logo Header -->
 
-  .field-icon {
-    margin-right: 30px;
-    position: absolute;
-    right: 0;
-    top: 65%;
-    transform: translateY(-50%);
-    cursor: pointer;
-  }
-
-  .form-control {
-    padding-right: 30px;
-  }
-</style>
-
-<body>
-  <div class="wrapper">
-    <div class="main-header">
-      <!-- Logo Header -->
-      <%- include("../blocks/logoheader.ejs") %>
-      <!-- End Logo Header -->
-
-      <!-- Navbar Header -->
-      <%- include("../blocks/navbarheader.ejs") %>
-      <!-- End Navbar -->
-    </div>
-    <!-- Sidebar -->
-    <%- include("../blocks/sidebar.ejs") %>
-    <div class="main-panel">
-      <div class="content">
-        <div class="page-inner">
-          <div class="page-header">
-            <h4 class="page-title">ReadingApp</h4>
-            <ul class="breadcrumbs">
-              <li class="nav-home">
-                <a href="/">
-                  <i class="flaticon-home"></i>
-                </a>
-              </li>
-              <li class="separator">
-                <i class="flaticon-right-arrow"></i>
-              </li>
-              <li class="nav-item">
-                <a href="/user">Danh sách tài khoản</a>
-              </li>
-              <li class="separator">
-                <i class="flaticon-right-arrow"></i>
-              </li>
-              <li class="nav-item">
-                <a href="/user/create">Thêm tài khoản</a>
-              </li>
-            </ul>
+        <!-- Navbar Header -->
+        <%- include("../blocks/navbarheader.ejs") %>
+        <!-- End Navbar -->
+      </div>
+      <!-- Sidebar -->
+      <%- include("../blocks/sidebar.ejs") %>
+      <div class="main-panel">
+        <div class="content">
+          <div class="page-inner">
+            <div class="page-header">
+              <h4 class="page-title">ReadingApp</h4>
+              <ul class="breadcrumbs">
+                <li class="nav-home">
+                  <a href="/">
+                    <i class="flaticon-home"></i>
+                  </a>
+                </li>
+                <li class="separator">
+                  <i class="flaticon-right-arrow"></i>
+                </li>
+                <li class="nav-item">
+                  <a href="/user">Danh sách tài khoảm</a>
+                </li>
+                <li class="separator">
+                  <i class="flaticon-right-arrow"></i>
+                </li>
+                <li class="nav-item">
+                  <a href="/user/create">Thêm tài khoản</a>
+                </li>
+              </ul>
+            </div>
+            <form style="width: 650px" method="post" action="/user/create">
+              <div class="form-group input-with-icon">
+                <label>Tài khoản</label>
+                <input required="required" type="text" class="form-control" name="TaiKhoan" placeholder="Nhập tên tài khoản..." />
+                <small class="form-text text-muted">Tên tài khoản là unique</small>
+              </div>
+              <div class="form-group input-with-icon">
+                <label>Mật khẩu</label>
+                <input required="required" type="password" class="form-control input-password" name="MatKhau" placeholder="Nhập mật khẩu" />
+                <span id="togglePassword1" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+              </div>
+              <div class="form-group input-with-icon">
+                <label>Xác nhận mật khẩu</label>
+                <input required="required" type="password" class="form-control input-password" name="XacNhanMatKhau" placeholder="Nhập lại mật khẩu" />
+                <span id="togglePassword2" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+              </div>
+              <div class="form-group input-with-icon">
+                <label>Họ Tên</label>
+                <input required="required" type="text" class="form-control" name="HoTen" placeholder="Nhập họ tên..." />
+              </div>
+              <div class="form-group input-with-icon">
+                <label>Email</label>
+                <input required="required" type="email" class="form-control" name="Email" placeholder="Nhập email..." />
+              </div>
+              <div class="form-group">
+                <label for="isAdmin">Tài khoản là Admin</label>
+                <input type="checkbox" value="true" id="isAdmin" name="isAdmin" />
+              </div>
+              <div class="form-group">
+                <label for="isActive">Tài khoản là đang hoạt động</label>
+                <input type="checkbox" value="true" id="isActive" name="isActive" />
+              </div>
+              <div class="col-lg-4 col-md-9 col-sm-12">
+                <br />
+                <button class="btn btn-success">Create</button>
+                <button class="btn btn-danger" onclick="location.href='/user'">Cancel</button>
+              </div>
+            </form>
           </div>
-          <form style="width: 650px" method="post" action="/user/create">
-            <div class="form-group input-with-icon">
-              <label>Tài khoản</label>
-              <input required="required" type="text" class="form-control" name="TaiKhoan" placeholder="Nhập tên tài khoản..." />
-              <small class="form-text text-muted">Tên tài khoản là unique</small>
-            </div>
-            <div class="form-group input-with-icon">
-              <label>Mật khẩu</label>
-              <input required="required" type="password" class="form-control input-password" name="MatKhau" placeholder="Nhập mật khẩu" />
-              <span id="togglePassword1" class="fa fa-fw fa-eye field-icon toggle-password"></span>
-            </div>
-            <div class="form-group input-with-icon">
-              <label>Xác nhận mật khẩu</label>
-              <input required="required" type="password" class="form-control input-password" name="XacNhanMatKhau" placeholder="Nhập lại mật khẩu" />
-              <span id="togglePassword2" class="fa fa-fw fa-eye field-icon toggle-password"></span>
-            </div>
-            <div class="form-group input-with-icon">
-              <label>Họ Tên</label>
-              <input required="required" type="text" class="form-control" name="HoTen" placeholder="Nhập họ tên..." />
-            </div>
-            <div class="form-group input-with-icon">
-              <label>Email</label>
-              <input required="required" type="email" class="form-control" name="Email" placeholder="Nhập email..." />
-            </div>
-            <div class="form-group">
-              <label for="isAdmin">Tài khoản là Admin</label>
-              <input type="checkbox" value="true" id="isAdmin" name="isAdmin" />
-            </div>
-            <div class="form-group">
-              <label for="isActive">Tài khoản là đang hoạt động</label>
-              <input type="checkbox" value="true" id="isActive" name="isActive" />
-            </div>
-            <div class="col-lg-4 col-md-9 col-sm-12">
-              <br />
-              <button class="btn btn-success">Create</button>
-              <button class="btn btn-danger" onclick="location.href='/user'">Cancel</button>
-            </div>
-          </form>
         </div>
       </div>
+
+      <!-- End Custom template -->
     </div>
+    <!--   Core JS Files   -->
+    <script src="../../assets/js/core/jquery.3.2.1.min.js"></script>
+    <script src="../../assets/js/core/popper.min.js"></script>
+    <script src="../../assets/js/core/bootstrap.min.js"></script>
+    <!-- jQuery UI -->
+    <script src="../../assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+    <script src="../../assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
+    <!-- Bootstrap Notify -->
+    <script src="../../assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
 
-    <!-- End Custom template -->
-  </div>
-  <!--   Core JS Files   -->
-  <script src="../../assets/js/core/jquery.3.2.1.min.js"></script>
-  <script src="../../assets/js/core/popper.min.js"></script>
-  <script src="../../assets/js/core/bootstrap.min.js"></script>
-  <!-- jQuery UI -->
-  <script src="../../assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
-  <script src="../../assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
-  <!-- Bootstrap Notify -->
-  <script src="../../assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+    <!-- jQuery Scrollbar -->
+    <script src="../../assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+    <!-- Atlantis JS -->
+    <script src="../../assets/js/atlantis.min.js"></script>
+    <!-- Atlantis DEMO methods, don't include it in your project! -->
+    <script src="../../assets/js/setting-demo2.js"></script>
+    <script>
+      var text = "<%= message %>";
+      if (text == 0) {
+        $.notify(
+          {
+            icon: "flaticon-alarm-1",
+            title: "ReadingApp",
+            message: "Tạo tài khoản thất bại",
+          },
+          {
+            type: "danger",
+            placement: {
+              from: "top",
+              align: "center",
+            },
+            time: 1000,
+          }
+        );
+      }
+      if (text == 1) {
+        $.notify(
+          {
+            icon: "flaticon-alarm-1",
+            title: "ReadingApp",
+            message: "Mật khẩu không trùng khớp",
+          },
+          {
+            type: "danger",
+            placement: {
+              from: "top",
+              align: "center",
+            },
+            time: 1000,
+          }
+        );
+      }
+    </script>
+    <script>
+      // Lấy ra các elements cần sử dụng
+      const inputPasswords = document.querySelectorAll(".input-password");
+      const togglePasswords = document.querySelectorAll(".toggle-password");
 
-  <!-- jQuery Scrollbar -->
-  <script src="../../assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
-  <!-- Atlantis JS -->
-  <script src="../../assets/js/atlantis.min.js"></script>
-  <!-- Atlantis DEMO methods, don't include it in your project! -->
-  <script src="../../assets/js/setting-demo2.js"></script>
-  <script>
-    var text = "<%= message %>";
-    if (text == 0) {
-      $.notify({
-        icon: "flaticon-alarm-1",
-        title: "ReadingApp",
-        message: "Tạo tài khoản thất bại",
-      }, {
-        type: "danger",
-        placement: {
-          from: "top",
-          align: "center",
-        },
-        time: 1000,
+      // Xử lý cho từng element
+      togglePasswords.forEach((togglePassword, index) => {
+        togglePassword.addEventListener("click", (event) => {
+          const inputPassword = inputPasswords[index];
+          inputPassword.type = inputPassword.type === "password" ? "text" : "password";
+        });
       });
-    }
-    if (text == 1) {
-      $.notify({
-        icon: "flaticon-alarm-1",
-        title: "ReadingApp",
-        message: "Mật khẩu không trùng khớp",
-      }, {
-        type: "danger",
-        placement: {
-          from: "top",
-          align: "center",
-        },
-        time: 1000,
-      });
-    }
-  </script>
-  <script>
-    // Lấy ra các elements cần sử dụng
-    const inputPasswords = document.querySelectorAll(".input-password");
-    const togglePasswords = document.querySelectorAll(".toggle-password");
-
-    // Xử lý cho từng element
-    togglePasswords.forEach((togglePassword, index) => {
-      togglePassword.addEventListener("click", (event) => {
-        const inputPassword = inputPasswords[index];
-        inputPassword.type = inputPassword.type === "password" ? "text" : "password";
-      });
-    });
-  </script>
-</body>
-
+    </script>
+  </body>
 </html>

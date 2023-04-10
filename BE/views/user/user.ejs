@@ -1,96 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- Head -->
-<%- include("../blocks/head.ejs") %>
-<!-- End Head -->
-<style>
-  .centered {
-    text-align: center;
-    vertical-align: middle;
-  }
-</style>
+  <!-- Head -->
+  <%- include("../blocks/head.ejs") %>
+  <!-- End Head -->
+  <style>
+    .centered {
+      text-align: center;
+      vertical-align: middle;
+    }
+  </style>
 
-<body>
-  <div class="wrapper">
-    <div class="main-header">
-      <!-- Logo Header -->
-      <%- include("../blocks/logoheader.ejs") %>
-      <!-- End Logo Header -->
-      <!-- Navbar Header -->
-      <%- include("../blocks/navbarheader.ejs") %>
-      <!-- End Navbar -->
-    </div>
-    <!-- Sidebar -->
-    <%- include("../blocks/sidebar.ejs") %>
-    <!-- End Sidebar -->
-    <!-- giao diện chính -->
-    <div class="main-panel">
-      <div class="content">
-        <div class="page-inner">
-          <div class="page-header">
-            <h4 class="page-title">ReadingApp</h4>
-            <ul class="breadcrumbs">
-              <li class="nav-home">
-                <a href="/">
-                  <i class="flaticon-home"></i>
-                </a>
-              </li>
-              <li class="separator">
-                <i class="flaticon-right-arrow"></i>
-              </li>
-              <li class="nav-item">
-                <a href="/user">Danh sách tài khoản</a>
-              </li>
-            </ul>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <div class="card">
-                <div class="card-header">
-                  <div class="d-flex align-items-center">
-                    <h4 class="card-title">DANH SÁCH TÀI KHOẢN</h4>
-                    <a class="btn btn-primary btn-round ml-auto" href="/user/create"><i class="fa fa-plus"></i>THÊM TÀI KHOẢN</a>
+  <body>
+    <div class="wrapper">
+      <div class="main-header">
+        <!-- Logo Header -->
+        <%- include("../blocks/logoheader.ejs") %>
+        <!-- End Logo Header -->
+        <!-- Navbar Header -->
+        <%- include("../blocks/navbarheader.ejs") %>
+        <!-- End Navbar -->
+      </div>
+      <!-- Sidebar -->
+      <%- include("../blocks/sidebar.ejs") %>
+      <!-- End Sidebar -->
+      <!-- giao diện chính -->
+      <div class="main-panel">
+        <div class="content">
+          <div class="page-inner">
+            <div class="page-header">
+              <h4 class="page-title">ReadingApp</h4>
+              <ul class="breadcrumbs">
+                <li class="nav-home">
+                  <a href="/">
+                    <i class="flaticon-home"></i>
+                  </a>
+                </li>
+                <li class="separator">
+                  <i class="flaticon-right-arrow"></i>
+                </li>
+                <li class="nav-item">
+                  <a href="/user">Danh sách tài khoản</a>
+                </li>
+              </ul>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card">
+                  <div class="card-header">
+                    <div class="d-flex align-items-center">
+                      <h4 class="card-title">DANH SÁCH TÀI KHOẢN</h4>
+                      <button class="btn btn-primary btn-round ml-auto" onclick="location.href='/user/create'"><i class="fa fa-plus"></i>THÊM TÀI KHOẢN</button>
+                    </div>
                   </div>
-                </div>
-                <div class="card-body">
-                  <div class="table-responsive">
-                    <table id="add-row" class="display table table-striped table-hover">
-                      <thead>
-                        <tr class="centered">
-                          <th>ID</th>
-                          <th>TÀI KHOẢN</th>
-                          <th>TRẠNG THÁI</th>
-                          <th>PHẦN QUYỀN</th>
-                          <th>NGÀY TẠO</th>
-                          <th style="width: 10%">Action</th>
-                        </tr>
-                      </thead>
-                      <tbody class="centered">
-                        <% listuser.forEach(function(user){ %> <%if(user.PhanQuyen==true ||user.PhanQuyen==false){ %>
-                        <tr>
-                          <td><%= user._id %></td>
-                          <td><%= user.TaiKhoan %></td>
-                          <% if(user.TrangThai==true) { %>
-                          <td style="color: green">Đã kích hoạt</td>
-                          <% } else { %>
-                          <td style="color: red">Chưa kích hoạt</td>
-                          <% } %> <% if(user.PhanQuyen==true) { %>
-                          <td style="color: green">Admin</td>
-                          <% } else { %>
-                          <td style="color: red">User</td>
-                          <% } %>
-                          <td><%= (new Date(user.NgayTao)).toLocaleDateString('en-GB') %></td>
-                          <td>
-                            <div class="form-button-action">
-                              <a href="/user/update/<%= user._id %>" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
-                                <i class="fa fa-edit"></i>
-                              </a>
-                            </div>
-                          </td>
-                        </tr>
-                        <% } %> <% }); %>
-                      </tbody>
-                    </table>
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <table id="add-row" class="display table table-striped table-hover">
+                        <thead>
+                          <tr class="centered">
+                            <th>ID</th>
+                            <th>TÀI KHOẢN</th>
+                            <th>TRẠNG THÁI</th>
+                            <th>PHẦN QUYỀN</th>
+                            <th>NGÀY TẠO</th>
+                            <th style="width: 10%">Action</th>
+                          </tr>
+                        </thead>
+                        <tbody class="centered">
+                          <% listuser.forEach(function(user){ %> <%if(user.PhanQuyen==true ||user.PhanQuyen==false){ %>
+                          <tr>
+                            <td><%= user._id %></td>
+                            <td><%= user.TaiKhoan %></td>
+                            <% if(user.TrangThai==true) { %>
+                            <td style="color: green">Đã kích hoạt</td>
+                            <% } else { %>
+                            <td style="color: red">Chưa kích hoạt</td>
+                            <% } %> <% if(user.PhanQuyen==true) { %>
+                            <td style="color: green">Admin</td>
+                            <% } else { %>
+                            <td style="color: red">User</td>
+                            <% } %>
+                            <td><%= (new Date(user.NgayTao)).toLocaleDateString('en-GB') %></td>
+                            <td>
+                              <div class="form-button-action">
+                                <button onclick="location.href='/user/update/<%= user._id %>'" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
+                                  <i class="fa fa-edit"></i>
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                          <% } %> <% }); %>
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -99,58 +100,56 @@
         </div>
       </div>
     </div>
-  </div>
-  <!--   Core JS Files   -->
-  <script src="../../assets/js/core/jquery.3.2.1.min.js"></script>
-  <script src="../../assets/js/core/popper.min.js"></script>
-  <script src="../../assets/js/core/bootstrap.min.js"></script>
-  <!-- jQuery UI -->
-  <script src="../../assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
-  <script src="../../assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
-  <!-- jQuery Scrollbar -->
-  <script src="../../assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
-  <!-- Datatables -->
-  <script src="../../assets/js/plugin/datatables/datatables.min.js"></script>
-  <!-- Atlantis JS -->
-  <script src="../../assets/js/atlantis.min.js"></script>
-  <script>
-    const moment = require("moment");
-    ejs.locals.formatDate = (date, format) => {
-      return moment(date).format(format);
-    };
-  </script>
-  <script>
-    $(document).ready(function() {
-      $("#multi-filter-select").DataTable({
-        pageLength: 5,
-        initComplete: function() {
-          this.api()
-            .columns()
-            .every(function() {
-              var column = this;
-              var select = $('<select class="form-control"><option value=""></option></select>')
-                .appendTo($(column.footer()).empty())
-                .on("change", function() {
-                  var val = $.fn.dataTable.util.escapeRegex($(this).val());
-                  column.search(val ? "^" + val + "$" : "", true, false).draw();
-                });
+    <!--   Core JS Files   -->
+    <script src="../../assets/js/core/jquery.3.2.1.min.js"></script>
+    <script src="../../assets/js/core/popper.min.js"></script>
+    <script src="../../assets/js/core/bootstrap.min.js"></script>
+    <!-- jQuery UI -->
+    <script src="../../assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+    <script src="../../assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
+    <!-- jQuery Scrollbar -->
+    <script src="../../assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+    <!-- Datatables -->
+    <script src="../../assets/js/plugin/datatables/datatables.min.js"></script>
+    <!-- Atlantis JS -->
+    <script src="../../assets/js/atlantis.min.js"></script>
+    <script>
+      const moment = require("moment");
+      ejs.locals.formatDate = (date, format) => {
+        return moment(date).format(format);
+      };
+    </script>
+    <script>
+      $(document).ready(function () {
+        $("#multi-filter-select").DataTable({
+          pageLength: 5,
+          initComplete: function () {
+            this.api()
+              .columns()
+              .every(function () {
+                var column = this;
+                var select = $('<select class="form-control"><option value=""></option></select>')
+                  .appendTo($(column.footer()).empty())
+                  .on("change", function () {
+                    var val = $.fn.dataTable.util.escapeRegex($(this).val());
+                    column.search(val ? "^" + val + "$" : "", true, false).draw();
+                  });
 
-              column
-                .data()
-                .unique()
-                .sort()
-                .each(function(d, j) {
-                  select.append('<option value="' + d + '">' + d + "</option>");
-                });
-            });
-        },
+                column
+                  .data()
+                  .unique()
+                  .sort()
+                  .each(function (d, j) {
+                    select.append('<option value="' + d + '">' + d + "</option>");
+                  });
+              });
+          },
+        });
+        // Add Row
+        $("#add-row").DataTable({
+          pageLength: 5,
+        });
       });
-      // Add Row
-      $("#add-row").DataTable({
-        pageLength: 5,
-      });
-    });
-  </script>
-</body>
-
+    </script>
+  </body>
 </html>
