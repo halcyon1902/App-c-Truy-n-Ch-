@@ -157,5 +157,8 @@ public class TheoDoiFragment extends Fragment {
         });
         AlertDialog dialog = builder.create();
         dialog.show();
+        // Set button text color
+        Button okButton = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
+        okButton.setTextColor(Color.BLACK);
     }
 }

@@ -14,25 +14,19 @@ public class Truyen implements Serializable {
     private String AnhBia;
     private int LuotThich;
     private int LuotXem;
-    private int LuotXemThang;
-    private Date NgayXepHang;
     private String TacGia;
     private Chapter[] Chapters;
 
-    public Truyen(boolean trangThai, boolean tinhTrang, int luotThich, int luotXem, int luotXemThang, Date ngayXepHang) {
+    public Truyen(boolean trangThai, boolean tinhTrang, int luotThich, int luotXem) {
         TrangThai = trangThai;
         TinhTrang = tinhTrang;
         LuotThich = luotThich;
         LuotXem = luotXem;
-        LuotXemThang = luotXemThang;
-        NgayXepHang = ngayXepHang;
     }
 
-    public Truyen(boolean trangThai, boolean tinhTrang, int luotXemThang, Date ngayXepHang) {
+    public Truyen(boolean trangThai, boolean tinhTrang) {
         TrangThai = trangThai;
         TinhTrang = tinhTrang;
-        LuotXemThang = luotXemThang;
-        NgayXepHang = ngayXepHang;
     }
 
     public Truyen(boolean trangThai, boolean tinhTrang, int luotXem) {
@@ -45,11 +39,9 @@ public class Truyen implements Serializable {
         TrangThai = trangThai;
         TinhTrang = tinhTrang;
         LuotXem = luotXem;
-        LuotXemThang = luotXemThang;
-        NgayXepHang = ngayXepHang;
     }
 
-    public Truyen(String _id, String tenTruyen, String[] theLoais, boolean trangThai, boolean tinhTrang, String gioiThieu, String anhBia, int luotThich, int luotXem, int luotXemThang, Date ngayXepHang, String tacGia, Chapter[] chapters) {
+    public Truyen(String _id, String tenTruyen, String[] theLoais, boolean trangThai, boolean tinhTrang, String gioiThieu, String anhBia, int luotThich, int luotXem, String tacGia, Chapter[] chapters) {
         this._id = _id;
         TenTruyen = tenTruyen;
         TheLoais = theLoais;
@@ -59,18 +51,8 @@ public class Truyen implements Serializable {
         AnhBia = anhBia;
         LuotThich = luotThich;
         LuotXem = luotXem;
-        LuotXemThang = luotXemThang;
-        NgayXepHang = ngayXepHang;
         TacGia = tacGia;
         Chapters = chapters;
-    }
-
-
-    public Truyen(boolean trangThai, boolean tinhTrang, int luotThich, int luotXem) {
-        TrangThai = trangThai;
-        TinhTrang = tinhTrang;
-        LuotThich = luotThich;
-        LuotXem = luotXem;
     }
 
     public Truyen() {
@@ -89,8 +71,6 @@ public class Truyen implements Serializable {
                 ", AnhBia='" + AnhBia + '\'' +
                 ", LuotThich=" + LuotThich +
                 ", LuotXem=" + LuotXem +
-                ", LuotXemThang=" + LuotXemThang +
-                ", NgayXepHang=" + NgayXepHang +
                 ", TacGia=" + TacGia +
                 ", Chapters=" + Arrays.toString(Chapters) +
                 '}';
@@ -166,22 +146,6 @@ public class Truyen implements Serializable {
 
     public void setLuotXem(int luotXem) {
         LuotXem = luotXem;
-    }
-
-    public int getLuotXemThang() {
-        return LuotXemThang;
-    }
-
-    public void setLuotXemThang(int luotXemThang) {
-        LuotXemThang = luotXemThang;
-    }
-
-    public Date getNgayXepHang() {
-        return NgayXepHang;
-    }
-
-    public void setNgayXepHang(Date ngayXepHang) {
-        NgayXepHang = ngayXepHang;
     }
 
     public String getTacGia() {

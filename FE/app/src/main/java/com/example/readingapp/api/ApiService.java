@@ -1,5 +1,6 @@
 package com.example.readingapp.api;
 
+import com.example.readingapp.model.Chapter;
 import com.example.readingapp.model.TacGia;
 import com.example.readingapp.model.TaiKhoan;
 import com.example.readingapp.model.TheLoai;
@@ -33,6 +34,10 @@ public interface ApiService {
     //Tài khoản
     @GET("TaiKhoan")
     Call<List<TaiKhoan>> GetTaiKhoan();
+
+
+    @PUT("Chapter/{id}")
+    Call<Chapter> UpdateChapter(@Path("id") String ChapterID, @Body Chapter chapter);
 
     @POST("TaiKhoan")
     Call<TaiKhoan> PostTaiKhoan(@Body TaiKhoan taiKhoan);
@@ -76,5 +81,7 @@ public interface ApiService {
     //Tác giả
     @GET("TacGia/{id}")
     Call<TacGia> GetTacGia(@Path("id") String tacGiaID);
-
+    //Chapter
+    @GET("Chapter/{id}")
+    Call<Chapter> GetChapter(@Path("id") String ChapterID);
 }

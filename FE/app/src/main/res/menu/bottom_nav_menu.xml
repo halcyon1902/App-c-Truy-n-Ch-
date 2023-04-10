@@ -15,12 +15,6 @@
         app:showAsAction="always" />
 
     <item
-        android:id="@+id/menu_bhx"
-        android:icon="@drawable/baseline_star_rate_24"
-        android:title="@string/title_bxh"
-        app:showAsAction="always" />
-
-    <item
         android:id="@+id/menu_taikhoan"
         android:icon="@drawable/baseline_person_24"
         android:title="@string/title_taikhoan"

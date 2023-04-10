@@ -65,6 +65,9 @@ public class GetChapter extends AppCompatActivity {
             }
         });
     }
+    private void resetActivityState() {
+        // Reset any state in your activity here
+    }
 
     private void init() {
         viewPager2 = findViewById(R.id.detail_view_pager);
