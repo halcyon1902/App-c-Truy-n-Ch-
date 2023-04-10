@@ -62,6 +62,7 @@ app.use("/category", require("./adminRoutes/category"));
 app.use("/user", require("./adminRoutes/user"));
 app.use("/", require("./adminRoutes/home"));
 app.use("/", require("./adminRoutes/auth"));
+app.use("/resetPass", require("./adminRoutes/mailer"));
 //#endregion
 //#region view engine
 app.use(express.static(__dirname + "/public"));
