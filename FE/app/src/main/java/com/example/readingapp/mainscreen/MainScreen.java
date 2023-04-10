@@ -7,7 +7,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.readingapp.R;
-import com.example.readingapp.ui.BXHFragment;
 import com.example.readingapp.ui.TaiKhoanFragment;
 import com.example.readingapp.ui.TheoDoiFragment;
 import com.example.readingapp.ui.TrangChuFragment;
@@ -17,7 +16,6 @@ import com.google.android.material.navigation.NavigationBarView;
 public class MainScreen extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
     TrangChuFragment trangChuFragment = new TrangChuFragment();
-    BXHFragment bxhFragment = new BXHFragment();
     TheoDoiFragment theoDoiFragment = new TheoDoiFragment();
     TaiKhoanFragment taiKhoanFragment = new TaiKhoanFragment();
 
@@ -36,9 +34,6 @@ public class MainScreen extends AppCompatActivity {
                         return true;
                     case R.id.menu_theodoi:
                         getSupportFragmentManager().beginTransaction().replace(R.id.container, theoDoiFragment).commit();
-                        return true;
-                    case R.id.menu_bhx:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container, bxhFragment).commit();
                         return true;
                     case R.id.menu_taikhoan:
                         getSupportFragmentManager().beginTransaction().replace(R.id.container, taiKhoanFragment).commit();

@@ -2,19 +2,19 @@ package com.example.readingapp.ui;
 
 import static android.content.Context.MODE_PRIVATE;
 
-import android.content.Context;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -24,7 +24,6 @@ import com.example.readingapp.R;
 import com.example.readingapp.api.ApiService;
 import com.example.readingapp.function.SignIn;
 import com.example.readingapp.function.UpdatePassword;
-import com.example.readingapp.mainscreen.MainScreen;
 import com.example.readingapp.model.TaiKhoan;
 
 import retrofit2.Call;
@@ -40,14 +39,17 @@ public class TaiKhoanFragment extends Fragment {
     private TextView tvEmail, tvEmail1, tvCSHoTen, tvCSMatKhau, lichsu, tv_TaiKhoan, yeuthich;
     private Button btnXacNhanHoTen, btn_LogOut;
     private TaiKhoan user;
+    private boolean isID = true;
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view;
         view = inflater.inflate(R.layout.fragment_tai_khoan, container, false);
         init(view);
-        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(MY_PREFERENCE_NAME, MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences(MY_PREFERENCE_NAME, MODE_PRIVATE);
         id = sharedPreferences.getString("value", "");
-        SharedPreferences shared = this.getActivity().getSharedPreferences(MY_PREFERENCE_PASS, MODE_PRIVATE);
+        SharedPreferences shared = getContext().getSharedPreferences(MY_PREFERENCE_NAME, MODE_PRIVATE);
         pass = shared.getString("value", "");
+        check(id);
         getThongTinTaiKhoan(id);
         tvCSHoTen.setOnClickListener(v -> {
             btnXacNhanHoTen.setVisibility(View.VISIBLE);
@@ -79,28 +81,6 @@ public class TaiKhoanFragment extends Fragment {
 //        });
         return view;
     }
-//
-//    @Override
-//    protected void onRestart() {
-//        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(MY_PREFERENCE_NAME, MODE_PRIVATE);
-//        id = sharedPreferences.getString("value", "");
-//        check(id);
-//        super.onRestart();
-//    }
-//
-//    @Override
-//    protected void onResume() {
-//        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(MY_PREFERENCE_NAME, MODE_PRIVATE);
-//        id = sharedPreferences.getString("value", "");
-//        check(id);
-//        super.onResume();
-//    }
-//
-//    //Full màn hình
-//    private void setFullScreen() {
-//        requestWindowFeature(Window.FEATURE_NO_TITLE);
-//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-//    }
 
     private void ChinhSuaHoTen(String s) {
         String newHoTen = tvHoVaTen1.getText().toString();
@@ -141,6 +121,7 @@ public class TaiKhoanFragment extends Fragment {
             }
         });
     }
+
     public void init(View view) {
         tv_TaiKhoan = view.findViewById(R.id.ttcn_tv_TaiKhoan);
         tvHoVaTen1 = view.findViewById(R.id.ttcn_tv_HoVaTen1);
@@ -152,5 +133,66 @@ public class TaiKhoanFragment extends Fragment {
         btn_LogOut = view.findViewById(R.id.btn_LogOut);
         yeuthich = view.findViewById(R.id.ttcn_tv_YeuThich);
         lichsu = view.findViewById(R.id.ttcn_tv_LichSu);
+    }
+
+    private void check(String id) {
+        if (id.equals("")) {
+            Dialog();
+            isID = false;
+        } else {
+            ApiService.apiService.thongtintaikhoan(id).enqueue(new Callback<TaiKhoan>() {
+                @Override
+                public void onResponse(@NonNull Call<TaiKhoan> call, @NonNull Response<TaiKhoan> response) {
+                    TaiKhoan taiKhoan = response.body();
+                    if (taiKhoan != null) {
+                        if (!taiKhoan.isTrangThai()) {
+                            Dialog3();
+                            isID = false;
+                        } else {
+                            isID = true;
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<TaiKhoan> call, @NonNull Throwable t) {
+                    Log.e("Thông tin tài khoản: ", t.toString());
+                }
+            });
+        }
+    }
+
+    private void Dialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setMessage("Tài khoản chưa đăng nhập")
+                .setIcon(R.drawable.ic_notifications_red)
+                .setTitle("Thông báo");
+        builder.setPositiveButton("OK", (dialog, which) -> {
+            Intent intent = new Intent(((Dialog) dialog).getContext(), SignIn.class);
+            startActivity(intent);
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+        // Set button text color
+        Button okButton = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
+        okButton.setTextColor(Color.BLACK);
+    }
+
+    private void Dialog3() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setMessage("Tài khoản đã bị đóng băng! Xin liên hệ quản trị viên ")
+                .setIcon(R.drawable.ic_notifications_red)
+                .setTitle("Thông báo");
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss(); // Close the dialog
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+        // Set button text color
+        Button okButton = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
+        okButton.setTextColor(Color.BLACK);
     }
 }

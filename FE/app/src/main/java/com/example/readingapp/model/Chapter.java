@@ -12,20 +12,24 @@ public class Chapter implements Serializable {
     private String Truyen;
     private String NoiDung;
 
+    private int LuotXem;
+
     public Chapter() {
     }
 
-    public Chapter(boolean trangThai) {
+    public Chapter(int luotXem, boolean trangThai) {
+        LuotXem = luotXem;
         TrangThai = trangThai;
     }
 
-    public Chapter(String _id, String tenChapter, Date ngayNhap, boolean trangThai, String truyen, String noiDung) {
+    public Chapter(String _id, String tenChapter, Date ngayNhap, boolean trangThai, String truyen, String noiDung, int luotXem) {
         this._id = _id;
         TenChapter = tenChapter;
         NgayNhap = ngayNhap;
         TrangThai = trangThai;
         Truyen = truyen;
         NoiDung = noiDung;
+        LuotXem = luotXem;
     }
 
     public String get_id() {
@@ -76,6 +80,14 @@ public class Chapter implements Serializable {
         NoiDung = noiDung;
     }
 
+    public int getLuotXem() {
+        return LuotXem;
+    }
+
+    public void setLuotXem(int luotXem) {
+        LuotXem = luotXem;
+    }
+
     @Override
     public String toString() {
         return "Chapter{" +
@@ -85,6 +97,7 @@ public class Chapter implements Serializable {
                 ", TrangThai=" + TrangThai +
                 ", Truyen='" + Truyen + '\'' +
                 ", NoiDung='" + NoiDung + '\'' +
+                ", LuotXem=" + LuotXem +
                 '}';
     }
 }

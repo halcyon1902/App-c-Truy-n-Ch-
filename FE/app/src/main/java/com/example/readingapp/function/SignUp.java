@@ -1,9 +1,12 @@
 package com.example.readingapp.function;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -155,13 +158,16 @@ public class SignUp extends AppCompatActivity {
         builder.setMessage("Tạo tài khoản thành công")
                 .setIcon(R.drawable.ic_notifications_red)
                 .setTitle("Thông báo");
-//        builder.setPositiveButton("OK", (dialog, which) -> {
-//            Intent intent = new Intent(((Dialog) dialog).getContext(), ThongTinTaiKhoan.class);
-//            startActivity(intent);
-//            finish();
-//        });
+        builder.setPositiveButton("OK", (dialog, which) -> {
+            Intent intent = new Intent(((Dialog) dialog).getContext(), SignIn.class);
+            startActivity(intent);
+            finish();
+        });
         AlertDialog dialog = builder.create();
         dialog.show();
+        // Set button text color
+        Button okButton = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
+        okButton.setTextColor(Color.BLACK);
     }
 
     private void getTaiKhoan() {

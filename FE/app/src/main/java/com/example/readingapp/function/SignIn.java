@@ -2,8 +2,10 @@ package com.example.readingapp.function;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Window;
@@ -92,6 +94,9 @@ public class SignIn extends AppCompatActivity {
         });
         AlertDialog dialog = builder.create();
         dialog.show();
+        // Set button text color
+        Button okButton = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
+        okButton.setTextColor(Color.BLACK);
     }
 
     private void Dialog2() {
@@ -103,6 +108,9 @@ public class SignIn extends AppCompatActivity {
         });
         AlertDialog dialog = builder.create();
         dialog.show();
+        // Set button text color
+        Button okButton = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
+        okButton.setTextColor(Color.BLACK);
     }
 
     private void Dialog3() {
@@ -114,6 +122,9 @@ public class SignIn extends AppCompatActivity {
         });
         AlertDialog dialog = builder.create();
         dialog.show();
+        // Set button text color
+        Button okButton = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
+        okButton.setTextColor(Color.BLACK);
     }
 
     private void setFullScreen() {

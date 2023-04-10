@@ -10,11 +10,11 @@ public class TheLoai implements Serializable {
     public TheLoai() {
     }
 
-    public TheLoai(String tenTheLoai, boolean trangThai) {
+    public TheLoai(String tenTheLoai) {
         TenTheLoai = tenTheLoai;
     }
 
-    public TheLoai(String _id, String tenTheLoai, boolean trangThai) {
+    public TheLoai(String _id, String tenTheLoai) {
         this._id = _id;
         TenTheLoai = tenTheLoai;
     }

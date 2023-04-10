@@ -35,6 +35,10 @@ public interface ApiService {
     @GET("TaiKhoan")
     Call<List<TaiKhoan>> GetTaiKhoan();
 
+
+    @PUT("Chapter/{id}")
+    Call<Chapter> UpdateChapter(@Path("id") String ChapterID, @Body Chapter chapter);
+
     @POST("TaiKhoan")
     Call<TaiKhoan> PostTaiKhoan(@Body TaiKhoan taiKhoan);
 
@@ -50,19 +54,9 @@ public interface ApiService {
     @PUT("TaiKhoan/UpdateMatKhau/{id}")
     Call<TaiKhoan> updateMatKHau(@Path("id") String ID, @Body TaiKhoan taiKhoan);
 
-    //Chapter
-    @GET("Chapter/{id}")
-    Call<Chapter> GetChapter(@Path("id") String ChapterID);
-
-    @PUT("Chapter/{id}")
-    Call<Chapter> UpdateChapter(@Path("id") String ChapterID, @Body Chapter chapter);
-
     //Truyện
     @GET("Truyen")
     Call<List<Truyen>> GetTatCaTruyen();
-
-    @GET("Truyen/TruyenMoi")
-    Call<List<Truyen>> GetTruyenMoi();
 
     @GET("Truyen/{id}")
     Call<Truyen> GetTruyen(@Path("id") String truyenID);
@@ -84,11 +78,10 @@ public interface ApiService {
     @GET("TheLoai/{id}")
     Call<TheLoai> GetTheLoai(@Path("id") String theLoaiID);
 
-
-    @GET("TheLoai")
-    Call<List<TheLoai>> GetTatCaTheLoai();
-
     //Tác giả
     @GET("TacGia/{id}")
     Call<TacGia> GetTacGia(@Path("id") String tacGiaID);
+    //Chapter
+    @GET("Chapter/{id}")
+    Call<Chapter> GetChapter(@Path("id") String ChapterID);
 }

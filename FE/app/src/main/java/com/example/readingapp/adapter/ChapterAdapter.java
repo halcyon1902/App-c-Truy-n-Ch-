@@ -13,11 +13,15 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.readingapp.R;
+import com.example.readingapp.api.ApiService;
 import com.example.readingapp.function.GetChapter;
 import com.example.readingapp.model.Chapter;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ChapterViewHolder> {
     private final List<Chapter> mListChapter;
@@ -45,8 +49,6 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ChapterV
             return;
         }
         holder.tvTenChapter.setText(chapter.getTenChapter());
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        // holder.tvNgayNhap.setText("" + simpleDateFormat.format(chapter.getNgayNhap()));
         holder.cvChapter.setOnClickListener(v -> {
             Intent intent = new Intent(context, GetChapter.class);
             intent.putExtra("clickchapter", chapter);
@@ -68,13 +70,11 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ChapterV
 
     public static class ChapterViewHolder extends RecyclerView.ViewHolder {
         private final TextView tvTenChapter;
-        //private final TextView tvNgayNhap;
         private final CardView cvChapter;
 
         public ChapterViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTenChapter = itemView.findViewById(R.id.tv_item_ten_chapter);
-            //tvNgayNhap = itemView.findViewById(R.id.tv_ngay_dang_chapter);
             cvChapter = itemView.findViewById(R.id.cv_chapter);
         }
     }

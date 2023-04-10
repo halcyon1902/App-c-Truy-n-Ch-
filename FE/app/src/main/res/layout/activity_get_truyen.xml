@@ -119,6 +119,7 @@
             android:id="@+id/txt_tac_gia"
             android:layout_width="wrap_content"
             android:text="ua alo"
+            android:layout_marginLeft="10dp"
             android:textSize="15sp"
             android:textColor="@color/white"
             android:layout_height="wrap_content" />
@@ -128,7 +129,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:text=""
+            android:text="dsad"
             android:textColor="@color/white"
             android:textSize="15sp" />
 
@@ -150,27 +151,15 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="5dp"
-            android:text=""
+            android:text="10"
             android:textColor="@color/white"
             app:drawableStartCompat="@drawable/ic_eye_black" />
-
-        <TextView
-            android:id="@+id/tv_like"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="5dp"
-            android:text=""
-            android:textColor="@color/white"
-            android:textSize="15sp"
-            app:drawableStartCompat="@drawable/ic_like" />
-
         <ImageView
             android:id="@+id/btn_fav"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="10px"
             android:src="@drawable/ic_favorite_black"
             tools:ignore="ContentDescription" />
     </LinearLayout>
