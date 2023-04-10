@@ -50,10 +50,10 @@
                 <div class="card-header">
                   <div class="d-flex align-items-center">
                     <h4 class="card-title">DANH SÁCH TÁC GIẢ</h4>
-                    <button class="btn btn-primary btn-round ml-auto" onclick="location.href='/author/create'">
+                    <a class="btn btn-primary btn-round ml-auto" href="/author/create">
                       <i class="fa fa-plus"></i>
                       THÊM TÁC GIẢ
-                    </button>
+                    </a>
                   </div>
                 </div>
                 <div class="card-body">
@@ -71,10 +71,9 @@
                           <td><%= author.TenTacGia %></td>
                           <td>
                             <div class="form-button-action">
-                              <button onclick="location.href='/author/update/<%= author._id %>'" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Chỉnh sửa""
-                                >
-                                  <i class=" fa fa-edit"></i>
-                              </button>
+                              <a href="/author/update/<%= author._id %>" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Chỉnh sửa">
+                                <i class=" fa fa-edit"></i>
+                              </a>
                             </div>
                           </td>
                         </tr>

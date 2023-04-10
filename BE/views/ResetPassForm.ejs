@@ -23,8 +23,14 @@
     //                    A DI ĐÀ PHẬT!                    
     //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 <!DOCTYPE html>
-<html lang="en">
-<%- include("./blocks/head.ejs") %>
+<html>
+
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>ReadingApp</title>
+  <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
+  <link rel="icon" href="../assets/img/icon.ico" type="image/x-icon" />
+</head>
 <style>
   body {
     background-color: #e0e0e0;
@@ -128,40 +134,16 @@
 <body>
   <div class="container">
     <img src="/assets/img/icon.ico" alt="Logo của chúng tôi">
-    <h1>Administrator</h1>
-    <form action="/login" method="POST">
-      <label for="username">Tài Khoản</label>
-      <input type="text" name="TaiKhoan" id="username" placeholder="Enter Username" required />
-      <label for="password">Mật Khẩu</label>
-      <input type="password" name="MatKhau" id="password" placeholder="Enter Password" required />
-      <button type="submit">LogIn</button>
-      <a href="/resetPass/" style="text-align: right;margin-top: 20px;">Quên mật khẩu</a>
+    <h1>Khôi phục mật khẩu</h1>
+    <form action="/resetPass/reset" method="POST">
+      <label for="pass">Nhập mật khẩu mới</label>
+      <input type="password" id="pass" name="mail" required />
+      <label for="verifypass">Xác nhận mật khẩu</label>
+      <input type="password" id="verifypass" name="mail" required />
+      <button type="submit">Gửi</button>
+      <a href="/login" style="text-align: right;margin-top: 20px;">Quay lại</a>
     </form>
   </div>
-</body>
-<!--   Core JS Files   -->
-<script src="../assets/js/core/jquery.3.2.1.min.js"></script>
-<script src="../assets/js/core/popper.min.js"></script>
-<script src="../assets/js/core/bootstrap.min.js"></script>
-<!-- Bootstrap Notify -->
-<script src="../assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
-<script>
-  var text = '<%= message %>';
-  if (text) {
-    $.notify({
-      icon: "flaticon-alarm-1",
-      title: "ReadingApp",
-      message: text,
-    }, {
-      type: "danger",
-      placement: {
-        from: "top",
-        align: "center",
-      },
-      time: 1000,
-    });
-  }
-</script>
 </body>
 
 </html>

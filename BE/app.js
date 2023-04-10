@@ -21,7 +21,6 @@ app.use(
     extended: true,
   })
 );
-
 app.use(helmet());
 app.use(cookieParser());
 app.use(flash());
