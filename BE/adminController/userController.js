@@ -42,7 +42,6 @@ const usercontroller = {
       //lưu vào database
       await user.save();
       res.redirect("/user");
-      console.log(err);
     } catch (err) {
       console.log(err);
       res.render("../views/user/addUser", { message: 0, item });
@@ -79,11 +78,11 @@ const usercontroller = {
   //show update admin
   GetUpdateAdmin: async (req, res) => {
     const item = req.admin;
-    TaiKhoan.findById(req.params.id, function (error, admin) {
+    TaiKhoan.findById(item.id, function (error, admin) {
       if (error) {
       } else {
         //2 là thông báo bình thường
-        res.render("../views/user/updateAdmin", { message: 2, item, admin });
+        res.render("./../views/user/updateAdmin", { message: 2, item, admin });
       }
     });
   },

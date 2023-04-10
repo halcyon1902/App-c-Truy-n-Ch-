@@ -3,6 +3,7 @@ const controller = require("../adminController/storyController");
 const middlewarecontroller = require("../adminController/middlewareController");
 express.get("/", middlewarecontroller.verifyTokenAndAdmin, controller.GetStory);
 express.get("/create", middlewarecontroller.verifyTokenAndAdmin, controller.GetCreateStory);
+express.post("/create", middlewarecontroller.verifyTokenAndAdmin, controller.PostCreateStory);
 express.get("/detail/:id", middlewarecontroller.verifyTokenAndAdmin, controller.GetDetailStory);
 express.get("/chapter/detail/:id", middlewarecontroller.verifyTokenAndAdmin, controller.GetDetailChapter);
 express.get("/chapter/update/:id", middlewarecontroller.verifyTokenAndAdmin, controller.GetUpdateChapter);

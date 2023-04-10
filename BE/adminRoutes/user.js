@@ -6,6 +6,6 @@ express.get("/create", middlewarecontroller.verifyTokenAndAdmin, usercontroller.
 express.post("/create", middlewarecontroller.verifyTokenAndAdmin, usercontroller.PostCreateUser);
 express.get("/update/:id", middlewarecontroller.verifyTokenAndAdmin, usercontroller.GetUpdateUser);
 express.post("/update/:id", middlewarecontroller.verifyTokenAndAdmin, usercontroller.PostUpdateUser);
-express.get("/updateAdmin/:id", middlewarecontroller.verifyTokenAndAdmin, usercontroller.GetUpdateAdmin);
-express.post("/updateAdmin/:id", middlewarecontroller.verifyTokenAndAdmin, usercontroller.PostUpdateAdmin);
+express.get("/updateAdmin/", middlewarecontroller.verifyTokenAndAdmin, usercontroller.GetUpdateAdmin);
+express.post("/updateAdmin/", middlewarecontroller.verifyTokenAndAdmin, usercontroller.PostUpdateAdmin);
 module.exports = express;
