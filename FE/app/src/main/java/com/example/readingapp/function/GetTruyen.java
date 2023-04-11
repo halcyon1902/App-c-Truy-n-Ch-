@@ -73,12 +73,12 @@ public class GetTruyen extends AppCompatActivity {
         listTheLoai = new ArrayList<>();
         initLinearLayout();
         hienThiTruyen(truyen);
-       // isFavorite(truyen);
+        isFavorite(truyen);
         fav.setOnClickListener(v -> {
             check(id);
             if (isID) {
                 if (isfav) {
-                    //xoaYeuThich(truyen);
+                    xoaYeuThich(truyen);
                 } else {
                     themYeuThich(truyen);
                 }
@@ -101,7 +101,6 @@ public class GetTruyen extends AppCompatActivity {
                             isID = false;
                         } else {
                             isID = true;
-                            LichSu = taiKhoan.getLichSu();
                             YeuThich = taiKhoan.getYeuThich();
                         }
                     }
@@ -121,8 +120,8 @@ public class GetTruyen extends AppCompatActivity {
             public void onResponse(@NonNull Call<TaiKhoan> call, @NonNull Response<TaiKhoan> response) {
                 TaiKhoan taiKhoan = response.body();
                 if (taiKhoan != null) {
-                    List YeuThich = taiKhoan.getYeuThich();
-                    if (YeuThich.contains(truyen.get_id())) {
+                    List<String> yeuThich = taiKhoan.getYeuThich();
+                    if (yeuThich != null && yeuThich.contains(truyen.get_id())) {
                         fav.setImageResource(R.drawable.ic_favorite_red);
                         fav.setBackgroundResource(R.drawable.ic_favorite_red);
                         isfav = true;
@@ -136,10 +135,11 @@ public class GetTruyen extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<TaiKhoan> call, @NonNull Throwable t) {
-
+                // Handle failure
             }
         });
     }
+
 
     private void initLinearLayout() {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 3);
@@ -168,6 +168,7 @@ public class GetTruyen extends AppCompatActivity {
 
                     @Override
                     public void onFailure(@NonNull Call<TheLoai> call, @NonNull Throwable t) {
+
                     }
                 });
             }
@@ -228,14 +229,34 @@ public class GetTruyen extends AppCompatActivity {
     }
 
     private void themYeuThich(@NonNull Truyen truyen) {
-        if (!YeuThich.contains(truyen.get_id())) {
-            YeuThich.add(truyen.get_id());
-        }
-        TaiKhoan taiKhoan = new TaiKhoan(true, YeuThich, LichSu);
-        ApiService.apiService.updateTaiKhoan(id, taiKhoan).enqueue(new Callback<TaiKhoan>() {
+        ApiService.apiService.thongtintaikhoan(id).enqueue(new Callback<TaiKhoan>() {
             @Override
             public void onResponse(Call<TaiKhoan> call, Response<TaiKhoan> response) {
+                TaiKhoan taiKhoan = response.body();
+                if (taiKhoan != null) {
+                    List<String> YeuThich = taiKhoan.getYeuThich();
+                    if (YeuThich == null) {
+                        YeuThich = new ArrayList<>();
+                    }
+                    if (!YeuThich.contains(truyen.get_id())) {
+                        YeuThich.add(truyen.get_id());
+                        taiKhoan.setYeuThich(YeuThich);
+                        ApiService.apiService.updateTaiKhoan(id, taiKhoan).enqueue(new Callback<TaiKhoan>() {
+                            @Override
+                            public void onResponse(Call<TaiKhoan> call, Response<TaiKhoan> response) {
 
+                            }
+
+                            @Override
+                            public void onFailure(Call<TaiKhoan> call, Throwable t) {
+
+                            }
+                        });
+                        fav.setImageResource(R.drawable.ic_favorite_red);
+                        fav.setBackgroundResource(R.drawable.ic_favorite_red);
+                        isfav = true;
+                    }
+                }
             }
 
             @Override
@@ -244,6 +265,45 @@ public class GetTruyen extends AppCompatActivity {
             }
         });
     }
+
+    private void xoaYeuThich(@NonNull Truyen truyen) {
+        ApiService.apiService.thongtintaikhoan(id).enqueue(new Callback<TaiKhoan>() {
+            @Override
+            public void onResponse(Call<TaiKhoan> call, Response<TaiKhoan> response) {
+                TaiKhoan taiKhoan = response.body();
+                if (taiKhoan != null) {
+                    List<String> YeuThich = taiKhoan.getYeuThich();
+                    if (YeuThich == null) {
+                        YeuThich = new ArrayList<>();
+                    }
+                    if (YeuThich.contains(truyen.get_id())) {
+                        YeuThich.remove(truyen.get_id());
+                        taiKhoan.setYeuThich(YeuThich);
+                        ApiService.apiService.updateTaiKhoan(id, taiKhoan).enqueue(new Callback<TaiKhoan>() {
+                            @Override
+                            public void onResponse(Call<TaiKhoan> call, Response<TaiKhoan> response) {
+
+                            }
+
+                            @Override
+                            public void onFailure(Call<TaiKhoan> call, Throwable t) {
+
+                            }
+                        });
+                        fav.setImageResource(R.drawable.ic_favorite_black);
+                        fav.setBackgroundResource(R.drawable.ic_favorite_black);
+                        isfav = false;
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TaiKhoan> call, Throwable t) {
+
+            }
+        });
+    }
+
 
     private void setFullScreen() {
         requestWindowFeature(Window.FEATURE_NO_TITLE);

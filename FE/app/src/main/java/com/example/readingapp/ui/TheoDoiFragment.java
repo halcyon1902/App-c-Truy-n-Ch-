@@ -13,8 +13,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
@@ -40,14 +38,14 @@ public class TheoDoiFragment extends Fragment {
     private static final String MY_PREFERENCE_NAME = "USER_ID";
     String id = null;
     private RecyclerView recyclerView;
-    private TruyenAdapter truyenTranhAdapter;
+    private TruyenAdapter truyenAdapter;
     private List<Truyen> listTruyen;
     private List<Truyen> list = new ArrayList<>();
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view;
         view = inflater.inflate(R.layout.fragment_theo_doi, container, false);
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(MY_PREFERENCE_NAME, MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences(MY_PREFERENCE_NAME, MODE_PRIVATE);
         id = sharedPreferences.getString("value", "");
         check(id);
         init(view);
@@ -94,6 +92,7 @@ public class TheoDoiFragment extends Fragment {
                     public void onResponse(@NonNull Call<List<Truyen>> call, @NonNull Response<List<Truyen>> response) {
                         listTruyen = response.body();
                         if (listTruyen != null) {
+                            list.clear(); // Xóa danh sách cũ trước khi thêm các phần tử mới
                             for (int i = 0; i < listTruyen.size(); i++) {
                                 for (int j = 0; j < YeuThich.size(); j++) {
                                     if (listTruyen.get(i).get_id().equals(YeuThich.get(j))) {
@@ -104,8 +103,8 @@ public class TheoDoiFragment extends Fragment {
                             if (list.size() == 0) {
                                 Dialog();
                             }
-                            truyenTranhAdapter = new TruyenAdapter(getContext(), list);
-                            recyclerView.setAdapter(truyenTranhAdapter);
+                            truyenAdapter = new TruyenAdapter(getContext(), list);
+                            recyclerView.setAdapter(truyenAdapter);
                         }
                     }
 
@@ -142,8 +141,6 @@ public class TheoDoiFragment extends Fragment {
         Button okButton = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
         okButton.setTextColor(Color.BLACK);
     }
-
-
 
 
     private void Dialog3() {

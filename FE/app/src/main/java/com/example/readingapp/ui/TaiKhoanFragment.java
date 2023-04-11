@@ -111,7 +111,6 @@ public class TaiKhoanFragment extends Fragment {
                     tvEmail.setText(taiKhoan.getEmail());
                     tvEmail1.setText(taiKhoan.getEmail());
                     tvEmail1.setText(taiKhoan.getEmail());
-                    Log.e("pass", "" + pass);
                 }
             }
 

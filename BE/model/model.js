@@ -92,6 +92,12 @@ const TaiKhoanSchema = new mongoose.Schema({
     default: true,
     required: true,
   },
+  LichSu: {
+    type: [String],
+  },
+  YeuThich: {
+    type: [String],
+  },
 });
 //#endregion
 //#region chapter
