@@ -186,7 +186,6 @@ const usercontroller = {
     Chapter.findOne({}, async function (err, item) {
       try {
         const chapter = await Chapter.findById(req.params.id);
-        console.log(chapter);
         res.render("../views/chapter/updateChapter", { message: 2, chapter, item });
       } catch (err) {
         console.log(err);
@@ -202,7 +201,7 @@ const usercontroller = {
     };
     Chapter.findByIdAndUpdate(req.params.id, update, function (err, item) {
       if (err) {
-        res.render("../views/chapter/updateChapter", { message: 0, item });
+        res.render("../views/chapter/updateChapter");
       } else {
         res.redirect("/story");
       }

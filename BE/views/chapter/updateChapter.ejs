@@ -1,99 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <%- include("../blocks/head.ejs") %>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-  </head>
 
-  <body>
-    <div class="wrapper">
-      <div class="main-header">
-        <!-- Logo Header -->
-        <%- include("../blocks/logoheader.ejs") %>
-        <!-- End Logo Header -->
+<head>
+  <%- include("../blocks/head.ejs") %>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
 
-        <!-- Navbar Header -->
-        <%- include("../blocks/navbarheader.ejs") %>
-        <!-- End Navbar -->
-      </div>
-      <!-- Sidebar -->
-      <%- include("../blocks/sidebar.ejs") %>
-      <div class="main-panel">
-        <div class="content">
-          <div class="page-inner">
-            <div class="page-header">
-              <h4 class="page-title">ReadingApp</h4>
-              <ul class="breadcrumbs">
-                <li class="nav-home">
-                  <a href="/">
-                    <i class="flaticon-home"></i>
-                  </a>
-                </li>
-                <li class="separator">
-                  <i class="flaticon-right-arrow"></i>
-                </li>
-                <li class="nav-item">
-                  <a href="/story">Danh sách truyện</a>
-                </li>
-              </ul>
-            </div>
-            <form style="width: 650px" method="post" action="/chapter/update/<%= chapter._id %>">
-              <div class="form-group input-with-icon">
-                <label for="TenChapter">Tên Chương</label>
-                <input id="TenChapter" required="required" type="text" class="form-control" name="TenChapter" placeholder="<%= chapter.TenChapter %>" value="<%= chapter.TenChapter %>" />
-              </div>
-              <div class="form-group">
-                <label for="NoiDung">Nội dung</label>
-                <textarea class="form-control custom-textarea" rows="8" id="NoiDung" name="NoiDung"><%= chapter.NoiDung %></textarea>
-              </div>
-              <div class="form-group">
-                <% if(chapter.TrangThai){ %>
-                <label for="isActive">Chưa kích hoạt</label>
-                <input type="checkbox" value="false" name="isActive" />
-                <% }else{ %>
-                <label for="isActive">Đã kích hoạt</label>
-                <input type="checkbox" value="true" name="isActive" />
-                <% } %>
-              </div>
-              <div class="col-lg-4 col-md-9 col-sm-12">
-                <br />
-                <button class="btn btn-success">Update</button>
-                <button class="btn btn-danger" onclick="history.back()">Cancel</button>
-              </div>
-            </form>
+<body>
+  <div class="wrapper">
+    <div class="main-header">
+      <!-- Logo Header -->
+      <%- include("../blocks/logoheader.ejs") %>
+      <!-- End Logo Header -->
+
+      <!-- Navbar Header -->
+      <%- include("../blocks/navbarheader.ejs") %>
+      <!-- End Navbar -->
+    </div>
+    <!-- Sidebar -->
+    <%- include("../blocks/sidebar.ejs") %>
+    <div class="main-panel">
+      <div class="content">
+        <div class="page-inner">
+          <div class="page-header">
+            <h4 class="page-title">ReadingApp</h4>
+            <ul class="breadcrumbs">
+              <li class="nav-home">
+                <a href="/">
+                  <i class="flaticon-home"></i>
+                </a>
+              </li>
+              <li class="separator">
+                <i class="flaticon-right-arrow"></i>
+              </li>
+              <li class="nav-item">
+                <a href="/story">Danh sách truyện</a>
+              </li>
+            </ul>
           </div>
+          <form style="width: 650px" method="post" action="/story/chapter/update/<%= chapter._id %>">
+            <div class="form-group input-with-icon">
+              <label for="TenChapter">Tên Chương</label>
+              <input id="TenChapter" required="required" type="text" class="form-control" name="TenChapter" placeholder="<%= chapter.TenChapter %>" value="<%= chapter.TenChapter %>" />
+            </div>
+            <div class="form-group">
+              <label for="NoiDung">Nội dung</label>
+              <textarea class="form-control custom-textarea" rows="8" id="NoiDung" name="NoiDung"><%= chapter.NoiDung %></textarea>
+            </div>
+            <div class="form-group">
+              <% if(chapter.TrangThai){ %>
+              <label for="isActive">Chưa kích hoạt</label>
+              <input type="checkbox" value="false" name="isActive" />
+              <% }else{ %>
+              <label for="isActive">Đã kích hoạt</label>
+              <input type="checkbox" value="true" name="isActive" />
+              <% } %>
+            </div>
+            <div class="col-lg-4 col-md-9 col-sm-12">
+              <br />
+              <button class="btn btn-success">Update</button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
-    <script src="../../assets/js/core/jquery.3.2.1.min.js"></script>
-    <script src="../../assets/js/core/popper.min.js"></script>
-    <script src="../../assets/js/core/bootstrap.min.js"></script>
-    <script src="../../assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
-    <script src="../../assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
-    <script src="../../assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
-    <script src="../../assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
-    <script src="../../assets/js/atlantis.min.js"></script>
-    <script src="../../assets/js/setting-demo2.js"></script>
-    <script>
-      var text = "<%= message %>";
-      if (text == 0) {
-        $.notify(
-          {
-            icon: "flaticon-alarm-1",
-            title: "ReadingApp",
-            message: "Cập nhật chapter",
-          },
-          {
-            type: "danger",
-            placement: {
-              from: "top",
-              align: "center",
-            },
-            time: 1000,
-          }
-        );
-      }
-    </script>
-  </body>
+  </div>
+  <script src="../../assets/js/core/jquery.3.2.1.min.js"></script>
+  <script src="../../assets/js/core/popper.min.js"></script>
+  <script src="../../assets/js/core/bootstrap.min.js"></script>
+  <script src="../../assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+  <script src="../../assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
+  <script src="../../assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+  <script src="../../assets/js/atlantis.min.js"></script>
+  <script src="../../assets/js/setting-demo2.js"></script>
+</body>
+
 </html>
