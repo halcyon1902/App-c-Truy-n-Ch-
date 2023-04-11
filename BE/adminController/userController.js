@@ -78,11 +78,11 @@ const usercontroller = {
   //show update admin
   GetUpdateAdmin: async (req, res) => {
     const item = req.admin;
-    TaiKhoan.findById(item.id, function (error, admin) {
+    TaiKhoan.findById(item.id, function (error, user) {
       if (error) {
       } else {
         //2 là thông báo bình thường
-        res.render("./../views/user/updateAdmin", { message: 2, item, admin });
+        res.render("./../views/user/updateAdmin", { message: 2, item, user });
       }
     });
   },

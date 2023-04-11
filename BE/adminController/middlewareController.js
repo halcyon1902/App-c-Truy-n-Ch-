@@ -9,10 +9,14 @@ const middlewareController = {
         if (err) {
           res.redirect("/login");
         } else {
-          TaiKhoan.findOne({ TaiKhoan: item.TaiKhoan }, function (err, admin) {
-            req.admin = admin;
-            next();
-          });
+          if (item.PhanQuyen == true) {
+            TaiKhoan.findOne({ TaiKhoan: item.TaiKhoan }, function (err, admin) {
+              req.admin = admin;
+              next();
+            });
+          } else {
+            res.redirect("/login");
+          }
         }
       });
     } else {
