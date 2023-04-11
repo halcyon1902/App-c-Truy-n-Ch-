@@ -24,24 +24,79 @@
     //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 <!DOCTYPE html>
 <html lang="en">
-  <%- include("./blocks/head.ejs") %>
+<%- include("./blocks/head.ejs") %>
 
-  <body>
-    <div class="wrapper">
-      <div class="main-header">
-        <!-- Logo Header -->
-        <%- include("./blocks/logoheader.ejs") %>
-        <!-- End Logo Header -->
+<body>
+  <div class="wrapper">
+    <div class="main-header">
+      <!-- Logo Header -->
+      <%- include("./blocks/logoheader.ejs") %>
+      <!-- End Logo Header -->
 
-        <!-- Navbar Header -->
-        <%- include("./blocks/navbarheader.ejs") %>
+      <!-- Navbar Header -->
+      <%- include("./blocks/navbarheader.ejs") %>
 
-        <!-- End Navbar -->
+      <!-- End Navbar -->
+    </div>
+
+    <!-- Sidebar -->
+    <%- include("./blocks/sidebar.ejs") %>
+    <!-- End Sidebar -->
+
+
+    <div class="main-panel">
+      <div class="content">
+        <div class="panel-header bg-primary-gradient">
+          <div class="page-inner py-5">
+          </div>
+        </div>
+        <div class="page-inner mt--5">
+          <div class="row mt--2">
+            <div class="col-md-6">
+              <div class="card full-height">
+                <div class="card-body">
+                  <div class="card-title">Thông tin cơ bản</div>
+                  <div class="card-category">Thông tin của ngày: <%= (new Date(day)).toLocaleDateString('en-GB') %></div>
+                  <div class="d-flex flex-wrap justify-content-around pb-2 pt-4">
+                    <div class="px-2 pb-2 pb-md-0 text-center">
+                      <div id="circles-1">5</div>
+                      <h6 class="fw-bold mt-3 mb-0">Tài khoản mới trong ngày</h6>
+                    </div>
+                    <div class="px-2 pb-2 pb-md-0 text-center">
+                      <div id="circles-3">5</div>
+                      <h6 class="fw-bold mt-3 mb-0">Chương mới trong ngày</h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="card full-height">
+                <div class="card-body">
+                  <div class="card-title">Tổng số truyện và tài khoản</div>
+                  <div class="row py-3">
+                    <div class="col-md-4 d-flex flex-column justify-content-around">
+                      <div>
+                        <h6 class="fw-bold text-uppercase text-success op-8">Tổng số truyện</h6>
+                        <h3 class="fw-bold"><%=TotalStory  %></h3>
+                      </div>
+                      <div>
+                        <h6 class="fw-bold text-uppercase text-danger op-8">Tổng số tài khoản</h6>
+                        <h3 class="fw-bold"><%= Total %></h3>
+                      </div>
+                    </div>
+                    <div class="col-md-8">
+                      <div id="chart-container">
+                        <canvas id="totalIncomeChart"></canvas>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-
-      <!-- Sidebar -->
-      <%- include("./blocks/sidebar.ejs") %>
-      <!-- End Sidebar -->
     </div>
     <!--   Core JS Files   -->
     <script src="../assets/js/core/jquery.3.2.1.min.js"></script>
@@ -76,5 +131,38 @@
 
     <!-- Atlantis JS -->
     <script src="../assets/js/atlantis.min.js"></script>
-  </body>
+    <script>
+      var newUser = '<%= newUser %>';
+      var newChap = '<%= newChap %>';
+      Circles.create({
+        id: 'circles-1',
+        radius: 45,
+        value: 100,
+        maxValue: 100,
+        width: 7,
+        text: newUser,
+        colors: ['#f1f1f1', '#FF9E27'],
+        duration: 400,
+        wrpClass: 'circles-wrp',
+        textClass: 'circles-text',
+        styleWrapper: true,
+        styleText: true
+      })
+      Circles.create({
+        id: 'circles-3',
+        radius: 45,
+        value: 100,
+        maxValue: 100,
+        width: 7,
+        text: newChap,
+        colors: ['#f1f1f1', '#F25961'],
+        duration: 400,
+        wrpClass: 'circles-wrp',
+        textClass: 'circles-text',
+        styleWrapper: true,
+        styleText: true
+      })
+    </script>
+</body>
+
 </html>

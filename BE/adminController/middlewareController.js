@@ -5,7 +5,6 @@ const middlewareController = {
     const accessToken = req.cookies.accessToken;
     if (accessToken) {
       jwt.verify(accessToken, process.env.JWT_ACCESS_KEY, async (err, item) => {
-        console.log(item);
         if (err) {
           res.redirect("/login");
         } else {
