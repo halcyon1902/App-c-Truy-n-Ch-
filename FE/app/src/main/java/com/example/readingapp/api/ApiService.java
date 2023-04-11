@@ -11,6 +11,7 @@ import com.google.gson.GsonBuilder;
 import java.util.List;
 
 import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -81,7 +82,12 @@ public interface ApiService {
     //Tác giả
     @GET("TacGia/{id}")
     Call<TacGia> GetTacGia(@Path("id") String tacGiaID);
+
     //Chapter
     @GET("Chapter/{id}")
     Call<Chapter> GetChapter(@Path("id") String ChapterID);
+
+    //quenmatkhau
+    @POST("/resetPass")
+    Call<TaiKhoan> QuenMatKhau(@Body RequestBody requestBody);
 }

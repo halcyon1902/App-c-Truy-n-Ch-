@@ -36,7 +36,7 @@ public class TaiKhoanFragment extends Fragment {
     String id = null;
     String pass = null;
     private EditText tvHoVaTen1;
-    private TextView tvEmail, tvEmail1, tvCSHoTen, tvCSMatKhau, lichsu, tv_TaiKhoan, yeuthich;
+    private TextView tvEmail, tvEmail1, tvCSHoTen, tvCSMatKhau, tv_TaiKhoan;
     private Button btnXacNhanHoTen, btn_LogOut;
     private TaiKhoan user;
     private boolean isID = true;
@@ -130,8 +130,6 @@ public class TaiKhoanFragment extends Fragment {
         tvCSMatKhau = view.findViewById(R.id.ttcn_tv_ChinhSuaMK);
         btnXacNhanHoTen = view.findViewById(R.id.ttcn_btn_XacnhanHovaTen);
         btn_LogOut = view.findViewById(R.id.btn_LogOut);
-        yeuthich = view.findViewById(R.id.ttcn_tv_YeuThich);
-        lichsu = view.findViewById(R.id.ttcn_tv_LichSu);
     }
 
     private void check(String id) {

@@ -105,4 +105,5 @@
     <string name="thongtinlienhe">Thông tin liên hệ</string>
     <string name="sodienthoaihotro">Số điện thoại quản trị viên: 0921436587</string>
     <string name="logottlh">Logo thông tin liên hệ</string>
+    <string name="title_activity_quen_mat_khau">QuenMatKhau</string>
 </resources>

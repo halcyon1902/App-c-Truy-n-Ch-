@@ -7,6 +7,22 @@
     android:background="@drawable/background"
     tools:context=".function.SignIn">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/img_home"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="10sp"
+            android:layout_marginTop="10sp"
+            android:contentDescription="@string/img_home"
+            android:src="@drawable/baseline_home_24" />
+    </RelativeLayout>
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -80,27 +96,61 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <TextView
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:importantForAutofill="no"
-                android:text="@string/dn_chuacotaikhoan"
-                android:textColor="@color/black"
-                android:textSize="15sp"
-                tools:ignore="LabelFor" />
+                android:layout_margin="10dp">
 
-            <TextView
-                android:id="@+id/et_DangKy"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:importantForAutofill="no"
+                    android:text="@string/dn_chuacotaikhoan"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    tools:ignore="LabelFor" />
+
+                <TextView
+                    android:id="@+id/et_DangKy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dn_dangky"
+                    android:textColor="@color/orange"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    tools:ignore="LabelFor" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/dn_dangky"
-                android:textColor="@color/orange"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                tools:ignore="LabelFor" />
+                android:layout_margin="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:importantForAutofill="no"
+                    android:text="Quên mật khẩu"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    tools:ignore="LabelFor" />
+
+                <TextView
+                    android:id="@+id/et_QuenMatKhau"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lấy lại mật khẩu"
+                    android:textColor="@color/orange"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    tools:ignore="LabelFor" />
+            </LinearLayout>
         </LinearLayout>
 
     </LinearLayout>

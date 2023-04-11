@@ -8,9 +8,11 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,9 +29,10 @@ import retrofit2.Response;
 public class SignIn extends AppCompatActivity {
     private static final String MY_PREFERENCE_NAME = "USER_ID";
     private static final String MY_PREFERENCE_PASS = "USER_PASS";
-    private Button btnDangNhap;
+    private Button btnDangNhap ;
     private TextInputEditText matkhau, tentaikhoan;
-    private TextView dangky;
+    private TextView dangky, btnQuenMatKhau;
+    private ImageView  home;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +41,21 @@ public class SignIn extends AppCompatActivity {
         setContentView(R.layout.activity_sign_in);
         init();
         btnDangNhap.setOnClickListener(v -> clickDangNhap());
+        btnQuenMatKhau.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(SignIn.this, QuenMatKhau.class));
+                finish();
+            }
+        });
         dangky.setOnClickListener(v -> clickDangKy());
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SignIn.this, MainScreen.class));
+                finish();
+            }
+        });
     }
 
     private void clickDangKy() {
@@ -137,5 +154,7 @@ public class SignIn extends AppCompatActivity {
         matkhau = findViewById(R.id.edt_MatKhau);
         btnDangNhap = findViewById(R.id.btn_DangNhap);
         dangky = findViewById(R.id.et_DangKy);
+        home = findViewById(R.id.img_home);
+        btnQuenMatKhau = findViewById(R.id.et_QuenMatKhau);
     }
 }
